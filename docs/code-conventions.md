@@ -17,6 +17,11 @@ what it can; the rest is convention documented here.
 - **No barrel files** (`index.ts` that re-exports a folder). They defeat
   code-splitting/tree-shaking and slow HMR. Import from the real module:
   `import { Reveal } from '@/components/motion/reveal'`.
+- **Components-only exports from component files** (fast-refresh rule,
+  lint-enforced): helpers live in `lib/`. Exception: `src/components/ui/**`
+  follows shadcn's pattern of exporting cva variants alongside the
+  component — the lint rule is disabled for that folder only
+  (`.oxlintrc.json` override).
 - **Absolute imports via `@/`** for anything outside the current folder;
   relative `./` only within a module.
 - **Types:** `import type { Foo }` for type-only imports (the compiler's
