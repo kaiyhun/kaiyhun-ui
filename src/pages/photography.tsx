@@ -16,7 +16,7 @@ export default function Photography() {
     <main className="mx-auto max-w-6xl px-6 pt-32 pb-24">
       <Reveal>
         <h1 className="text-display-sm">
-          Photography<span className="text-primary">.</span>
+          Photography
         </h1>
         <p className="mt-4 max-w-prose text-muted-foreground">
           {COLLECTIONS.length} collections · {PHOTO_COUNT} photographs
