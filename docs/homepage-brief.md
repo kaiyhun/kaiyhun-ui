@@ -1,7 +1,6 @@
 # Homepage & site brief — the multi-domain "personal universe"
 
-> **Status: PROPOSED (2026-07-02) — awaiting explicit user go-ahead before
-> any implementation.** Supersedes the "photography-only portfolio" framing;
+> **Status: APPROVED (2026-07-02) — implementation authorized.** Supersedes the "photography-only portfolio" framing;
 > the approved gallery milestones survive, re-homed under `/photography`.
 
 ## What this site is

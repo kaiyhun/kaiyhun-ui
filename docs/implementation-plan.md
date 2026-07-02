@@ -3,11 +3,14 @@
 > **Status: APPROVED (2026-07-01). M1 done & deploy-verified. M2 done
 > (pipeline verified against production build — see docs/images.md).**
 >
-> **SCOPE REVISION PENDING (2026-07-02):** the site expanded from a
-> photography portfolio to a multi-domain personal site (photography,
-> drawings, research/code, blog, presets, tutorials). M3–M7 below are
-> superseded by the revised sequence in `docs/homepage-brief.md`,
-> **awaiting explicit user go-ahead**. M1/M2 foundations are unaffected.
+> **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
+> M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
+> (approved). Content inputs approved in `docs/content-draft.md`.
+> **M3 done (2026-07-02), awaiting user commit.** Content model, homepage
+> hub (hero + gateway + socials footer), `/photography` index, routes
+> re-homed. Verified: Lighthouse mobile 100/100/100, CLS 0.00 (metric-
+> matched font fallbacks), LCP 438 ms, WCAG contrast fixed
+> (primary-foreground now dark-on-blue). Next: M4 collection pages.
 > Companion docs: `architecture.md` (structure), `code-conventions.md`
 > (style/exports/tooling), `design-system.md` (tokens — locked).
 

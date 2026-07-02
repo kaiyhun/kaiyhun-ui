@@ -1,7 +1,8 @@
 # Design system — Phase 1 foundation
 
 > **Status: APPROVED & LOCKED (2026-07-01).**
-> Preview it live: `npm run dev` renders the showcase page (`src/App.tsx`).
+> (The Phase 1 showcase page was replaced by the real homepage in M3;
+> tokens are now seen live across the site.)
 
 ## Single source of truth (the maintenance contract)
 
@@ -35,6 +36,11 @@ Usage guidance: orange is a _spice_, not a flavor — one accent element per
 view is usually right. Blue owns interactivity so users learn "blue = can
 click".
 
+**Contrast note (M3):** `--primary-foreground` is near-black, not white —
+white on the primary blue is only 3.36:1 (WCAG fail) while dark-on-blue is
+5.3:1. Both filled buttons (primary + accent) therefore use dark text.
+Keep it that way unless the primary lightness changes.
+
 ## Typography
 
 | Token          | Font                       | Use                                              |
@@ -44,6 +50,12 @@ click".
 
 Both are self-hosted via `@fontsource-variable/*` (no external font CDN —
 GitHub Pages static-only rule). `h1–h4` get `font-display` automatically.
+
+**Metric-matched fallbacks (M3):** each stack includes an Arial-based
+fallback with measured `size-adjust`/`ascent-override`/`descent-override`
+values (`@font-face` blocks at the top of `index.css`) so the web-font
+swap causes no layout shift — verified CLS 0.00. If the fonts ever change,
+re-measure those overrides.
 
 Fluid display sizes (clamp-based, scale with viewport):
 
