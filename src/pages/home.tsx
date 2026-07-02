@@ -5,6 +5,13 @@
  * index grid.
  */
 import reactLogo from "@/assets/react.svg"
+/* Temporary M2 pipeline-verification imports — replaced by the content
+   model in M3. Alt text below is placeholder pending user-approved copy. */
+import icelandShot from "@/assets/iceland/iceland_1.jpg?w=400;800;1200;2000&format=avif;webp;jpeg&as=picture"
+import icelandLqip from "@/assets/iceland/iceland_1.jpg?w=24&format=webp&inline"
+import moonShot from "@/assets/moon/moon_1.jpg?w=400;800;1200;2000&format=avif;webp;jpeg&as=picture"
+import moonLqip from "@/assets/moon/moon_1.jpg?w=24&format=webp&inline"
+import { ResponsiveImage } from "@/components/media/responsive-image"
 import { Parallax } from "@/components/motion/parallax"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"
 import { Button } from "@/components/ui/button"
@@ -179,6 +186,40 @@ export default function Home() {
             <Parallax speed={0.3}>
               <div className="size-14 rounded-lg bg-accent" />
             </Parallax>
+          </div>
+        </section>
+
+        {/* ============ Imagery (M2 pipeline verification) ============ */}
+        <section aria-labelledby="imagery">
+          <Reveal>
+            <h2 id="imagery" className="text-display-sm">
+              Imagery
+            </h2>
+            <p className="mt-4 max-w-prose text-muted-foreground">
+              Build-time pipeline: AVIF/WebP/JPEG at 400–2000w with LQIP
+              blur-up. These two run through <code>ResponsiveImage</code>; the
+              browser picks the smallest sufficient file.
+            </p>
+          </Reveal>
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+            <Reveal>
+              <ResponsiveImage
+                picture={icelandShot}
+                placeholder={icelandLqip}
+                alt="Iceland collection sample"
+                sizes="(min-width: 64rem) 30rem, (min-width: 40rem) 50vw, 100vw"
+                className="rounded-xl"
+              />
+            </Reveal>
+            <Reveal delay={0.1}>
+              <ResponsiveImage
+                picture={moonShot}
+                placeholder={moonLqip}
+                alt="Moon collection sample"
+                sizes="(min-width: 64rem) 30rem, (min-width: 40rem) 50vw, 100vw"
+                className="rounded-xl"
+              />
+            </Reveal>
           </div>
         </section>
 
