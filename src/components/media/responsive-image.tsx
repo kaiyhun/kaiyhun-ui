@@ -25,11 +25,23 @@
  * heights must set the shape on the frame (e.g. `aspect-[4/5]`) and let
  * object-cover crop. Without a frame class the image renders at its
  * natural ratio (width/height attrs prevent layout shift).
+ *
+ * Art direction: pass `variants` to serve a different image when a media
+ * query matches (e.g. a portrait crop on portrait screens). Variant
+ * sources are listed before the defaults, so the browser downloads only
+ * whichever matches — never both.
  */
 import { useState, type ComponentProps } from "react"
 import type { Picture } from "vite-imagetools"
 
 import { cn } from "@/lib/utils"
+
+/** One art-direction alternative: shown when its media query matches. */
+interface ImageVariant {
+  /** Media query, e.g. "(orientation: portrait)". */
+  media: string
+  picture: Picture
+}
 
 interface ResponsiveImageProps extends Omit<
   ComponentProps<"img">,
@@ -45,6 +57,13 @@ interface ResponsiveImageProps extends Omit<
   placeholder?: string
   /** Above-the-fold/hero images: fetch immediately at high priority. */
   eager?: boolean
+  /** Art-directed alternatives, tried in order before the default picture. */
+  variants?: ImageVariant[]
+}
+
+/** Normalizes an imagetools sources key ("avif") to a mime type. */
+function mimeType(format: string) {
+  return format.startsWith("image/") ? format : `image/${format}`
 }
 
 export function ResponsiveImage({
@@ -53,7 +72,9 @@ export function ResponsiveImage({
   sizes = "100vw",
   placeholder,
   eager = false,
+  variants = [],
   className,
+  onLoad,
   ...props
 }: ResponsiveImageProps) {
   const [loaded, setLoaded] = useState(false)
@@ -77,12 +98,23 @@ export function ResponsiveImage({
           : undefined
       }
     >
+      {/* Art-directed variants first: the browser uses the first <source>
+          whose media + type match, so these take precedence over defaults */}
+      {variants.flatMap((variant) =>
+        Object.entries(variant.picture.sources).map(([format, srcSet]) => (
+          <source
+            key={`${variant.media}-${format}`}
+            media={variant.media}
+            type={mimeType(format)}
+            srcSet={srcSet}
+            sizes={sizes}
+          />
+        )),
+      )}
       {Object.entries(picture.sources).map(([format, srcSet]) => (
         <source
           key={format}
-          // imagetools keys sources by bare format name ("avif"); tolerate
-          // full mime types too in case the shape changes across versions
-          type={format.startsWith("image/") ? format : `image/${format}`}
+          type={mimeType(format)}
           srcSet={srcSet}
           sizes={sizes}
         />
@@ -96,7 +128,10 @@ export function ResponsiveImage({
         loading={eager ? "eager" : "lazy"}
         fetchPriority={eager ? "high" : "auto"}
         decoding={eager ? "sync" : "async"}
-        onLoad={() => setLoaded(true)}
+        onLoad={(event) => {
+          setLoaded(true)
+          onLoad?.(event) // compose, don't clobber, a caller-supplied handler
+        }}
         className={cn(
           "block h-full w-full object-cover transition-opacity duration-(--motion-duration-base) ease-(--ease-out-expo)",
           loaded ? "opacity-100" : "opacity-0",

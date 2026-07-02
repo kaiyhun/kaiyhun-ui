@@ -22,6 +22,7 @@ import { Reveal, RevealGroup } from "@/components/motion/reveal"
 import { Button } from "@/components/ui/button"
 import { COLLECTIONS, PHOTO_COUNT, getCollection } from "@/content/collections"
 import { SITE } from "@/content/site"
+import { HeroBackdrop } from "@/features/home/hero-backdrop"
 
 /** Hero photo metadata comes from the content model, not re-written here. */
 const HERO_ALT =
@@ -38,16 +39,11 @@ export default function Home() {
     <main>
       {/* ============ Hero — identity statement ============ */}
       <section className="relative flex min-h-svh items-end overflow-hidden">
-        <ResponsiveImage
+        <HeroBackdrop
           picture={heroShot}
-          variants={[
-            { media: "(orientation: portrait)", picture: heroShotPortrait },
-          ]}
+          portrait={heroShotPortrait}
           placeholder={heroLqip}
           alt={HERO_ALT}
-          sizes="100vw"
-          eager
-          className="absolute inset-0"
         />
         {/* Legibility scrim: deepen the already-dark image toward the text */}
         <div
@@ -56,9 +52,7 @@ export default function Home() {
         />
         <RevealGroup className="relative mx-auto w-full max-w-6xl px-6 pt-32 pb-24">
           <Reveal>
-            <h1 className="text-display">
-              {SITE.name}
-            </h1>
+            <h1 className="text-display">{SITE.name}</h1>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="mt-4 max-w-xl text-lg text-foreground/85 sm:text-xl">
