@@ -8,8 +8,12 @@ Two stages: **masters** (committed, prepared once per new image) and
 
 ## Stage 1 — masters (`npm run prepare-masters`)
 
-`scripts/prepare-masters.mjs` reads raw originals from `originals/<collection>/`
-(git-ignored) and writes optimized masters to `src/assets/<collection>/`:
+`scripts/prepare-masters.mjs` reads raw originals from
+`originals/<category>/<collection>/` (git-ignored) and writes optimized
+masters to `src/assets/<category>/<collection>/`. **Categories** are the
+top-level organization — `landscape/` today; `portrait/`, `drawings/`,
+`ai-art/`, … as those wings arrive. **Collections** are the sets within
+a category:
 
 - longest edge ≤ 2560px, never upscaled
 - mozjpeg quality 80, EXIF orientation baked in, metadata stripped (GPS etc.)
@@ -19,9 +23,10 @@ Result on the initial set: **179.6 MB of originals → 23.7 MB of masters.**
 Keep true originals backed up wherever you store them; `originals/` is just
 the staging area and never gets committed.
 
-**Adding a collection:** drop the folder into `originals/`, run
-`npm run prepare-masters`, describe it in `src/content/` (M3+), commit the
-new masters.
+**Adding a collection:** drop the folder into `originals/<category>/`
+(create the category folder if it's a new kind of work), run
+`npm run prepare-masters`, describe it in `src/content/` (its `folder`
+field is `"<category>/<collection>"`), commit the new masters.
 
 ## Stage 2 — build-time derivatives (vite-imagetools)
 
@@ -62,6 +67,14 @@ share a row/grid only align when the frame dictates the shape — set e.g.
 `aspect-[4/5]` on each and `object-cover` crops to fill. Without a frame
 class, images render at their natural ratio (the `width`/`height`
 attributes prevent layout shift either way).
+
+**Art direction (`variants` prop):** pass alternative crops with media
+queries — e.g. the homepage hero serves a portrait image on portrait
+screens: `variants={[{ media: "(orientation: portrait)", picture: … }]}`.
+Variant `<source>`s precede the defaults, so only the matching crop is
+ever downloaded. For a _animated_ orientation swap see
+`src/features/home/hero-backdrop.tsx`, which dissolves a cached ghost of
+the previous frame over the new one.
 
 **Get `sizes` right** — it's the browser's only pre-layout width hint.
 Account for container caps: a 50vw column inside `max-w-5xl` never exceeds

@@ -79,9 +79,11 @@ No content strings hard-coded in components.
 
 ## Images (build-time pipeline)
 
-- `src/assets/<collection>/` holds **optimized masters** (one-time
-  `scripts/prepare-masters.ts` run: ≤2560px long edge, ~q80). True originals
-  stay outside the repo.
+- `src/assets/<category>/<collection>/` holds **optimized masters**
+  (categories: `landscape/` now; `portrait/`, `drawings/`, `ai-art/` as
+  those wings arrive; `scripts/prepare-masters.mjs` run: ≤2560px long
+  edge, ~q80). True originals stay outside the repo in
+  `originals/<category>/<collection>/` (git-ignored).
 - Build-time plugin (vite-imagetools — sharp-based; exact options confirmed
   via Context7 at implementation) emits AVIF/WebP/JPEG at 400/800/1200/2000
   widths plus an LQIP placeholder, all content-hashed.
