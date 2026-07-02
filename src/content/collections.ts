@@ -356,3 +356,18 @@ export const PHOTO_COUNT = COLLECTIONS.reduce(
 export function getCollection(slug: string): Collection | undefined {
   return COLLECTIONS.find((collection) => collection.slug === slug)
 }
+
+/**
+ * Like getCollection, but for compile-time-known slugs the UI depends on
+ * (hero, gateway panels). Throws loudly at startup if a slug was renamed
+ * in the model, instead of failing silently via a `!` assertion.
+ */
+export function requireCollection(slug: string): Collection {
+  const collection = getCollection(slug)
+  if (!collection) {
+    throw new Error(
+      `Content model is missing required collection "${slug}" — was it renamed in src/content/collections.ts?`,
+    )
+  }
+  return collection
+}

@@ -24,7 +24,8 @@ import { motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import type { Picture } from "vite-imagetools"
 
-import { ResponsiveImage, mimeType } from "@/components/media/responsive-image"
+import { ResponsiveImage } from "@/components/media/responsive-image"
+import { mimeType } from "@/lib/images"
 import { MOTION } from "@/lib/motion-tokens"
 
 interface HeroBackdropProps {

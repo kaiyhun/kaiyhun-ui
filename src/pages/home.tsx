@@ -20,19 +20,23 @@ import { ResponsiveImage } from "@/components/media/responsive-image"
 import { Parallax } from "@/components/motion/parallax"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"
 import { Button } from "@/components/ui/button"
-import { COLLECTIONS, PHOTO_COUNT, getCollection } from "@/content/collections"
+import {
+  COLLECTIONS,
+  PHOTO_COUNT,
+  requireCollection,
+} from "@/content/collections"
 import { SITE } from "@/content/site"
 import { HeroBackdrop } from "@/features/home/hero-backdrop"
 
 /** Hero photo metadata comes from the content model, not re-written here. */
 const HERO_ALT =
-  getCollection("niagara-falls")?.photos.find(
+  requireCollection("niagara-falls").photos.find(
     (photo) => photo.file === "niagaraFalls_8",
   )?.alt ?? ""
 
 /** Gateway door for the photography wing; cover = lakeLouise_1 (user
  *  pick), pulled from the content model. */
-const GATEWAY_COVER = getCollection("lake-louise")!
+const GATEWAY_COVER = requireCollection("lake-louise")
 
 export default function Home() {
   return (

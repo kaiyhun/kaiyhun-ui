@@ -34,6 +34,7 @@
 import { useState, type ComponentProps } from "react"
 import type { Picture } from "vite-imagetools"
 
+import { mimeType } from "@/lib/images"
 import { cn } from "@/lib/utils"
 
 /** One art-direction alternative: shown when its media query matches. */
@@ -59,11 +60,6 @@ interface ResponsiveImageProps extends Omit<
   eager?: boolean
   /** Art-directed alternatives, tried in order before the default picture. */
   variants?: ImageVariant[]
-}
-
-/** Normalizes an imagetools sources key ("avif") to a mime type. */
-export function mimeType(format: string) {
-  return format.startsWith("image/") ? format : `image/${format}`
 }
 
 export function ResponsiveImage({
