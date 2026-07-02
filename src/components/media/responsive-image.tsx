@@ -19,6 +19,12 @@
  *
  *   <ResponsiveImage picture={shot} placeholder={shotLqip} alt="…"
  *     sizes="(min-width: 64rem) 33vw, 100vw" />
+ *
+ * Sizing: `className` styles the <picture> layout box. Masters have
+ * differing intrinsic aspect ratios, so grids/rows that need uniform
+ * heights must set the shape on the frame (e.g. `aspect-[4/5]`) and let
+ * object-cover crop. Without a frame class the image renders at its
+ * natural ratio (width/height attrs prevent layout shift).
  */
 import { useState, type ComponentProps } from "react"
 import type { Picture } from "vite-imagetools"
@@ -54,11 +60,16 @@ export function ResponsiveImage({
 
   return (
     <picture
-      // The LQIP sits as the <picture> background; the real image fades in
-      // over it. Blur + slight scale hide the placeholder's 24px coarseness.
+      // The <picture> is the LAYOUT BOX: size images by styling it via
+      // className (e.g. aspect-[4/5] for uniform grid rows — masters have
+      // differing intrinsic ratios, so side-by-side images only align when
+      // the frame dictates the shape). The <img> crops to fill via
+      // object-cover. The LQIP sits as the background; the real image
+      // fades in over it.
       className={cn(
         "block overflow-hidden",
         placeholder && "bg-cover bg-center",
+        className,
       )}
       style={
         placeholder && !loaded
@@ -89,7 +100,6 @@ export function ResponsiveImage({
         className={cn(
           "block h-full w-full object-cover transition-opacity duration-(--motion-duration-base) ease-(--ease-out-expo)",
           loaded ? "opacity-100" : "opacity-0",
-          className,
         )}
         {...props}
       />

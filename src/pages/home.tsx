@@ -208,7 +208,7 @@ export default function Home() {
                 placeholder={icelandLqip}
                 alt="Iceland collection sample"
                 sizes="(min-width: 64rem) 30rem, (min-width: 40rem) 50vw, 100vw"
-                className="rounded-xl"
+                className="aspect-[4/5] rounded-xl"
               />
             </Reveal>
             <Reveal delay={0.1}>
@@ -217,7 +217,7 @@ export default function Home() {
                 placeholder={moonLqip}
                 alt="Moon collection sample"
                 sizes="(min-width: 64rem) 30rem, (min-width: 40rem) 50vw, 100vw"
-                className="rounded-xl"
+                className="aspect-[4/5] rounded-xl"
               />
             </Reveal>
           </div>
