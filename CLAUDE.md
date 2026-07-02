@@ -53,6 +53,12 @@ Bold, motion-heavy image gallery / portfolio. Static client-side SPA, deployed t
 - Keep changes small and scoped (the user commits in reviewable units); explain notable decisions
 - Accessibility is mandatory: alt text, keyboard navigation, reduced-motion fallbacks
 
+## Key docs (read before structural work)
+- `docs/architecture.md` — folder structure, dependency rules, routing, image pipeline
+- `docs/code-conventions.md` — exports (named only; default only for lazy route pages), interfaces, naming, comments, tooling
+- `docs/design-system.md` — design tokens reference
+- `docs/implementation-plan.md` — approved milestones; no feature work outside the current one
+
 ## Commands
 - `npm run dev` — dev server
 - `npm run build` — typecheck (`tsc -b`) + production build to `dist/`
