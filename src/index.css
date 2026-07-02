@@ -1,26 +1,57 @@
+/**
+ * Design tokens — SINGLE SOURCE OF TRUTH for all styling.
+ *
+ * Every color, font, radius, and motion value used anywhere in the app is
+ * defined in this file and consumed as a CSS variable. Components must never
+ * hard-code visual values; they reference semantic tokens (bg-background,
+ * text-primary, var(--motion-duration-base), …). Changing a value here
+ * changes it everywhere — including JS-driven animations, which read the
+ * motion tokens at startup (see src/lib/motion-tokens.ts).
+ *
+ * Palette model — "cinematic ratio" (dark teal-orange grade):
+ *   ~65% near-black blue-cast surfaces (background / card / popover)
+ *   ~30% blue           (primary, interactive elements, focus rings)
+ *   ~5%  orange         (accent — rare, deliberate highlights only)
+ *
+ * Docs: docs/design-system.md
+ */
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import "@fontsource-variable/space-grotesk"; /* display / headings */
+@import "@fontsource-variable/roboto-flex";   /* body text */
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * Tailwind v4 theme — maps raw tokens (defined in :root below) onto
+ * Tailwind's namespaces so utilities like bg-background, font-display,
+ * ease-cinematic, and text-display are generated from them.
+ */
 @theme inline {
-    --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif;
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
-    --color-chart-5: var(--chart-5);
-    --color-chart-4: var(--chart-4);
-    --color-chart-3: var(--chart-3);
-    --color-chart-2: var(--chart-2);
-    --color-chart-1: var(--chart-1);
+    /* Typography */
+    --font-sans: 'Roboto Flex Variable', system-ui, sans-serif;
+    --font-display: 'Space Grotesk Variable', var(--font-sans);
+    --font-heading: var(--font-display);
+
+    /* Fluid display type scale — hero/headline sizes that scale with the
+       viewport between phone and large desktop. */
+    --text-display: clamp(3rem, 1.5rem + 7.5vw, 8rem);
+    --text-display--line-height: 0.95;
+    --text-display--letter-spacing: -0.03em;
+    --text-display--font-weight: 700;
+    --text-display-sm: clamp(2rem, 1.25rem + 3.75vw, 4.5rem);
+    --text-display-sm--line-height: 1;
+    --text-display-sm--letter-spacing: -0.02em;
+    --text-display-sm--font-weight: 700;
+
+    /* Motion easings — exposed as Tailwind ease-* utilities.
+       Same curves are consumed by Motion (JS) via motion-tokens.ts. */
+    --ease-out-expo: var(--motion-ease-out-expo);
+    --ease-cinematic: var(--motion-ease-cinematic);
+
+    /* Semantic colors (shadcn contract) */
     --color-ring: var(--ring);
     --color-input: var(--input);
     --color-border: var(--border);
@@ -39,6 +70,21 @@
     --color-card: var(--card);
     --color-foreground: var(--foreground);
     --color-background: var(--background);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+
+    /* Radii — derived from the single --radius knob below */
     --radius-sm: calc(var(--radius) * 0.6);
     --radius-md: calc(var(--radius) * 0.8);
     --radius-lg: var(--radius);
@@ -48,73 +94,69 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/*
+ * Raw token values. The site is dark-only by design (cinematic grade), so
+ * the dark palette lives directly in :root — no theme toggle to maintain.
+ */
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
-}
+    /* ~65% — surfaces: near-black with a subtle cool blue cast */
+    --background: oklch(0.16 0.012 255);
+    --foreground: oklch(0.93 0.008 255);
+    --card: oklch(0.20 0.015 255);
+    --card-foreground: oklch(0.93 0.008 255);
+    --popover: oklch(0.22 0.016 255);
+    --popover-foreground: oklch(0.93 0.008 255);
 
-.dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    /* ~30% — blue: interactive elements, links, focus, selection */
+    --primary: oklch(0.62 0.17 255);
+    --primary-foreground: oklch(0.97 0.005 255);
+    --secondary: oklch(0.28 0.035 255);
+    --secondary-foreground: oklch(0.90 0.02 255);
+    --muted: oklch(0.24 0.02 255);
+    --muted-foreground: oklch(0.68 0.015 255);
+    --ring: oklch(0.62 0.17 255);
+
+    /* ~5% — orange: rare accent, use sparingly and deliberately */
+    --accent: oklch(0.72 0.17 50);
+    --accent-foreground: oklch(0.15 0.02 50);
+
+    --destructive: oklch(0.65 0.20 25);
+    --border: oklch(1 0 0 / 12%);
+    --input: oklch(1 0 0 / 16%);
+
+    /* Charts: blue-dominant scale, orange as the contrast series */
+    --chart-1: oklch(0.62 0.17 255);
+    --chart-2: oklch(0.72 0.17 50);
+    --chart-3: oklch(0.50 0.12 255);
+    --chart-4: oklch(0.75 0.10 255);
+    --chart-5: oklch(0.38 0.06 255);
+
+    /* Sidebar mirrors the main surfaces */
+    --sidebar: oklch(0.18 0.014 255);
+    --sidebar-foreground: oklch(0.93 0.008 255);
+    --sidebar-primary: oklch(0.62 0.17 255);
+    --sidebar-primary-foreground: oklch(0.97 0.005 255);
+    --sidebar-accent: oklch(0.24 0.02 255);
+    --sidebar-accent-foreground: oklch(0.93 0.008 255);
+    --sidebar-border: oklch(1 0 0 / 12%);
+    --sidebar-ring: oklch(0.62 0.17 255);
+
+    /* Shape — one knob controls every radius */
+    --radius: 0.5rem;
+
+    /*
+     * Motion tokens — canonical values for BOTH CSS and JS animation.
+     * motion-tokens.ts parses these at startup so Motion (JS) uses the
+     * exact same durations/curves as CSS transitions. Durations in ms.
+     */
+    --motion-duration-fast: 150ms;   /* microinteractions: hover, press */
+    --motion-duration-base: 300ms;   /* standard UI transitions */
+    --motion-duration-slow: 600ms;   /* scroll reveals, section entrances */
+    --motion-duration-slower: 900ms; /* hero/page-level choreography */
+    --motion-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);   /* decisive arrivals */
+    --motion-ease-cinematic: cubic-bezier(0.65, 0, 0.35, 1); /* smooth in-out drama */
+    --motion-reveal-distance: 48px;  /* default travel for scroll reveals */
+    --motion-stagger: 90ms;          /* delay between staggered children */
 }
 
 @layer base {
@@ -126,5 +168,19 @@
     }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+    }
+  /* Respect reduced motion globally: JS animations are handled by
+     MotionConfig reducedMotion="user"; this covers CSS-land. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  ::selection {
+    @apply bg-primary/40;
+    }
+  h1, h2, h3, h4 {
+    @apply font-display;
     }
 }
