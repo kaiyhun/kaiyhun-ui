@@ -1,6 +1,6 @@
 # Code conventions
 
-> **Status: PROPOSED — part of the Phase 2 plan, pending approval.**
+> **Status: APPROVED (2026-07-01).**
 
 The rules that keep the codebase consistent as it grows. Tooling enforces
 what it can; the rest is convention documented here.
@@ -47,21 +47,21 @@ what it can; the rest is convention documented here.
 
 ## Naming
 
-| Thing | Convention | Example |
-|---|---|---|
-| Files & folders | `kebab-case` | `responsive-image.tsx` |
-| Components | `PascalCase` | `ResponsiveImage` |
-| Hooks | `use` + camelCase, file `use-*.ts` | `useLightbox` / `use-lightbox.ts` |
-| Functions/vars | `camelCase` | `offsetFor` |
-| Module constants | `SCREAMING_SNAKE` | `MOTION`, `SWATCHES` |
-| Types/interfaces | `PascalCase`, no `I`/`T` prefixes | `RevealProps` |
+| Thing            | Convention                         | Example                           |
+| ---------------- | ---------------------------------- | --------------------------------- |
+| Files & folders  | `kebab-case`                       | `responsive-image.tsx`            |
+| Components       | `PascalCase`                       | `ResponsiveImage`                 |
+| Hooks            | `use` + camelCase, file `use-*.ts` | `useLightbox` / `use-lightbox.ts` |
+| Functions/vars   | `camelCase`                        | `offsetFor`                       |
+| Module constants | `SCREAMING_SNAKE`                  | `MOTION`, `SWATCHES`              |
+| Types/interfaces | `PascalCase`, no `I`/`T` prefixes  | `RevealProps`                     |
 
 ## Comments & documentation
 
 - File-header docstring on every component/module: what it is, notable
   decisions/deviations, accessibility behavior.
-- Inline comments for larger or non-obvious blocks — explain *why*, not
-  *what* the next line does.
+- Inline comments for larger or non-obvious blocks — explain _why_, not
+  _what_ the next line does.
 - Features and system decisions get a markdown doc in `docs/`, updated as
   the thing changes.
 
@@ -74,12 +74,12 @@ what it can; the rest is convention documented here.
 
 ## Tooling (enforced)
 
-| Command | What |
-|---|---|
-| `npm run lint` | oxlint (ships with the Vite template) |
+| Command                           | What                                                             |
+| --------------------------------- | ---------------------------------------------------------------- |
+| `npm run lint`                    | oxlint (ships with the Vite template)                            |
 | `npm run format` / `format:check` | Prettier + `prettier-plugin-tailwindcss` (canonical class order) |
-| `npm run typecheck` | `tsc -b` without emitting |
-| `npm run check` | typecheck + lint + format:check — run before handing off work |
+| `npm run typecheck`               | `tsc -b` without emitting                                        |
+| `npm run check`                   | typecheck + lint + format:check — run before handing off work    |
 
 CI (`.github/workflows/ci.yml`) runs `npm run check` + build on every push
 and PR; the Pages deploy workflow stays separate. `.editorconfig` keeps
@@ -90,4 +90,3 @@ non-JS editors consistent (2-space indent, LF, final newline).
 - Claude never commits or pushes — work stays in the tree for user review.
 - Changes arrive in small, milestone-scoped units (see
   `docs/implementation-plan.md`) so each review is tractable.
-```

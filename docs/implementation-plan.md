@@ -1,8 +1,9 @@
 # Implementation plan — full gallery/portfolio
 
-> **Status: AWAITING APPROVAL — no feature work begins until signed off.**
+> **Status: APPROVED (2026-07-01). M1 implemented — awaiting user commit +
+> deployed verification of Pages deep links, then M2 begins.**
 > Companion docs: `architecture.md` (structure), `code-conventions.md`
-> (style/exports/tooling), `design-system.md` (tokens, pending confirmation).
+> (style/exports/tooling), `design-system.md` (tokens — locked).
 
 Decisions already made (2026-07-01): optimized committed masters (no LFS,
 no raw 180 MB commit); gallery = per-collection pages + lightbox +
@@ -17,6 +18,7 @@ unit for you to commit.
 ## M1 — Housekeeping & architecture refactor
 
 **Delivers:** the structure everything else builds on.
+
 - Prettier (+ tailwind class-sorting plugin), `.editorconfig`, npm scripts
   (`lint`, `format`, `typecheck`, `check`), CI workflow running check+build
 - Folder refactor per `architecture.md`: `app/`, `pages/`, `features/`,
@@ -32,6 +34,7 @@ routed path renders the app (no 404); Lighthouse a11y pass on nav.
 ## M2 — Image masters & build pipeline
 
 **Delivers:** the performance backbone.
+
 - `scripts/prepare-masters.ts` (sharp): one-time resize of the 180 MB
   originals → committed masters (≤2560px, ~q80, ~20–30 MB total)
 - vite-imagetools (options confirmed via Context7): AVIF/WebP/JPEG ×
@@ -46,6 +49,7 @@ blur-up visible on throttled 3G; repo delta ≤ ~35 MB; build time sane.
 ## M3 — Content model & home page
 
 **Delivers:** the first real page.
+
 - `src/content/collections.ts`: typed collections (slug, title, description,
   cover, tags) + per-image metadata with mandatory alt text (you provide or
   approve alt/tag text — I won't invent content)
@@ -58,18 +62,20 @@ Lighthouse perf ≥ 90 mobile; LCP < 2.5 s throttled.
 ## M4 — Collection pages
 
 **Delivers:** `/c/:slug` for all 8 collections.
+
 - Responsive gallery grid (all lazy ResponsiveImages), staggered reveals,
   scroll-linked accents; unknown slug → not-found
 - Page transitions between home ↔ collection (AnimatePresence, opacity-led,
   reduced-motion safe)
 
 **Verify:** every collection renders from content model alone; keyboard
-tab-through; transitions verified with chrome-devtools trace (no jank
-> a dropped-frame budget of ~2 frames).
+tab-through; transitions verified with chrome-devtools trace (dropped-frame
+budget of ~2 frames).
 
 ## M5 — Lightbox
 
 **Delivers:** full-screen viewer.
+
 - Built on the restyled Dialog (focus trap/ESC for free) + Motion
 - Arrow-key/swipe navigation, preload of neighbors, URL state
   (`?i=<image>`) so views are shareable/back-button friendly
@@ -81,6 +87,7 @@ to trigger); screen-reader labels; network shows neighbor preloading.
 ## M6 — Filtering / tags
 
 **Delivers:** cross-collection discovery.
+
 - Tag chips (from content model) on home; filtered grid view; URL-driven
   (`?tag=x`) so filters are linkable; animated grid reflow (layout
   animations, reduced-motion safe)
@@ -91,6 +98,7 @@ keyboard operable chips.
 ## M7 — Polish & launch audit
 
 **Delivers:** production readiness.
+
 - SEO/meta (title/description/OG image per route), styled 404, favicon
   from logo
 - Full accessibility pass (axe + manual keyboard/screen-reader spot check)
@@ -111,4 +119,3 @@ mobile viewport.
 - Context7 before new library APIs; shadcn components pulled then restyled
 - Alt text and content wording come from you — never invented
 - Every milestone ends: `npm run check` green, deploy green, docs updated
-```

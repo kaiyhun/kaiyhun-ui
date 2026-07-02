@@ -1,6 +1,6 @@
 # Design system — Phase 1 foundation
 
-> **Status: PROPOSED — pending user confirmation before locking.**
+> **Status: APPROVED & LOCKED (2026-07-01).**
 > Preview it live: `npm run dev` renders the showcase page (`src/App.tsx`).
 
 ## Single source of truth (the maintenance contract)
@@ -10,11 +10,11 @@ Components reference semantic tokens only — never raw colors, font names,
 pixel durations, or bezier curves. Change a token once and it propagates
 everywhere, including JS animations:
 
-| Layer | How it consumes tokens |
-|---|---|
-| Tailwind utilities | `@theme inline` maps tokens → `bg-primary`, `font-display`, `ease-out-expo`, `text-display`, … |
-| shadcn components | Semantic vars (`--primary`, `--card`, `--radius`, …) per the shadcn contract |
-| Motion (JS animations) | `src/lib/motion-tokens.ts` parses the `--motion-*` vars once at startup |
+| Layer                  | How it consumes tokens                                                                         |
+| ---------------------- | ---------------------------------------------------------------------------------------------- |
+| Tailwind utilities     | `@theme inline` maps tokens → `bg-primary`, `font-display`, `ease-out-expo`, `text-display`, … |
+| shadcn components      | Semantic vars (`--primary`, `--card`, `--radius`, …) per the shadcn contract                   |
+| Motion (JS animations) | `src/lib/motion-tokens.ts` parses the `--motion-*` vars once at startup                        |
 
 **Rule: if you find yourself typing a hex/oklch value, a font name, a `ms`
 number, or a `cubic-bezier` anywhere outside `src/index.css`, stop — add or
@@ -25,27 +25,28 @@ use a token instead.**
 Dark-only by design; there is no light theme to maintain. All colors are
 OKLCH (perceptually uniform, wide-gamut ready).
 
-| Share | Role | Tokens |
-|---|---|---|
-| ~65% | Near-black, blue-cast surfaces | `background`, `card`, `popover`, `muted` |
-| ~30% | Blue — everything interactive | `primary`, `secondary`, `ring`, links/focus/selection |
-| ~5% | Orange — rare, deliberate accents | `accent` (+ `Button variant="accent"`) |
+| Share | Role                              | Tokens                                                |
+| ----- | --------------------------------- | ----------------------------------------------------- |
+| ~65%  | Near-black, blue-cast surfaces    | `background`, `card`, `popover`, `muted`              |
+| ~30%  | Blue — everything interactive     | `primary`, `secondary`, `ring`, links/focus/selection |
+| ~5%   | Orange — rare, deliberate accents | `accent` (+ `Button variant="accent"`)                |
 
-Usage guidance: orange is a *spice*, not a flavor — one accent element per
+Usage guidance: orange is a _spice_, not a flavor — one accent element per
 view is usually right. Blue owns interactivity so users learn "blue = can
 click".
 
 ## Typography
 
-| Token | Font | Use |
-|---|---|---|
+| Token          | Font                       | Use                                              |
+| -------------- | -------------------------- | ------------------------------------------------ |
 | `font-display` | **Space Grotesk Variable** | Headings, hero type, buttons, card/dialog titles |
-| `font-sans` | **Roboto Flex Variable** | Body copy, UI text (default on `<html>`) |
+| `font-sans`    | **Roboto Flex Variable**   | Body copy, UI text (default on `<html>`)         |
 
 Both are self-hosted via `@fontsource-variable/*` (no external font CDN —
 GitHub Pages static-only rule). `h1–h4` get `font-display` automatically.
 
 Fluid display sizes (clamp-based, scale with viewport):
+
 - `text-display` — hero headlines: 3rem → 8rem
 - `text-display-sm` — section headlines: 2rem → 4.5rem
 
@@ -62,16 +63,16 @@ Library: **`motion`** (formerly Framer Motion), imported from `motion/react`.
 
 ### Tokens (canonical in `index.css`, mirrored to JS by `motion-tokens.ts`)
 
-| Token | Value | Use |
-|---|---|---|
-| `--motion-duration-fast` | 150ms | Hover, press microinteractions |
-| `--motion-duration-base` | 300ms | Standard UI transitions (dialogs, cards) |
-| `--motion-duration-slow` | 600ms | Scroll reveals, section entrances |
-| `--motion-duration-slower` | 900ms | Hero / page-level choreography |
-| `--motion-ease-out-expo` | `cubic-bezier(0.16,1,0.3,1)` | Decisive arrivals (reveals) |
-| `--motion-ease-cinematic` | `cubic-bezier(0.65,0,0.35,1)` | Smooth in-out drama |
-| `--motion-reveal-distance` | 48px | Default reveal travel |
-| `--motion-stagger` | 90ms | Delay between staggered children |
+| Token                      | Value                         | Use                                      |
+| -------------------------- | ----------------------------- | ---------------------------------------- |
+| `--motion-duration-fast`   | 150ms                         | Hover, press microinteractions           |
+| `--motion-duration-base`   | 300ms                         | Standard UI transitions (dialogs, cards) |
+| `--motion-duration-slow`   | 600ms                         | Scroll reveals, section entrances        |
+| `--motion-duration-slower` | 900ms                         | Hero / page-level choreography           |
+| `--motion-ease-out-expo`   | `cubic-bezier(0.16,1,0.3,1)`  | Decisive arrivals (reveals)              |
+| `--motion-ease-cinematic`  | `cubic-bezier(0.65,0,0.35,1)` | Smooth in-out drama                      |
+| `--motion-reveal-distance` | 48px                          | Default reveal travel                    |
+| `--motion-stagger`         | 90ms                          | Delay between staggered children         |
 
 ### Rules (performance + accessibility, non-negotiable)
 

@@ -1,6 +1,6 @@
 # Architecture
 
-> **Status: PROPOSED — part of the Phase 2 plan, pending approval.**
+> **Status: APPROVED (2026-07-01).**
 
 How the codebase is organized so it stays maintainable as the site grows.
 The model is a right-sized version of current React community standards
@@ -88,4 +88,3 @@ No content strings hard-coded in components.
 - One shared `<ResponsiveImage>` component (`components/media/`) owns the
   `<picture>`/`srcset`/`sizes`/lazy-loading/LQIP logic so no page ever
   hand-writes it.
-```
