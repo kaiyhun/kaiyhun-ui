@@ -12,7 +12,8 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc -b",
     "check": "npm run typecheck && npm run lint && npm run format:check",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare-masters": "node scripts/prepare-masters.mjs"
   },
   "dependencies": {
     "@fontsource-variable/roboto-flex": "^5.2.8",
@@ -39,7 +40,9 @@
     "oxlint": "^1.71.0",
     "prettier": "^3.9.4",
     "prettier-plugin-tailwindcss": "^0.8.0",
+    "sharp": "^0.35.3",
     "typescript": "~6.0.2",
-    "vite": "^8.1.1"
+    "vite": "^8.1.1",
+    "vite-imagetools": "^10.0.1"
   }
 }

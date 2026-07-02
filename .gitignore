@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Raw image originals (masters in src/assets are derived from these)
+originals/

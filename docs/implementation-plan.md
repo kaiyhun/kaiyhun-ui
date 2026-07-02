@@ -1,7 +1,9 @@
 # Implementation plan — full gallery/portfolio
 
-> **Status: APPROVED (2026-07-01). M1 implemented — awaiting user commit +
-> deployed verification of Pages deep links, then M2 begins.**
+> **Status: APPROVED (2026-07-01). M1 done & deploy-verified. M2 done
+> (pipeline verified against production build — see docs/images.md);
+> awaiting user commit. Next: M3 (needs user-provided/approved alt text,
+> titles, descriptions, tags per collection).**
 > Companion docs: `architecture.md` (structure), `code-conventions.md`
 > (style/exports/tooling), `design-system.md` (tokens — locked).
 
