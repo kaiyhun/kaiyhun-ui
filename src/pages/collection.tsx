@@ -7,16 +7,16 @@
  */
 import { Link, useParams } from "react-router"
 
+import { NotFoundView } from "@/components/layout/not-found-view"
 import { Reveal } from "@/components/motion/reveal"
 import { Button } from "@/components/ui/button"
 import { getCollection } from "@/content/collections"
-import NotFound from "@/pages/not-found"
 
 export default function Collection() {
   const { slug } = useParams()
   const collection = slug ? getCollection(slug) : undefined
 
-  if (!collection) return <NotFound />
+  if (!collection) return <NotFoundView />
 
   return (
     <main className="mx-auto max-w-6xl px-6 pt-32 pb-24">
