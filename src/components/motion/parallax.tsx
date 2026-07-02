@@ -40,11 +40,15 @@ export function Parallax({ speed = 0.25, children, ...props }: ParallaxProps) {
   const y = useTransform(
     scrollYProgress,
     [0, 1],
-    [`${speed * 50}vh`, `${speed * -50}vh`]
+    [`${speed * 50}vh`, `${speed * -50}vh`],
   )
 
   return (
-    <motion.div ref={ref} style={prefersReducedMotion ? undefined : { y }} {...props}>
+    <motion.div
+      ref={ref}
+      style={prefersReducedMotion ? undefined : { y }}
+      {...props}
+    >
       {children}
     </motion.div>
   )

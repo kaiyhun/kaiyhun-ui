@@ -27,7 +27,9 @@ type Bezier = readonly [number, number, number, number]
 /** Reads a `--motion-*` custom property from the document root. */
 function readToken(name: string): string {
   if (typeof window === "undefined") return ""
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim()
+  return getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim()
 }
 
 /** Parses a CSS time value ("300ms" | "0.3s") into seconds (Motion's unit). */
@@ -60,22 +62,43 @@ function parsePx(value: string, fallback: number): number {
 export const MOTION = {
   duration: {
     /** Microinteractions: hover, press. */
-    fast: parseSeconds(readToken("--motion-duration-fast"), FALLBACKS.durationFast),
+    fast: parseSeconds(
+      readToken("--motion-duration-fast"),
+      FALLBACKS.durationFast,
+    ),
     /** Standard UI transitions. */
-    base: parseSeconds(readToken("--motion-duration-base"), FALLBACKS.durationBase),
+    base: parseSeconds(
+      readToken("--motion-duration-base"),
+      FALLBACKS.durationBase,
+    ),
     /** Scroll reveals, section entrances. */
-    slow: parseSeconds(readToken("--motion-duration-slow"), FALLBACKS.durationSlow),
+    slow: parseSeconds(
+      readToken("--motion-duration-slow"),
+      FALLBACKS.durationSlow,
+    ),
     /** Hero / page-level choreography. */
-    slower: parseSeconds(readToken("--motion-duration-slower"), FALLBACKS.durationSlower),
+    slower: parseSeconds(
+      readToken("--motion-duration-slower"),
+      FALLBACKS.durationSlower,
+    ),
   },
   ease: {
     /** Decisive arrivals — fast start, long settle. */
-    outExpo: parseBezier(readToken("--motion-ease-out-expo"), FALLBACKS.easeOutExpo),
+    outExpo: parseBezier(
+      readToken("--motion-ease-out-expo"),
+      FALLBACKS.easeOutExpo,
+    ),
     /** Smooth in-out drama for larger moves. */
-    cinematic: parseBezier(readToken("--motion-ease-cinematic"), FALLBACKS.easeCinematic),
+    cinematic: parseBezier(
+      readToken("--motion-ease-cinematic"),
+      FALLBACKS.easeCinematic,
+    ),
   },
   /** Default travel distance (px) for scroll reveals. */
-  revealDistance: parsePx(readToken("--motion-reveal-distance"), FALLBACKS.revealDistance),
+  revealDistance: parsePx(
+    readToken("--motion-reveal-distance"),
+    FALLBACKS.revealDistance,
+  ),
   /** Delay (s) between staggered children. */
   stagger: parseSeconds(readToken("--motion-stagger"), FALLBACKS.stagger),
 } as const
