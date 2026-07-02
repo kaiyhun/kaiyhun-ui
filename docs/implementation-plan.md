@@ -6,11 +6,14 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
-> **M3 done (2026-07-02), awaiting user commit.** Content model, homepage
-> hub (hero + gateway + socials footer), `/photography` index, routes
-> re-homed. Verified: Lighthouse mobile 100/100/100, CLS 0.00 (metric-
-> matched font fallbacks), LCP 438 ms, WCAG contrast fixed
-> (primary-foreground now dark-on-blue). Next: M4 collection pages.
+> **M4 done (2026-07-02), awaiting user commit + photo-order approval.**
+> Masonry collection pages (natural ratios, hairline gaps, 3-col balanced
+> distribution), hover zoom + caption, cinematic page transitions
+> (AnimatePresence fade+lift), prev/next pager. Verified: all 8
+> collections render from content model (exact counts), transition trace
+> CLS 0.00 / INP 118 ms, a11y tree clean. Proposed per-collection photo
+> curation applied in collections.ts — pending user approval.
+> M3 done 2026-07-02 (Lighthouse 100s, LCP 438 ms). Next: M5 lightbox.
 > Companion docs: `architecture.md` (structure), `code-conventions.md`
 > (style/exports/tooling), `design-system.md` (tokens — locked).
 
