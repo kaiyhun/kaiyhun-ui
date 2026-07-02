@@ -10,12 +10,12 @@ import { ArrowRight } from "lucide-react"
 import { Link } from "react-router"
 
 // prettier-ignore
-import heroShot from "@/assets/niagaraFalls/niagaraFalls_8.jpg?w=800;1200;2000;2560&format=avif;webp;jpeg&as=picture"
-import heroLqip from "@/assets/niagaraFalls/niagaraFalls_8.jpg?w=24&format=webp&inline"
+import heroShot from "@/assets/landscape/niagaraFalls/niagaraFalls_8.jpg?w=800;1200;2000;2560&format=avif;webp;jpeg&as=picture"
+import heroLqip from "@/assets/landscape/niagaraFalls/niagaraFalls_8.jpg?w=24&format=webp&inline"
 /* Portrait crop served on portrait screens (art direction — only the
    matching orientation is ever downloaded) */
 // prettier-ignore
-import heroShotPortrait from "@/assets/niagaraFalls/niagaraFalls_9.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+import heroShotPortrait from "@/assets/landscape/niagaraFalls/niagaraFalls_9.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
 import { ResponsiveImage } from "@/components/media/responsive-image"
 import { Parallax } from "@/components/motion/parallax"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"

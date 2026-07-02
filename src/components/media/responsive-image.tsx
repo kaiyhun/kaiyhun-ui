@@ -14,8 +14,8 @@
  * - `alt` is required by the type — accessibility is not optional
  *
  * Usage:
- *   import shot from '@/assets/iceland/iceland_1.jpg?w=400;800;1200;2000&format=avif;webp;jpeg&as=picture'
- *   import shotLqip from '@/assets/iceland/iceland_1.jpg?w=24&format=webp&inline'
+ *   import shot from '@/assets/landscape/iceland/iceland_1.jpg?w=400;800;1200;2000&format=avif;webp;jpeg&as=picture'
+ *   import shotLqip from '@/assets/landscape/iceland/iceland_1.jpg?w=24&format=webp&inline'
  *
  *   <ResponsiveImage picture={shot} placeholder={shotLqip} alt="…"
  *     sizes="(min-width: 64rem) 33vw, 100vw" />

@@ -25,7 +25,8 @@ export interface Photo {
 /** A photography collection (one folder under src/assets/). */
 export interface Collection {
   slug: string
-  /** Asset folder name under src/assets/ (may differ from slug). */
+  /** Asset path under src/assets/, as "<category>/<collection>"
+   *  (e.g. "landscape/iceland"; may differ from slug). */
   folder: string
   title: string
   /** Short user-approved blurb shown on index cards and collection pages. */

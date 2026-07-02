@@ -12,34 +12,34 @@ import type { Collection } from "@/content/types"
 
 /* Cover images — 400/800/1200w is plenty for card-sized rendering. */
 // prettier-ignore
-import coverNiagara from "@/assets/niagaraFalls/niagaraFalls_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverNiagaraLqip from "@/assets/niagaraFalls/niagaraFalls_3.jpg?w=24&format=webp&inline"
+import coverNiagara from "@/assets/landscape/niagaraFalls/niagaraFalls_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverNiagaraLqip from "@/assets/landscape/niagaraFalls/niagaraFalls_3.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverMoon from "@/assets/moon/moon_7.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverMoonLqip from "@/assets/moon/moon_7.jpg?w=24&format=webp&inline"
+import coverMoon from "@/assets/landscape/moon/moon_7.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverMoonLqip from "@/assets/landscape/moon/moon_7.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverIceland from "@/assets/iceland/iceland_7.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverIcelandLqip from "@/assets/iceland/iceland_7.jpg?w=24&format=webp&inline"
+import coverIceland from "@/assets/landscape/iceland/iceland_7.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverIcelandLqip from "@/assets/landscape/iceland/iceland_7.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverLakeLouise from "@/assets/lakeLouise/lakeLouise_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverLakeLouiseLqip from "@/assets/lakeLouise/lakeLouise_1.jpg?w=24&format=webp&inline"
+import coverLakeLouise from "@/assets/landscape/lakeLouise/lakeLouise_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverLakeLouiseLqip from "@/assets/landscape/lakeLouise/lakeLouise_1.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverLake from "@/assets/lake/lake_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverLakeLqip from "@/assets/lake/lake_1.jpg?w=24&format=webp&inline"
+import coverLake from "@/assets/landscape/lake/lake_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverLakeLqip from "@/assets/landscape/lake/lake_1.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverGoldenHour from "@/assets/goldenHour/goldenHour_4.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverGoldenHourLqip from "@/assets/goldenHour/goldenHour_4.jpg?w=24&format=webp&inline"
+import coverGoldenHour from "@/assets/landscape/goldenHour/goldenHour_4.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverGoldenHourLqip from "@/assets/landscape/goldenHour/goldenHour_4.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverCoast from "@/assets/coast/coast_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverCoastLqip from "@/assets/coast/coast_2.jpg?w=24&format=webp&inline"
+import coverCoast from "@/assets/landscape/coast/coast_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverCoastLqip from "@/assets/landscape/coast/coast_2.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverWinter from "@/assets/winter/winter_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverWinterLqip from "@/assets/winter/winter_1.jpg?w=24&format=webp&inline"
+import coverWinter from "@/assets/landscape/winter/winter_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverWinterLqip from "@/assets/landscape/winter/winter_1.jpg?w=24&format=webp&inline"
 
 export const COLLECTIONS: Collection[] = [
   {
     slug: "niagara-falls",
-    folder: "niagaraFalls",
+    folder: "landscape/niagaraFalls",
     title: "Niagara Falls",
     description:
       "Horseshoe Falls through every mood — molten sunrises at the brink, floodlit winter nights, and the frozen world the mist leaves behind.",
@@ -108,7 +108,7 @@ export const COLLECTIONS: Collection[] = [
   },
   {
     slug: "moon",
-    folder: "moon",
+    folder: "landscape/moon",
     title: "Moon",
     description:
       "Full moons, blood moons, and the quiet places they rise over — oceans, cloud seas, and ridgelines with a lone figure for scale.",
@@ -149,7 +149,7 @@ export const COLLECTIONS: Collection[] = [
   },
   {
     slug: "iceland",
-    folder: "iceland",
+    folder: "landscape/iceland",
     title: "Iceland",
     description:
       "Black sand, moss-green canyons, and mountains that make vans look like toys — the south coast in shifting storm light.",
@@ -190,7 +190,7 @@ export const COLLECTIONS: Collection[] = [
   },
   {
     slug: "lake-louise",
-    folder: "lakeLouise",
+    folder: "landscape/lakeLouise",
     title: "Lake Louise",
     description:
       "One turquoise lake through fog, storm, larch season, and first snow — red canoes and the boathouse anchoring every mood.",
@@ -231,7 +231,7 @@ export const COLLECTIONS: Collection[] = [
   },
   {
     slug: "emerald-lake",
-    folder: "lake",
+    folder: "landscape/lake",
     title: "Emerald Lake",
     description:
       "A lodge on a cold still lake, kept company by rolling mist, snow-dusted peaks, and the bridge that leads home.",
@@ -264,7 +264,7 @@ export const COLLECTIONS: Collection[] = [
   },
   {
     slug: "golden-hour",
-    folder: "goldenHour",
+    folder: "landscape/goldenHour",
     title: "Golden Hour",
     description:
       "The last light of the day, spent well — burning skies over still water, a pagoda in autumn gold, and light pouring through a bamboo grove.",
@@ -301,7 +301,7 @@ export const COLLECTIONS: Collection[] = [
   },
   {
     slug: "coast",
-    folder: "coast",
+    folder: "landscape/coast",
     title: "Coast",
     description:
       "Storm light on the Pacific edge — sea stacks holding the line while weather rolls over the headland town.",
@@ -322,7 +322,7 @@ export const COLLECTIONS: Collection[] = [
   },
   {
     slug: "winter",
-    folder: "winter",
+    folder: "landscape/winter",
     title: "Winter",
     description:
       "A suspension bridge through snow-heavy forest and the river canyon below — the quietest kind of cold.",
