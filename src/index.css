@@ -20,7 +20,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/space-grotesk"; /* display / headings */
-@import "@fontsource-variable/roboto-flex";   /* body text */
+@import "@fontsource-variable/roboto-flex"; /* body text */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -30,68 +30,68 @@
  * ease-cinematic, and text-display are generated from them.
  */
 @theme inline {
-    /* Typography */
-    --font-sans: 'Roboto Flex Variable', system-ui, sans-serif;
-    --font-display: 'Space Grotesk Variable', var(--font-sans);
-    --font-heading: var(--font-display);
+  /* Typography */
+  --font-sans: "Roboto Flex Variable", system-ui, sans-serif;
+  --font-display: "Space Grotesk Variable", var(--font-sans);
+  --font-heading: var(--font-display);
 
-    /* Fluid display type scale — hero/headline sizes that scale with the
+  /* Fluid display type scale — hero/headline sizes that scale with the
        viewport between phone and large desktop. */
-    --text-display: clamp(3rem, 1.5rem + 7.5vw, 8rem);
-    --text-display--line-height: 0.95;
-    --text-display--letter-spacing: -0.03em;
-    --text-display--font-weight: 700;
-    --text-display-sm: clamp(2rem, 1.25rem + 3.75vw, 4.5rem);
-    --text-display-sm--line-height: 1;
-    --text-display-sm--letter-spacing: -0.02em;
-    --text-display-sm--font-weight: 700;
+  --text-display: clamp(3rem, 1.5rem + 7.5vw, 8rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.03em;
+  --text-display--font-weight: 700;
+  --text-display-sm: clamp(2rem, 1.25rem + 3.75vw, 4.5rem);
+  --text-display-sm--line-height: 1;
+  --text-display-sm--letter-spacing: -0.02em;
+  --text-display-sm--font-weight: 700;
 
-    /* Motion easings — exposed as Tailwind ease-* utilities.
+  /* Motion easings — exposed as Tailwind ease-* utilities.
        Same curves are consumed by Motion (JS) via motion-tokens.ts. */
-    --ease-out-expo: var(--motion-ease-out-expo);
-    --ease-cinematic: var(--motion-ease-cinematic);
+  --ease-out-expo: var(--motion-ease-out-expo);
+  --ease-cinematic: var(--motion-ease-cinematic);
 
-    /* Semantic colors (shadcn contract) */
-    --color-ring: var(--ring);
-    --color-input: var(--input);
-    --color-border: var(--border);
-    --color-destructive: var(--destructive);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-accent: var(--accent);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-muted: var(--muted);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-secondary: var(--secondary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-primary: var(--primary);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-popover: var(--popover);
-    --color-card-foreground: var(--card-foreground);
-    --color-card: var(--card);
-    --color-foreground: var(--foreground);
-    --color-background: var(--background);
-    --color-chart-1: var(--chart-1);
-    --color-chart-2: var(--chart-2);
-    --color-chart-3: var(--chart-3);
-    --color-chart-4: var(--chart-4);
-    --color-chart-5: var(--chart-5);
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
+  /* Semantic colors (shadcn contract) */
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
 
-    /* Radii — derived from the single --radius knob below */
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
+  /* Radii — derived from the single --radius knob below */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
 /*
@@ -99,77 +99,82 @@
  * the dark palette lives directly in :root — no theme toggle to maintain.
  */
 :root {
-    /* ~65% — surfaces: near-black with a subtle cool blue cast */
-    --background: oklch(0.16 0.012 255);
-    --foreground: oklch(0.93 0.008 255);
-    --card: oklch(0.20 0.015 255);
-    --card-foreground: oklch(0.93 0.008 255);
-    --popover: oklch(0.22 0.016 255);
-    --popover-foreground: oklch(0.93 0.008 255);
+  /* ~65% — surfaces: near-black with a subtle cool blue cast */
+  --background: oklch(0.16 0.012 255);
+  --foreground: oklch(0.93 0.008 255);
+  --card: oklch(0.2 0.015 255);
+  --card-foreground: oklch(0.93 0.008 255);
+  --popover: oklch(0.22 0.016 255);
+  --popover-foreground: oklch(0.93 0.008 255);
 
-    /* ~30% — blue: interactive elements, links, focus, selection */
-    --primary: oklch(0.62 0.17 255);
-    --primary-foreground: oklch(0.97 0.005 255);
-    --secondary: oklch(0.28 0.035 255);
-    --secondary-foreground: oklch(0.90 0.02 255);
-    --muted: oklch(0.24 0.02 255);
-    --muted-foreground: oklch(0.68 0.015 255);
-    --ring: oklch(0.62 0.17 255);
+  /* ~30% — blue: interactive elements, links, focus, selection */
+  --primary: oklch(0.62 0.17 255);
+  --primary-foreground: oklch(0.97 0.005 255);
+  --secondary: oklch(0.28 0.035 255);
+  --secondary-foreground: oklch(0.9 0.02 255);
+  --muted: oklch(0.24 0.02 255);
+  --muted-foreground: oklch(0.68 0.015 255);
+  --ring: oklch(0.62 0.17 255);
 
-    /* ~5% — orange: rare accent, use sparingly and deliberately */
-    --accent: oklch(0.72 0.17 50);
-    --accent-foreground: oklch(0.15 0.02 50);
+  /* ~5% — orange: rare accent, use sparingly and deliberately */
+  --accent: oklch(0.72 0.17 50);
+  --accent-foreground: oklch(0.15 0.02 50);
 
-    --destructive: oklch(0.65 0.20 25);
-    --border: oklch(1 0 0 / 12%);
-    --input: oklch(1 0 0 / 16%);
+  --destructive: oklch(0.65 0.2 25);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
 
-    /* Charts: blue-dominant scale, orange as the contrast series */
-    --chart-1: oklch(0.62 0.17 255);
-    --chart-2: oklch(0.72 0.17 50);
-    --chart-3: oklch(0.50 0.12 255);
-    --chart-4: oklch(0.75 0.10 255);
-    --chart-5: oklch(0.38 0.06 255);
+  /* Charts: blue-dominant scale, orange as the contrast series */
+  --chart-1: oklch(0.62 0.17 255);
+  --chart-2: oklch(0.72 0.17 50);
+  --chart-3: oklch(0.5 0.12 255);
+  --chart-4: oklch(0.75 0.1 255);
+  --chart-5: oklch(0.38 0.06 255);
 
-    /* Sidebar mirrors the main surfaces */
-    --sidebar: oklch(0.18 0.014 255);
-    --sidebar-foreground: oklch(0.93 0.008 255);
-    --sidebar-primary: oklch(0.62 0.17 255);
-    --sidebar-primary-foreground: oklch(0.97 0.005 255);
-    --sidebar-accent: oklch(0.24 0.02 255);
-    --sidebar-accent-foreground: oklch(0.93 0.008 255);
-    --sidebar-border: oklch(1 0 0 / 12%);
-    --sidebar-ring: oklch(0.62 0.17 255);
+  /* Sidebar mirrors the main surfaces */
+  --sidebar: oklch(0.18 0.014 255);
+  --sidebar-foreground: oklch(0.93 0.008 255);
+  --sidebar-primary: oklch(0.62 0.17 255);
+  --sidebar-primary-foreground: oklch(0.97 0.005 255);
+  --sidebar-accent: oklch(0.24 0.02 255);
+  --sidebar-accent-foreground: oklch(0.93 0.008 255);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.62 0.17 255);
 
-    /* Shape — one knob controls every radius */
-    --radius: 0.5rem;
+  /* Shape — one knob controls every radius */
+  --radius: 0.5rem;
 
-    /*
+  /*
      * Motion tokens — canonical values for BOTH CSS and JS animation.
      * motion-tokens.ts parses these at startup so Motion (JS) uses the
      * exact same durations/curves as CSS transitions. Durations in ms.
      */
-    --motion-duration-fast: 150ms;   /* microinteractions: hover, press */
-    --motion-duration-base: 300ms;   /* standard UI transitions */
-    --motion-duration-slow: 600ms;   /* scroll reveals, section entrances */
-    --motion-duration-slower: 900ms; /* hero/page-level choreography */
-    --motion-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);   /* decisive arrivals */
-    --motion-ease-cinematic: cubic-bezier(0.65, 0, 0.35, 1); /* smooth in-out drama */
-    --motion-reveal-distance: 48px;  /* default travel for scroll reveals */
-    --motion-stagger: 90ms;          /* delay between staggered children */
+  --motion-duration-fast: 150ms; /* microinteractions: hover, press */
+  --motion-duration-base: 300ms; /* standard UI transitions */
+  --motion-duration-slow: 600ms; /* scroll reveals, section entrances */
+  --motion-duration-slower: 900ms; /* hero/page-level choreography */
+  --motion-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1); /* decisive arrivals */
+  --motion-ease-cinematic: cubic-bezier(
+    0.65,
+    0,
+    0.35,
+    1
+  ); /* smooth in-out drama */
+  --motion-reveal-distance: 48px; /* default travel for scroll reveals */
+  --motion-stagger: 90ms; /* delay between staggered children */
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    }
+  }
   body {
     @apply bg-background text-foreground;
-    }
+  }
   html {
     @apply font-sans;
     scroll-behavior: smooth;
-    }
+  }
   /* Respect reduced motion globally: JS animations are handled by
      MotionConfig reducedMotion="user"; this covers CSS-land. */
   @media (prefers-reduced-motion: reduce) {
@@ -179,8 +184,11 @@
   }
   ::selection {
     @apply bg-primary/40;
-    }
-  h1, h2, h3, h4 {
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
     @apply font-display;
-    }
+  }
 }
