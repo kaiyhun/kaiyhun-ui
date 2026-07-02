@@ -49,24 +49,24 @@ export const COLLECTIONS: Collection[] = [
       "Sunburst on the horizon directly above the glowing golden lip of the falls",
     photos: [
       {
+        file: "niagaraFalls_3",
+        alt: "Sunburst on the horizon directly above the glowing golden lip of the falls",
+      },
+      {
         file: "niagaraFalls_1",
         alt: "Long-exposure waterfall pouring over the brink in silky golden light",
       },
       {
-        file: "niagaraFalls_2",
-        alt: "Tour boat dwarfed beneath the full curve of the falls and its towering mist",
-      },
-      {
-        file: "niagaraFalls_3",
-        alt: "Sunburst on the horizon directly above the glowing golden lip of the falls",
+        file: "niagaraFalls_5",
+        alt: "Sun star breaking at the crest line, golden mist drifting off the edge",
       },
       {
         file: "niagaraFalls_4",
         alt: "Sunrise flaring under pink clouds where the river bends over the falls",
       },
       {
-        file: "niagaraFalls_5",
-        alt: "Sun star breaking at the crest line, golden mist drifting off the edge",
+        file: "niagaraFalls_2",
+        alt: "Tour boat dwarfed beneath the full curve of the falls and its towering mist",
       },
       {
         file: "niagaraFalls_6",
@@ -77,12 +77,20 @@ export const COLLECTIONS: Collection[] = [
         alt: "The falls floodlit warm orange against the night, cliff dark alongside",
       },
       {
+        file: "niagaraFalls_14",
+        alt: "The falls lit red-orange at night, a viewing platform glowing in the mist",
+      },
+      {
         file: "niagaraFalls_8",
         alt: "Blue floodlit falls on a winter night, frozen cliff and lamplit lookout beside",
       },
       {
         file: "niagaraFalls_9",
         alt: "Blue-lit cascade beside an ice-crusted cliff, a lone lamp glowing below",
+      },
+      {
+        file: "niagaraFalls_12",
+        alt: "Pale blue falls dissolving into winter fog beneath an icicled cliff",
       },
       {
         file: "niagaraFalls_10",
@@ -93,16 +101,8 @@ export const COLLECTIONS: Collection[] = [
         alt: "Blizzard night in blue, pavilion lights glowing above the frozen brink",
       },
       {
-        file: "niagaraFalls_12",
-        alt: "Pale blue falls dissolving into winter fog beneath an icicled cliff",
-      },
-      {
         file: "niagaraFalls_13",
         alt: "Lamplit snowy promenade above the gorge, old streetlights in the winter night",
-      },
-      {
-        file: "niagaraFalls_14",
-        alt: "The falls lit red-orange at night, a viewing platform glowing in the mist",
       },
     ],
   },
@@ -118,12 +118,12 @@ export const COLLECTIONS: Collection[] = [
       "Huge orange blood moon behind a ridgeline, a tiny hiker silhouetted against it",
     photos: [
       {
-        file: "moon_1",
-        alt: "Red eclipsed moon hanging above an endless range of snow-covered peaks",
+        file: "moon_7",
+        alt: "Huge orange blood moon behind a ridgeline, a tiny hiker silhouetted against it",
       },
       {
-        file: "moon_2",
-        alt: "Full moon over the open sea, moonlight laying a silver path across the water",
+        file: "moon_1",
+        alt: "Red eclipsed moon hanging above an endless range of snow-covered peaks",
       },
       {
         file: "moon_3",
@@ -134,16 +134,16 @@ export const COLLECTIONS: Collection[] = [
         alt: "Golden full moon glowing through thin cloud above a moonlit cloud sea",
       },
       {
+        file: "moon_2",
+        alt: "Full moon over the open sea, moonlight laying a silver path across the water",
+      },
+      {
         file: "moon_5",
         alt: "Low moon over dark water, its reflection scattered into molten gold",
       },
       {
         file: "moon_6",
         alt: "Moon setting into ocean swell, warm light tracing the black waves",
-      },
-      {
-        file: "moon_7",
-        alt: "Huge orange blood moon behind a ridgeline, a tiny hiker silhouetted against it",
       },
     ],
   },
@@ -159,6 +159,10 @@ export const COLLECTIONS: Collection[] = [
       "Jagged mountain range mirrored on wet tidal sand under burning evening clouds",
     photos: [
       {
+        file: "iceland_7",
+        alt: "Jagged mountain range mirrored on wet tidal sand under burning evening clouds",
+      },
+      {
         file: "iceland_1",
         alt: "Sunset breaking under storm clouds above a village on a black-sand beach",
       },
@@ -171,20 +175,16 @@ export const COLLECTIONS: Collection[] = [
         alt: "Aerial view of a braided blue river winding through a moss-green canyon",
       },
       {
-        file: "iceland_4",
-        alt: "Thin waterfall dropping down a green escarpment behind red-roofed farm buildings",
-      },
-      {
         file: "iceland_5",
         alt: "Storm sky over a mossy gorge with a glacial river rushing through it",
       },
       {
-        file: "iceland_6",
-        alt: "Immense grey mountain wall dwarfing a tiny white camper van on the plain below",
+        file: "iceland_4",
+        alt: "Thin waterfall dropping down a green escarpment behind red-roofed farm buildings",
       },
       {
-        file: "iceland_7",
-        alt: "Jagged mountain range mirrored on wet tidal sand under burning evening clouds",
+        file: "iceland_6",
+        alt: "Immense grey mountain wall dwarfing a tiny white camper van on the plain below",
       },
     ],
   },
@@ -204,8 +204,8 @@ export const COLLECTIONS: Collection[] = [
         alt: "Mirror-still mountain lake with red canoes docked by a boathouse, glacier beyond",
       },
       {
-        file: "lakeLouise_2",
-        alt: "Rounded stones under clear shallow water, a boathouse on the far shore",
+        file: "lakeLouise_6",
+        alt: "Storm clouds over the lake, red canoes waiting at a rain-wet dock",
       },
       {
         file: "lakeLouise_3",
@@ -216,16 +216,16 @@ export const COLLECTIONS: Collection[] = [
         alt: "Turquoise water meeting a stony shore, golden larches climbing the hillside",
       },
       {
-        file: "lakeLouise_5",
-        alt: "Winter sunset burning orange over snow-dusted peaks and a frozen lakeshore",
-      },
-      {
-        file: "lakeLouise_6",
-        alt: "Storm clouds over the lake, red canoes waiting at a rain-wet dock",
+        file: "lakeLouise_2",
+        alt: "Rounded stones under clear shallow water, a boathouse on the far shore",
       },
       {
         file: "lakeLouise_7",
         alt: "Boathouse across pale misty water at dawn, wet boulders in blue fog",
+      },
+      {
+        file: "lakeLouise_5",
+        alt: "Winter sunset burning orange over snow-dusted peaks and a frozen lakeshore",
       },
     ],
   },
@@ -249,12 +249,12 @@ export const COLLECTIONS: Collection[] = [
         alt: "Snow-dusted mountain above a cloud bank rolling over a turquoise forest lake",
       },
       {
-        file: "lake_3",
-        alt: "Lodge across dark teal water, mist rising against a snowy forest shore",
-      },
-      {
         file: "lake_4",
         alt: "Bright turquoise lake beneath hazy pink mountain light, lodge at the treeline",
+      },
+      {
+        file: "lake_3",
+        alt: "Lodge across dark teal water, mist rising against a snowy forest shore",
       },
       {
         file: "lake_5",
@@ -274,8 +274,8 @@ export const COLLECTIONS: Collection[] = [
       "Tiered pagoda rising from golden autumn trees, a hazy mountain in the distance",
     photos: [
       {
-        file: "goldenHour_1",
-        alt: "Fiery orange sunset sky reflected across a calm sea, mountains on the horizon",
+        file: "goldenHour_4",
+        alt: "Tiered pagoda rising from golden autumn trees, a hazy mountain in the distance",
       },
       {
         file: "goldenHour_2",
@@ -286,12 +286,12 @@ export const COLLECTIONS: Collection[] = [
         alt: "Sunset clouds mirrored in a lotus-lined canal between traditional tiled houses",
       },
       {
-        file: "goldenHour_4",
-        alt: "Tiered pagoda rising from golden autumn trees, a hazy mountain in the distance",
-      },
-      {
         file: "goldenHour_5",
         alt: "Towering bamboo grove glowing in backlight, a lone figure on the path below",
+      },
+      {
+        file: "goldenHour_1",
+        alt: "Fiery orange sunset sky reflected across a calm sea, mountains on the horizon",
       },
       {
         file: "goldenHour_6",
@@ -311,12 +311,12 @@ export const COLLECTIONS: Collection[] = [
       "Sunlit dune grass above a misty beach where rounded sea stacks rise from the surf",
     photos: [
       {
-        file: "coast_1",
-        alt: "Storm clouds over a coastal town, waves breaking around dark sea stacks offshore",
-      },
-      {
         file: "coast_2",
         alt: "Sunlit dune grass above a misty beach where rounded sea stacks rise from the surf",
+      },
+      {
+        file: "coast_1",
+        alt: "Storm clouds over a coastal town, waves breaking around dark sea stacks offshore",
       },
     ],
   },
