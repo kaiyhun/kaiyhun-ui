@@ -34,6 +34,19 @@ Bold, motion-heavy image gallery / portfolio. Static client-side SPA, deployed t
 - Animate only transform/opacity (GPU-friendly); **always respect `prefers-reduced-motion`** with a reduced fallback
 - Design tokens (palette, type scale, spacing, radii, motion durations/easings) must be confirmed with the user before locking
 
+## Styling — single source of truth (hard rule)
+- **All visual values live in `src/index.css` as CSS custom properties** — colors (OKLCH), fonts, radii, motion durations/easings. Full reference: `docs/design-system.md`.
+- Components consume tokens only (semantic Tailwind utilities / CSS vars). Never hard-code a color, font name, duration, or bezier outside `index.css`.
+- JS animations get the same tokens through `src/lib/motion-tokens.ts` (parses `--motion-*` vars at startup) — don't define separate JS constants.
+- Palette = "cinematic ratio": ~65% dark blue-cast surfaces, ~30% blue (interactive), ~5% orange accent. Dark-only, no theme toggle.
+- Fonts: Space Grotesk (`font-display`, headings) + Roboto Flex (`font-sans`, body), self-hosted via @fontsource.
+- Motion library is `motion`, imported from `motion/react`; app is wrapped in `<MotionConfig reducedMotion="user">`. Use the `Reveal`/`RevealGroup`/`Parallax` primitives in `src/components/motion/` rather than one-off animations.
+
+## Documentation conventions
+- Every component/module gets a file-header docstring: what it is, notable deviations/decisions, accessibility behavior
+- Inline comments for larger or non-obvious blocks; props documented with JSDoc on the interface
+- Features and system-level decisions get a markdown doc in `docs/` (e.g. `docs/design-system.md`, `docs/phase-0-scaffold.md`); keep them updated as things change
+
 ## Working rules
 - **Never commit or push.** The user reviews all changes and commits themselves. Leave work in the working tree.
 - Ask, don't assume — never invent requirements, content, or design decisions
