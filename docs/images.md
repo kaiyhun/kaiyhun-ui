@@ -56,6 +56,13 @@ loading, and `width`/`height` to prevent layout shift.
 />
 ```
 
+**`className` styles the layout frame** (the `<picture>` element), not the
+image. Masters keep their differing intrinsic aspect ratios, so images that
+share a row/grid only align when the frame dictates the shape — set e.g.
+`aspect-[4/5]` on each and `object-cover` crops to fill. Without a frame
+class, images render at their natural ratio (the `width`/`height`
+attributes prevent layout shift either way).
+
 **Get `sizes` right** — it's the browser's only pre-layout width hint.
 Account for container caps: a 50vw column inside `max-w-5xl` never exceeds
 ~32rem, so say so. Wrong hints silently over-fetch (verified during M2:
