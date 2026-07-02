@@ -4,16 +4,22 @@
  * exports (React.lazy consumes them); see docs/code-conventions.md.
  */
 import { lazy } from "react"
-import { Route, Routes } from "react-router"
+import { Route, Routes, type Location } from "react-router"
 
 const Home = lazy(() => import("@/pages/home"))
 const Photography = lazy(() => import("@/pages/photography"))
 const Collection = lazy(() => import("@/pages/collection"))
 const NotFound = lazy(() => import("@/pages/not-found"))
 
-export function AppRoutes() {
+interface AppRoutesProps {
+  /** Pinned location so exit animations render the outgoing route
+   *  (see the AnimatePresence wrapper in app.tsx). */
+  location?: Location
+}
+
+export function AppRoutes({ location }: AppRoutesProps) {
   return (
-    <Routes>
+    <Routes location={location}>
       <Route index element={<Home />} />
       <Route path="photography" element={<Photography />} />
       <Route path="photography/:slug" element={<Collection />} />
