@@ -1,16 +1,17 @@
 /**
  * Collection page — /photography/:slug
  *
- * M3 placeholder driven by the content model: shows the real title and
- * description, and hands unknown slugs to the 404. M4 replaces the body
- * with the full gallery grid.
+ * Compact text header, then the full masonry gallery, then prev/next
+ * navigation. Entirely content-model-driven; unknown slugs render the
+ * shared 404 view.
  */
-import { Link, useParams } from "react-router"
+import { useParams } from "react-router"
 
 import { NotFoundView } from "@/components/layout/not-found-view"
 import { Reveal } from "@/components/motion/reveal"
-import { Button } from "@/components/ui/button"
 import { getCollection } from "@/content/collections"
+import { CollectionPager } from "@/features/gallery/collection-pager"
+import { MasonryGrid } from "@/features/gallery/masonry-grid"
 
 export default function Collection() {
   const { slug } = useParams()
@@ -25,16 +26,17 @@ export default function Collection() {
         <p className="mt-4 max-w-prose text-muted-foreground">
           {collection.description}
         </p>
-      </Reveal>
-      <Reveal delay={0.1} className="mt-10">
-        <p className="text-sm text-muted-foreground">
-          Full gallery ({collection.photos.length} photographs) lands in
-          milestone M4.
+        <p className="mt-2 text-sm text-muted-foreground">
+          {collection.photos.length} photographs
         </p>
-        <Button asChild variant="outline" className="mt-6">
-          <Link to="/photography">All collections</Link>
-        </Button>
       </Reveal>
+
+      <div className="mt-14">
+        {/* key forces a clean grid remount when paging between collections */}
+        <MasonryGrid key={collection.slug} collection={collection} />
+      </div>
+
+      <CollectionPager current={collection} />
     </main>
   )
 }
