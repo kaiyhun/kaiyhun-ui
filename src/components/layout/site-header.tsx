@@ -1,27 +1,48 @@
 /**
- * SiteHeader — fixed site chrome: logo/wordmark linking home.
+ * SiteHeader — fixed site chrome: wordmark + primary nav.
  *
- * Kept deliberately minimal until the content model lands (M3); collection
- * navigation will be added then. Backdrop-blurred so the cinematic imagery
- * reads through it.
+ * Nav shows only wings that exist ("hidden until real" —
+ * docs/homepage-brief.md); more links land as milestones ship.
+ * Backdrop-blurred so the cinematic imagery reads through it.
  */
-import { Link } from "react-router"
+import { Link, NavLink } from "react-router"
 
 import reactLogo from "@/assets/react.svg"
+import { SITE } from "@/content/site"
+import { cn } from "@/lib/utils"
+
+const NAV_LINKS = [{ label: "Photography", to: "/photography" }]
 
 export function SiteHeader() {
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/70 backdrop-blur-md">
-      <div className="mx-auto flex h-14 max-w-6xl items-center px-6">
+      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
         <Link
           to="/"
           className="flex items-center gap-2.5 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           <img src={reactLogo} alt="" className="size-6" />
           <span className="font-display text-lg font-bold tracking-tight">
-            kaiyhun<span className="text-primary">.</span>
+            {SITE.name}
+            <span className="text-primary">.</span>
           </span>
         </Link>
+        <nav aria-label="Primary">
+          {NAV_LINKS.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              className={({ isActive }) =>
+                cn(
+                  "font-display text-xs font-semibold tracking-[0.15em] uppercase transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50",
+                  isActive ? "text-primary" : "text-muted-foreground",
+                )
+              }
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
       </div>
     </header>
   )
