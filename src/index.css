@@ -22,6 +22,28 @@
 @import "@fontsource-variable/space-grotesk"; /* display / headings */
 @import "@fontsource-variable/roboto-flex"; /* body text */
 
+/*
+ * Metric-matched fallbacks — prevent layout shift (CLS) when the web
+ * fonts swap in. Overrides scale local Arial to each font's measured
+ * metrics (values measured in-browser against the loaded fonts, M3).
+ */
+@font-face {
+  font-family: "Space Grotesk Fallback";
+  src: local("Arial");
+  size-adjust: 107.62%;
+  ascent-override: 91.06%;
+  descent-override: 26.95%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Roboto Flex Fallback";
+  src: local("Arial");
+  size-adjust: 98.98%;
+  ascent-override: 93.95%;
+  descent-override: 24.25%;
+  line-gap-override: 0%;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 /*
@@ -31,8 +53,11 @@
  */
 @theme inline {
   /* Typography */
-  --font-sans: "Roboto Flex Variable", system-ui, sans-serif;
-  --font-display: "Space Grotesk Variable", var(--font-sans);
+  /* Fallbacks are metric-matched to avoid swap CLS — see @font-face above */
+  --font-sans:
+    "Roboto Flex Variable", "Roboto Flex Fallback", system-ui, sans-serif;
+  --font-display:
+    "Space Grotesk Variable", "Space Grotesk Fallback", var(--font-sans);
   --font-heading: var(--font-display);
 
   /* Fluid display type scale — hero/headline sizes that scale with the
@@ -109,7 +134,9 @@
 
   /* ~30% — blue: interactive elements, links, focus, selection */
   --primary: oklch(0.62 0.17 255);
-  --primary-foreground: oklch(0.97 0.005 255);
+  /* Near-black on the blue: 5.3:1 (white was 3.36:1 — WCAG fail).
+     Also visually consistent with the accent button's dark foreground. */
+  --primary-foreground: oklch(0.15 0.012 255);
   --secondary: oklch(0.28 0.035 255);
   --secondary-foreground: oklch(0.9 0.02 255);
   --muted: oklch(0.24 0.02 255);
