@@ -7,6 +7,7 @@ import { lazy } from "react"
 import { Route, Routes } from "react-router"
 
 const Home = lazy(() => import("@/pages/home"))
+const Photography = lazy(() => import("@/pages/photography"))
 const Collection = lazy(() => import("@/pages/collection"))
 const NotFound = lazy(() => import("@/pages/not-found"))
 
@@ -14,7 +15,8 @@ export function AppRoutes() {
   return (
     <Routes>
       <Route index element={<Home />} />
-      <Route path="c/:slug" element={<Collection />} />
+      <Route path="photography" element={<Photography />} />
+      <Route path="photography/:slug" element={<Collection />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
