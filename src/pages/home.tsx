@@ -42,19 +42,20 @@ export default function Home() {
   return (
     <main>
       {/* ============ Hero — identity statement ============ */}
-      <section className="relative flex min-h-svh items-end overflow-hidden">
+      <section className="relative flex min-h-svh items-center overflow-hidden">
         <HeroBackdrop
           picture={heroShot}
           portrait={heroShotPortrait}
           placeholder={heroLqip}
           alt={HERO_ALT}
         />
-        {/* Legibility scrim: deepen the already-dark image toward the text */}
+        {/* Legibility scrim: slightly stronger through the middle since the
+            centered text sits over the brightest part of the falls */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/20"
+          className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-background/25"
         />
-        <RevealGroup className="relative mx-auto w-full max-w-6xl px-6 pt-32 pb-24">
+        <RevealGroup className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-6 py-32 text-center">
           <Reveal>
             <h1 className="text-display">{SITE.name}</h1>
           </Reveal>
