@@ -62,7 +62,7 @@ interface ResponsiveImageProps extends Omit<
 }
 
 /** Normalizes an imagetools sources key ("avif") to a mime type. */
-function mimeType(format: string) {
+export function mimeType(format: string) {
   return format.startsWith("image/") ? format : `image/${format}`
 }
 

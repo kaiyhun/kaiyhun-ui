@@ -3,12 +3,19 @@
  * between its orientation crops.
  *
  * The underlying <picture> serves the landscape or portrait crop via media
- * queries (only the matching one downloads). When the orientation *changes
- * at runtime* (device rotation, window resize), the browser hard-swaps the
- * source — abrupt. To soften it, the previous frame's URL (already in the
- * browser cache — captured from `currentSrc` on every load) is layered on
- * top as a ghost and dissolved out with a slow zoom-through, so the new
- * crop emerges beneath it.
+ * queries (only the matching one downloads first). When the orientation
+ * *changes at runtime* (device rotation, window resize), the browser
+ * hard-swaps the source — abrupt. To soften it, the previous frame's URL
+ * (already in the browser cache — captured from `currentSrc` on every
+ * load) is layered on top as a ghost and dissolved out with a slow
+ * zoom-through, so the new crop emerges beneath it.
+ *
+ * Smoothness guarantee: once the visible crop finishes loading, the
+ * OPPOSITE crop is quietly prefetched (hidden 1px <picture>), so even the
+ * very first orientation flip swaps between two cached images instead of
+ * racing a cold network fetch against the ghost animation. The prefetch
+ * uses `sizes="100vh"` — after rotation the viewport width ≈ the current
+ * height, so the browser warms the tier it will actually need.
  *
  * Reduced motion: the app-level MotionConfig strips the scale, leaving a
  * plain crossfade.
@@ -17,7 +24,7 @@ import { motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import type { Picture } from "vite-imagetools"
 
-import { ResponsiveImage } from "@/components/media/responsive-image"
+import { ResponsiveImage, mimeType } from "@/components/media/responsive-image"
 import { MOTION } from "@/lib/motion-tokens"
 
 interface HeroBackdropProps {
@@ -40,6 +47,10 @@ export function HeroBackdrop({
   const lastSrcRef = useRef("")
   /** Ghost of the pre-flip frame, rendered on top while dissolving. */
   const [ghost, setGhost] = useState<string | null>(null)
+  /** Opposite-orientation crop to warm up; null before the hero loads
+   *  and again after the prefetch completes (cache keeps the bytes). */
+  const [prefetch, setPrefetch] = useState<Picture | null>(null)
+  const prefetchStarted = useRef(false)
 
   useEffect(() => {
     const query = window.matchMedia("(orientation: portrait)")
@@ -64,8 +75,43 @@ export function HeroBackdrop({
         className="absolute inset-0"
         onLoad={(event) => {
           lastSrcRef.current = event.currentTarget.currentSrc
+          // Visible crop is in — warm the other one exactly once, after
+          // (never competing with) the LCP-critical load.
+          if (!prefetchStarted.current) {
+            prefetchStarted.current = true
+            const isPortrait = window.matchMedia(
+              "(orientation: portrait)",
+            ).matches
+            setPrefetch(isPortrait ? picture : portrait)
+          }
         }}
       />
+      {prefetch && (
+        // Hidden warm-up <picture>: no media queries, so it loads NOW.
+        // Not display:none — kept 1px in-flow so all browsers honor the
+        // srcset selection and actually fetch.
+        <picture
+          aria-hidden
+          className="pointer-events-none absolute size-px overflow-hidden opacity-0"
+        >
+          {Object.entries(prefetch.sources).map(([format, srcSet]) => (
+            <source
+              key={format}
+              type={mimeType(format)}
+              srcSet={srcSet}
+              sizes="100vh"
+            />
+          ))}
+          <img
+            src={prefetch.img.src}
+            alt=""
+            sizes="100vh"
+            decoding="async"
+            onLoad={() => setPrefetch(null)}
+            onError={() => setPrefetch(null)}
+          />
+        </picture>
+      )}
       {ghost && (
         <motion.img
           key={ghost}

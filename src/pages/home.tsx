@@ -30,9 +30,9 @@ const HERO_ALT =
     (photo) => photo.file === "niagaraFalls_8",
   )?.alt ?? ""
 
-/** Gateway door for the photography wing; cover = iceland_7 for contrast
- *  with the hero (both user-approved images from the model). */
-const GATEWAY_COVER = getCollection("iceland")!
+/** Gateway door for the photography wing; cover = lakeLouise_1 (user
+ *  pick), pulled from the content model. */
+const GATEWAY_COVER = getCollection("lake-louise")!
 
 export default function Home() {
   return (
