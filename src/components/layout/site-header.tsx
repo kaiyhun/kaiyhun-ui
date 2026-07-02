@@ -24,7 +24,6 @@ export function SiteHeader() {
           <img src={reactLogo} alt="" className="size-6" />
           <span className="font-display text-lg font-bold tracking-tight">
             {SITE.name}
-            <span className="text-primary">.</span>
           </span>
         </Link>
         <nav aria-label="Primary">

@@ -1,5 +1,5 @@
 /**
- * SiteFooter — site-wide footer: social links + identity line.
+ * SiteFooter — site-wide footer: social links + copyright.
  *
  * Socials come from the content model (src/content/site.ts) — URLs are
  * placeholders until the user swaps in real ones. Text links by design:
@@ -27,8 +27,7 @@ export function SiteFooter() {
           ))}
         </ul>
         <p className="text-sm text-muted-foreground">
-          {SITE.name}
-          <span className="text-primary">.</span> — {SITE.tagline}
+          © {new Date().getFullYear()} {SITE.name}
         </p>
       </div>
     </footer>

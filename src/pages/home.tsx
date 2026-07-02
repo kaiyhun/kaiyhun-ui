@@ -12,6 +12,10 @@ import { Link } from "react-router"
 // prettier-ignore
 import heroShot from "@/assets/niagaraFalls/niagaraFalls_8.jpg?w=800;1200;2000;2560&format=avif;webp;jpeg&as=picture"
 import heroLqip from "@/assets/niagaraFalls/niagaraFalls_8.jpg?w=24&format=webp&inline"
+/* Portrait crop served on portrait screens (art direction — only the
+   matching orientation is ever downloaded) */
+// prettier-ignore
+import heroShotPortrait from "@/assets/niagaraFalls/niagaraFalls_9.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
 import { ResponsiveImage } from "@/components/media/responsive-image"
 import { Parallax } from "@/components/motion/parallax"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"
@@ -36,6 +40,9 @@ export default function Home() {
       <section className="relative flex min-h-svh items-end overflow-hidden">
         <ResponsiveImage
           picture={heroShot}
+          variants={[
+            { media: "(orientation: portrait)", picture: heroShotPortrait },
+          ]}
           placeholder={heroLqip}
           alt={HERO_ALT}
           sizes="100vw"
@@ -51,7 +58,6 @@ export default function Home() {
           <Reveal>
             <h1 className="text-display">
               {SITE.name}
-              <span className="text-primary">.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.1}>
