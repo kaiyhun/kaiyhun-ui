@@ -1,9 +1,13 @@
 # Implementation plan — full gallery/portfolio
 
 > **Status: APPROVED (2026-07-01). M1 done & deploy-verified. M2 done
-> (pipeline verified against production build — see docs/images.md);
-> awaiting user commit. Next: M3 (needs user-provided/approved alt text,
-> titles, descriptions, tags per collection).**
+> (pipeline verified against production build — see docs/images.md).**
+>
+> **SCOPE REVISION PENDING (2026-07-02):** the site expanded from a
+> photography portfolio to a multi-domain personal site (photography,
+> drawings, research/code, blog, presets, tutorials). M3–M7 below are
+> superseded by the revised sequence in `docs/homepage-brief.md`,
+> **awaiting explicit user go-ahead**. M1/M2 foundations are unaffected.
 > Companion docs: `architecture.md` (structure), `code-conventions.md`
 > (style/exports/tooling), `design-system.md` (tokens — locked).
 
