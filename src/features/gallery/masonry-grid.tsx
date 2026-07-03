@@ -11,7 +11,7 @@
  * alive without fighting the photos.
  */
 import { Reveal } from "@/components/motion/reveal"
-import type { Collection } from "@/content/types"
+import type { TaggedPhoto } from "@/content/collections"
 import { PhotoTile } from "@/features/gallery/photo-tile"
 import { getPhotoImage } from "@/features/gallery/photos"
 import { useColumnCount } from "@/features/gallery/use-column-count"
@@ -20,18 +20,20 @@ import { useColumnCount } from "@/features/gallery/use-column-count"
 const TILE_SIZES = "(min-width: 64rem) 23rem, (min-width: 40rem) 50vw, 100vw"
 
 interface MasonryGridProps {
-  collection: Collection
-  /** Opens the lightbox on the given photo (passed through to tiles). */
-  onOpen: (file: string) => void
+  /** Photos to lay out — one collection's set, or a pooled tag view. */
+  photos: TaggedPhoto[]
+  /** Called with the clicked entry (open lightbox / navigate). */
+  onOpen: (entry: TaggedPhoto) => void
 }
 
-export function MasonryGrid({ collection, onOpen }: MasonryGridProps) {
+export function MasonryGrid({ photos, onOpen }: MasonryGridProps) {
   const columnCount = useColumnCount()
 
   // Resolve images once; aspect ratios drive the column balancing below
-  const items = collection.photos.map((photo) => ({
-    photo,
-    image: getPhotoImage(collection.folder, photo.file),
+  const items = photos.map((entry) => ({
+    entry,
+    photo: entry.photo,
+    image: getPhotoImage(entry.collection.folder, entry.photo.file),
   }))
 
   // Shortest-column-first distribution (heights in aspect units — all
@@ -51,14 +53,14 @@ export function MasonryGrid({ collection, onOpen }: MasonryGridProps) {
     <div className="flex gap-1">
       {columns.map((column, columnIndex) => (
         <div key={columnIndex} className="flex min-w-0 flex-1 flex-col gap-1">
-          {column.map(({ photo, image }) => (
+          {column.map(({ entry, photo, image }) => (
             <Reveal key={photo.file} distance={24}>
               <PhotoTile
                 photo={photo}
                 image={image}
-                folder={collection.folder}
+                folder={entry.collection.folder}
                 sizes={TILE_SIZES}
-                onOpen={onOpen}
+                onOpen={() => onOpen(entry)}
               />
             </Reveal>
           ))}

@@ -38,8 +38,8 @@ export default function Collection() {
         {/* key forces a clean grid remount when paging between collections */}
         <MasonryGrid
           key={collection.slug}
-          collection={collection}
-          onOpen={lightbox.open}
+          photos={collection.photos.map((photo) => ({ photo, collection }))}
+          onOpen={(entry) => lightbox.open(entry.photo.file)}
         />
       </div>
 
