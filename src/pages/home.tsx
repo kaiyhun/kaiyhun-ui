@@ -19,9 +19,8 @@ import heroShotPortrait from "@/assets/landscape/niagaraFalls/niagaraFalls_9.jpg
 /* Vertical gateway crop for small screens (user pick: lakeLouise_6) */
 // prettier-ignore
 import gatewayPortrait from "@/assets/landscape/lakeLouise/lakeLouise_6.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-/* Portrait-panel images (Claude picks, flagged for review): horizontal
-   nature_4 (reclined in sunlit grass), vertical dance_3 (dancer on
-   golden water) */
+/* Portrait-panel images (user picks): horizontal nature_5 (golden
+   meadow backlight), vertical studio_1 (red/blue gel studio) */
 // prettier-ignore
 import portraitPanelShot from "@/assets/portrait/nature/nature_5.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import portraitPanelLqip from "@/assets/portrait/nature/nature_5.jpg?w=24&format=webp&inline"
@@ -37,6 +36,7 @@ import {
 import { SITE } from "@/content/site"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
 import { GatewayPanel } from "@/features/home/gateway-panel"
+import { SectionNav, type HomeSection } from "@/features/home/section-nav"
 import { MEDIA } from "@/lib/media-queries"
 
 /** Hero photo metadata comes from the content model, not re-written here. */
@@ -53,6 +53,12 @@ function countLine(category: "landscape" | "portrait") {
   const collections = collectionsIn(category).length
   return `${collections} collections · ${photoCountIn(category)} photographs`
 }
+
+/** Sections the floating nav can jump to — grows as wings ship
+ *  (drawings, lab, blog, presets, tutorials…). */
+const HOME_SECTIONS: HomeSection[] = [
+  { id: "photography", label: "Photography" },
+]
 
 export default function Home() {
   return (
@@ -94,8 +100,11 @@ export default function Home() {
 
       {/* ============ Gateway — doors to live wings ============ */}
       <section
+        id="photography"
         aria-labelledby="explore"
-        className="mx-auto max-w-6xl px-6 py-32"
+        // scroll-mt keeps the heading clear of the fixed header when the
+        // floating section nav jumps here
+        className="mx-auto max-w-6xl scroll-mt-20 px-6 py-32"
       >
         <Reveal>
           <h2 id="explore" className="text-display-sm">
@@ -129,6 +138,9 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* Floating section menu — appears once the visitor scrolls */}
+      <SectionNav sections={HOME_SECTIONS} />
     </main>
   )
 }
