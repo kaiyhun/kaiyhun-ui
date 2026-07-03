@@ -11,11 +11,14 @@ import { NotFoundView } from "@/components/layout/not-found-view"
 import { Reveal } from "@/components/motion/reveal"
 import { getCollection } from "@/content/collections"
 import { CollectionPager } from "@/features/gallery/collection-pager"
+import { Lightbox } from "@/features/gallery/lightbox"
 import { MasonryGrid } from "@/features/gallery/masonry-grid"
+import { useLightboxState } from "@/features/gallery/use-lightbox-state"
 
 export default function Collection() {
   const { slug } = useParams()
   const collection = slug ? getCollection(slug) : undefined
+  const lightbox = useLightboxState()
 
   if (!collection) return <NotFoundView />
 
@@ -33,10 +36,21 @@ export default function Collection() {
 
       <div className="mt-14">
         {/* key forces a clean grid remount when paging between collections */}
-        <MasonryGrid key={collection.slug} collection={collection} />
+        <MasonryGrid
+          key={collection.slug}
+          collection={collection}
+          onOpen={lightbox.open}
+        />
       </div>
 
       <CollectionPager current={collection} />
+
+      <Lightbox
+        collection={collection}
+        file={lightbox.file}
+        onNavigate={lightbox.goTo}
+        onClose={lightbox.close}
+      />
     </main>
   )
 }

@@ -21,9 +21,11 @@ const TILE_SIZES = "(min-width: 64rem) 23rem, (min-width: 40rem) 50vw, 100vw"
 
 interface MasonryGridProps {
   collection: Collection
+  /** Opens the lightbox on the given photo (passed through to tiles). */
+  onOpen: (file: string) => void
 }
 
-export function MasonryGrid({ collection }: MasonryGridProps) {
+export function MasonryGrid({ collection, onOpen }: MasonryGridProps) {
   const columnCount = useColumnCount()
 
   // Resolve images once; aspect ratios drive the column balancing below
@@ -51,7 +53,12 @@ export function MasonryGrid({ collection }: MasonryGridProps) {
         <div key={columnIndex} className="flex min-w-0 flex-1 flex-col gap-1">
           {column.map(({ photo, image }) => (
             <Reveal key={photo.file} distance={24}>
-              <PhotoTile photo={photo} image={image} sizes={TILE_SIZES} />
+              <PhotoTile
+                photo={photo}
+                image={image}
+                sizes={TILE_SIZES}
+                onOpen={onOpen}
+              />
             </Reveal>
           ))}
         </div>
