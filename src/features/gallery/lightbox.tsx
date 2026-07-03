@@ -15,7 +15,7 @@
  *   the originating grid tile.
  * - Zoom: double-click/double-tap toggles 2.5×; drag pans while zoomed
  *   (nav/close gestures suspend until zoomed out).
- * - Neighbors (n±1) preload invisibly so flipping is instant.
+ * - Neighbors (n±2) preload invisibly so even fast flipping is instant.
  * - Reduced motion: MotionConfig strips transforms (slides become fades).
  */
 import { Check, ChevronLeft, ChevronRight, Link2, X } from "lucide-react"
@@ -23,6 +23,7 @@ import { AnimatePresence, motion, type PanInfo } from "motion/react"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { Dialog as DialogPrimitive, VisuallyHidden } from "radix-ui"
 
+import { PicturePreload } from "@/components/media/picture-preload"
 import type { Collection } from "@/content/types"
 import { getLightboxImage } from "@/features/gallery/photos"
 import { mimeType } from "@/lib/images"
@@ -68,26 +69,8 @@ function useIdleChrome(active: boolean) {
   return { visible, poke, toggle }
 }
 
-/** Invisible 1px picture that warms a neighbor photo's full-size tiers. */
-function NeighborPreload({ folder, file }: { folder: string; file: string }) {
-  const image = getLightboxImage(folder, file)
-  return (
-    <picture
-      aria-hidden
-      className="pointer-events-none absolute size-px overflow-hidden opacity-0"
-    >
-      {Object.entries(image.picture.sources).map(([format, srcSet]) => (
-        <source
-          key={format}
-          type={mimeType(format)}
-          srcSet={srcSet}
-          sizes="100vw"
-        />
-      ))}
-      <img src={image.picture.img.src} alt="" sizes="100vw" decoding="async" />
-    </picture>
-  )
-}
+/** How many photos on each side of the open one get cache-warmed. */
+const PRELOAD_RADIUS = 2
 
 interface LightboxProps {
   collection: Collection
@@ -162,10 +145,16 @@ export function Lightbox({
 
   if (!photo) return null
   const image = getLightboxImage(collection.folder, photo.file)
-  const neighbors = [
-    collection.photos[index - 1],
-    collection.photos[index + 1],
-  ].filter(Boolean)
+  // Warm ±PRELOAD_RADIUS so even fast flipping stays ahead of the network
+  const neighbors = []
+  for (let offset = 1; offset <= PRELOAD_RADIUS; offset++) {
+    for (const candidate of [
+      collection.photos[index - offset],
+      collection.photos[index + offset],
+    ]) {
+      if (candidate) neighbors.push(candidate)
+    }
+  }
 
   /* Chrome layout containers are ALWAYS click-transparent (they're
      full-width/height strips that would otherwise cover the photo, the
@@ -310,10 +299,11 @@ export function Lightbox({
 
           {/* Neighbor warm-up (cached before the visitor flips) */}
           {neighbors.map((neighbor) => (
-            <NeighborPreload
+            <PicturePreload
               key={neighbor.file}
-              folder={collection.folder}
-              file={neighbor.file}
+              picture={
+                getLightboxImage(collection.folder, neighbor.file).picture
+              }
             />
           ))}
 

@@ -3,30 +3,53 @@
  *
  * Natural aspect ratio (masonry), lazy-loaded through ResponsiveImage.
  * Hover/focus: slow zoom (transform-only, clipped by the tile) with a
- * bottom scrim carrying the caption (the photo's approved alt text).
- * Sharp corners by design — the hairline-gap grid reads as one surface.
+ * bottom scrim carrying the caption (the photo's approved alt text) —
+ * and an INTENT PREFETCH: the photo's full-size lightbox tier starts
+ * warming the moment the pointer arrives, so the click that follows
+ * usually opens an already-cached image.
  *
  * The whole tile is a real <button> (keyboard focusable), marked with
  * data-photo so the lightbox can return focus to it on close.
  */
+import { useState } from "react"
+
+import { PicturePreload } from "@/components/media/picture-preload"
 import { ResponsiveImage } from "@/components/media/responsive-image"
 import type { ImageRef, Photo } from "@/content/types"
+import { getLightboxImage } from "@/features/gallery/photos"
 
 interface PhotoTileProps {
   photo: Photo
   image: ImageRef
+  /** Asset folder ("<category>/<collection>") for lightbox-tier lookup. */
+  folder: string
   /** Layout width hint for the grid context this tile renders in. */
   sizes: string
   /** Opens the lightbox on this photo. */
   onOpen: (file: string) => void
 }
 
-export function PhotoTile({ photo, image, sizes, onOpen }: PhotoTileProps) {
+export function PhotoTile({
+  photo,
+  image,
+  folder,
+  sizes,
+  onOpen,
+}: PhotoTileProps) {
+  /** Flips once on first hover/focus; the preloader unmounts when done. */
+  const [warm, setWarm] = useState<"idle" | "loading" | "done">("idle")
+  const startWarming = () => {
+    setWarm((state) => (state === "idle" ? "loading" : state))
+  }
+
   return (
     <button
       type="button"
       data-photo={photo.file}
       onClick={() => onOpen(photo.file)}
+      onMouseEnter={startWarming}
+      onFocus={startWarming}
+      onTouchStart={startWarming}
       aria-label={`View photo: ${photo.alt}`}
       className="group relative block w-full cursor-zoom-in overflow-hidden outline-none focus-visible:ring-3 focus-visible:ring-ring/70 focus-visible:ring-inset"
     >
@@ -45,6 +68,12 @@ export function PhotoTile({ photo, image, sizes, onOpen }: PhotoTileProps) {
       >
         {photo.alt}
       </span>
+      {warm === "loading" && (
+        <PicturePreload
+          picture={getLightboxImage(folder, photo.file).picture}
+          onDone={() => setWarm("done")}
+        />
+      )}
     </button>
   )
 }

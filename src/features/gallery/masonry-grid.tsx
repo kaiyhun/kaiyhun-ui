@@ -56,6 +56,7 @@ export function MasonryGrid({ collection, onOpen }: MasonryGridProps) {
               <PhotoTile
                 photo={photo}
                 image={image}
+                folder={collection.folder}
                 sizes={TILE_SIZES}
                 onOpen={onOpen}
               />

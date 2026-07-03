@@ -24,8 +24,8 @@ import { motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import type { Picture } from "vite-imagetools"
 
+import { PicturePreload } from "@/components/media/picture-preload"
 import { ResponsiveImage } from "@/components/media/responsive-image"
-import { mimeType } from "@/lib/images"
 import { MOTION } from "@/lib/motion-tokens"
 
 interface HeroBackdropProps {
@@ -88,30 +88,13 @@ export function HeroBackdrop({
         }}
       />
       {prefetch && (
-        // Hidden warm-up <picture>: no media queries, so it loads NOW.
-        // Not display:none — kept 1px in-flow so all browsers honor the
-        // srcset selection and actually fetch.
-        <picture
-          aria-hidden
-          className="pointer-events-none absolute size-px overflow-hidden opacity-0"
-        >
-          {Object.entries(prefetch.sources).map(([format, srcSet]) => (
-            <source
-              key={format}
-              type={mimeType(format)}
-              srcSet={srcSet}
-              sizes="100vh"
-            />
-          ))}
-          <img
-            src={prefetch.img.src}
-            alt=""
-            sizes="100vh"
-            decoding="async"
-            onLoad={() => setPrefetch(null)}
-            onError={() => setPrefetch(null)}
-          />
-        </picture>
+        // sizes="100vh": after rotation the viewport width ≈ the current
+        // height, so this warms the exact tier the flip will need
+        <PicturePreload
+          picture={prefetch}
+          sizes="100vh"
+          onDone={() => setPrefetch(null)}
+        />
       )}
       {ghost && (
         <motion.img
