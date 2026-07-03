@@ -6,9 +6,9 @@
  * Dialog is a centered card, wrong shape for this. Open state lives in
  * the URL (?photo=…, see use-lightbox-state.ts).
  *
- * Interactions (user-approved M5 spec):
- * - Chrome (counter, caption, arrows, close, copy-link) is hover-reveal:
- *   fades in on pointer activity / tap, hides after idle.
+ * Interactions (user-approved M5 spec; idle-hide removed on user request
+ * 2026-07-02 — chrome is now always visible):
+ * - Chrome: counter, caption, arrows, close, copy-link, permanently shown.
  * - Photo-to-photo: directional slide (arrow keys, on-screen arrows on
  *   pointer devices, horizontal swipe on touch). Hard stop at both ends.
  * - Close: X, backdrop click/tap, downward swipe, ESC. Focus returns to
@@ -35,38 +35,12 @@ const SWIPE_OFFSET = 80
 const SWIPE_VELOCITY = 500
 const DISMISS_OFFSET = 120
 const ZOOM_SCALE = 2.5
-/** Chrome auto-hides after this much pointer inactivity (ms). */
-const CHROME_IDLE_MS = 2500
 
 /** Directional slide: photos enter from the side you're heading toward. */
 const slideVariants = {
   enter: (direction: number) => ({ x: direction * 90, opacity: 0 }),
   center: { x: 0, opacity: 1 },
   exit: (direction: number) => ({ x: direction * -90, opacity: 0 }),
-}
-
-/** Hover-reveal chrome: visible on activity, hidden after idle. */
-function useIdleChrome(active: boolean) {
-  const [visible, setVisible] = useState(true)
-  const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
-
-  const poke = useCallback(() => {
-    setVisible(true)
-    clearTimeout(timer.current)
-    timer.current = setTimeout(() => setVisible(false), CHROME_IDLE_MS)
-  }, [])
-
-  const toggle = useCallback(() => {
-    clearTimeout(timer.current)
-    setVisible((current) => !current)
-  }, [])
-
-  useEffect(() => {
-    if (active) poke()
-    return () => clearTimeout(timer.current)
-  }, [active, poke])
-
-  return { visible, poke, toggle }
 }
 
 /** How many photos on each side of the open one get cache-warmed. */
@@ -96,7 +70,6 @@ export function Lightbox({
   const [direction, setDirection] = useState(0)
   const [zoomed, setZoomed] = useState(false)
   const [copied, setCopied] = useState(false)
-  const chrome = useIdleChrome(open)
   const contentRef = useRef<HTMLDivElement>(null)
   /** Remembered for focus return after the dialog closes. */
   const lastFileRef = useRef<string | null>(null)
@@ -160,14 +133,9 @@ export function Lightbox({
      full-width/height strips that would otherwise cover the photo, the
      backdrop — and each other: the full-height arrow columns paint over
      the header's X button). Only the buttons themselves take pointer
-     events, and only while visible. */
-  const chromeClass = cn(
-    "pointer-events-none transition-opacity duration-(--motion-duration-base) ease-(--ease-out-expo)",
-    chrome.visible ? "opacity-100" : "opacity-0",
-  )
-  const controlClass = chrome.visible
-    ? "pointer-events-auto"
-    : "pointer-events-none"
+     events. */
+  const chromeClass = "pointer-events-none"
+  const controlClass = "pointer-events-auto"
 
   return (
     <DialogPrimitive.Root
@@ -180,7 +148,6 @@ export function Lightbox({
         <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-background/95 duration-(--motion-duration-base) supports-backdrop-filter:backdrop-blur-md data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0" />
         <DialogPrimitive.Content
           className="fixed inset-0 z-50 duration-(--motion-duration-base) outline-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0"
-          onPointerMove={chrome.poke}
           onKeyDown={(event) => {
             if (event.key === "ArrowRight") goTo(1)
             if (event.key === "ArrowLeft") goTo(-1)
@@ -248,7 +215,6 @@ export function Lightbox({
                   dragMomentum={zoomed}
                   onDragEnd={onDragEnd}
                   onDoubleClick={() => setZoomed((z) => !z)}
-                  onTap={() => chrome.toggle()}
                   animate={
                     zoomed ? { scale: ZOOM_SCALE } : { scale: 1, x: 0, y: 0 }
                   }
@@ -307,7 +273,7 @@ export function Lightbox({
             />
           ))}
 
-          {/* ============ Hover-reveal chrome ============ */}
+          {/* ============ Chrome (always visible) ============ */}
           <header
             className={cn(
               "absolute inset-x-0 top-0 flex items-center justify-between p-4 sm:px-6",
