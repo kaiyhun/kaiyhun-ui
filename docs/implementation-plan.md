@@ -6,6 +6,13 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
+> **M6.5 done (2026-07-03), awaiting user commit + review of portrait
+> content drafts (content-draft.md §9).** Portrait wing added to the
+> photography pillar: 7 collections / 29 photos in the content model,
+> category layer (landscape|portrait) with per-category tag chips and
+> scoped tag pools, All/Landscape/Portrait sub-menu on /photography with
+> stacked separated sections, second homepage gateway panel (nature_4 /
+> dance_3, art-directed), category-scoped collection pager.
 > **M6 done (2026-07-02), awaiting user commit + review of per-photo tag
 > drafts (content-draft.md §8) and chip placement.** Per-photo subject
 > tags (user decision — 51 photos tagged), curated chip row on
