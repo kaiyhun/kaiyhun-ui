@@ -60,6 +60,9 @@ interface ResponsiveImageProps extends Omit<
   eager?: boolean
   /** Art-directed alternatives, tried in order before the default picture. */
   variants?: ImageVariant[]
+  /** How the image meets its frame: "cover" crops to fill (grids, heroes);
+   *  "contain" letterboxes the whole photo (lightbox). */
+  fit?: "cover" | "contain"
 }
 
 export function ResponsiveImage({
@@ -69,6 +72,7 @@ export function ResponsiveImage({
   placeholder,
   eager = false,
   variants = [],
+  fit = "cover",
   className,
   onLoad,
   ...props
@@ -129,7 +133,8 @@ export function ResponsiveImage({
           onLoad?.(event) // compose, don't clobber, a caller-supplied handler
         }}
         className={cn(
-          "block h-full w-full object-cover transition-opacity duration-(--motion-duration-base) ease-(--ease-out-expo)",
+          "block h-full w-full transition-opacity duration-(--motion-duration-base) ease-(--ease-out-expo)",
+          fit === "cover" ? "object-cover" : "object-contain",
           loaded ? "opacity-100" : "opacity-0",
         )}
         {...props}
