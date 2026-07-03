@@ -19,16 +19,24 @@ import heroShotPortrait from "@/assets/landscape/niagaraFalls/niagaraFalls_9.jpg
 /* Vertical gateway crop for small screens (user pick: lakeLouise_6) */
 // prettier-ignore
 import gatewayPortrait from "@/assets/landscape/lakeLouise/lakeLouise_6.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import { Parallax } from "@/components/motion/parallax"
+/* Portrait-panel images (Claude picks, flagged for review): horizontal
+   nature_4 (reclined in sunlit grass), vertical dance_3 (dancer on
+   golden water) */
+// prettier-ignore
+import portraitPanelShot from "@/assets/portrait/nature/nature_5.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import portraitPanelLqip from "@/assets/portrait/nature/nature_5.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import portraitPanelVertical from "@/assets/portrait/studio/studio_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"
 import { Button } from "@/components/ui/button"
 import {
-  COLLECTIONS,
-  PHOTO_COUNT,
+  collectionsIn,
+  photoCountIn,
   requireCollection,
 } from "@/content/collections"
 import { SITE } from "@/content/site"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
+import { GatewayPanel } from "@/features/home/gateway-panel"
 import { MEDIA } from "@/lib/media-queries"
 
 /** Hero photo metadata comes from the content model, not re-written here. */
@@ -37,9 +45,14 @@ const HERO_ALT =
     (photo) => photo.file === "niagaraFalls_8",
   )?.alt ?? ""
 
-/** Gateway door for the photography wing; cover = lakeLouise_1 (user
- *  pick), pulled from the content model. */
+/** Landscape door backdrop; cover = lakeLouise_1 (user pick). */
 const GATEWAY_COVER = requireCollection("lake-louise")
+
+/** Count line for a category door. */
+function countLine(category: "landscape" | "portrait") {
+  const collections = collectionsIn(category).length
+  return `${collections} collections · ${photoCountIn(category)} photographs`
+}
 
 export default function Home() {
   return (
@@ -86,53 +99,35 @@ export default function Home() {
       >
         <Reveal>
           <h2 id="explore" className="text-display-sm">
-            Explore
+            Photography
           </h2>
           <p className="mt-4 max-w-prose text-muted-foreground">
-            More wings — drawings, the lab, the blog — open as they're built.
-            First up:
+            Two bodies of work — more wings (drawings, the lab, the blog) open
+            as they're built.
           </p>
         </Reveal>
-        <Reveal className="mt-12">
-          <Link
-            to="/photography"
-            className="group relative block overflow-hidden rounded-2xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            <Parallax speed={0.08} aria-hidden className="absolute inset-0">
-              {/* Slight overscan so the parallax drift never exposes edges;
-                  swaps to the vertical crop below `sm` — the same line
-                  where the frame flips to aspect-[4/5] */}
-              <ArtDirectedBackdrop
-                picture={GATEWAY_COVER.cover.picture}
-                variant={{ media: MEDIA.belowSm, picture: gatewayPortrait }}
-                placeholder={GATEWAY_COVER.cover.lqip}
-                alt=""
-                sizes="(min-width: 72rem) 72rem, 100vw"
-                prefetchSizes="40rem"
-                className="h-[120%] w-full scale-105 transition-transform duration-(--motion-duration-slower) ease-(--ease-cinematic) group-hover:scale-110"
-              />
-            </Parallax>
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent"
+        <div className="mt-12 flex flex-col gap-6">
+          <Reveal>
+            <GatewayPanel
+              to="/photography?category=landscape"
+              title="Landscape"
+              subtitle={countLine("landscape")}
+              picture={GATEWAY_COVER.cover.picture}
+              portraitPicture={gatewayPortrait}
+              placeholder={GATEWAY_COVER.cover.lqip}
             />
-            <div className="relative flex aspect-[4/5] flex-col justify-end p-8 sm:aspect-[21/10] sm:p-12">
-              <h3 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">
-                Photography
-              </h3>
-              <p className="mt-2 max-w-md text-muted-foreground">
-                {COLLECTIONS.length} collections · {PHOTO_COUNT} photographs
-              </p>
-              <span className="mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase">
-                Enter
-                <ArrowRight
-                  aria-hidden
-                  className="size-4 transition-transform duration-(--motion-duration-fast) ease-(--ease-out-expo) group-hover:translate-x-1"
-                />
-              </span>
-            </div>
-          </Link>
-        </Reveal>
+          </Reveal>
+          <Reveal>
+            <GatewayPanel
+              to="/photography?category=portrait"
+              title="Portrait"
+              subtitle={countLine("portrait")}
+              picture={portraitPanelShot}
+              portraitPicture={portraitPanelVertical}
+              placeholder={portraitPanelLqip}
+            />
+          </Reveal>
+        </div>
       </section>
     </main>
   )
