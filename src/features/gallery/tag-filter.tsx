@@ -8,7 +8,6 @@
  * it never stacks into a wall of chips.
  */
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import { TAG_CHIPS } from "@/content/collections"
 
 /** Chip-specific styling only — typography, transitions, and the primary
  *  on-state come from the restyled Toggle base (ui/toggle.tsx). */
@@ -16,12 +15,14 @@ const CHIP_CLASS =
   "h-8 shrink-0 rounded-full border border-input bg-transparent px-3.5 text-[0.65rem] text-muted-foreground hover:border-primary data-[state=on]:border-transparent"
 
 interface TagFilterProps {
+  /** The curated chip set to render (per category). */
+  chips: readonly string[]
   /** Active tag, or null for "All". */
   value: string | null
   onChange: (tag: string | null) => void
 }
 
-export function TagFilter({ value, onChange }: TagFilterProps) {
+export function TagFilter({ chips, value, onChange }: TagFilterProps) {
   return (
     // Bleed to the page padding so the scroll area reaches the edges
     <div className="-mx-6 [scrollbar-width:none] overflow-x-auto px-6 [&::-webkit-scrollbar]:hidden">
@@ -37,7 +38,7 @@ export function TagFilter({ value, onChange }: TagFilterProps) {
         <ToggleGroupItem value="all" className={CHIP_CLASS}>
           All
         </ToggleGroupItem>
-        {TAG_CHIPS.map((tag) => (
+        {chips.map((tag) => (
           <ToggleGroupItem key={tag} value={tag} className={CHIP_CLASS}>
             {tag}
           </ToggleGroupItem>

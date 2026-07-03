@@ -1,6 +1,7 @@
 /**
- * CollectionPager — previous/next collection navigation (curated order,
- * cover thumbnails) plus a link back to the index. No wrap-around: the
+ * CollectionPager — previous/next collection navigation within the same
+ * CATEGORY (curated order, cover thumbnails) plus a link back to the
+ * index. No wrap-around: the
  * first collection has no "previous", the last no "next".
  */
 import { ArrowLeft, ArrowRight } from "lucide-react"
@@ -8,7 +9,7 @@ import { Link } from "react-router"
 
 import { ResponsiveImage } from "@/components/media/responsive-image"
 import { Button } from "@/components/ui/button"
-import { COLLECTIONS } from "@/content/collections"
+import { collectionCategory, collectionsIn } from "@/content/collections"
 import type { Collection } from "@/content/types"
 import { cn } from "@/lib/utils"
 
@@ -55,10 +56,11 @@ interface CollectionPagerProps {
 }
 
 export function CollectionPager({ current }: CollectionPagerProps) {
-  const index = COLLECTIONS.findIndex((c) => c.slug === current.slug)
-  const previous = index > 0 ? COLLECTIONS[index - 1] : undefined
-  const next =
-    index < COLLECTIONS.length - 1 ? COLLECTIONS[index + 1] : undefined
+  // Page within the same category — landscape and portrait stay separated
+  const siblings = collectionsIn(collectionCategory(current))
+  const index = siblings.findIndex((c) => c.slug === current.slug)
+  const previous = index > 0 ? siblings[index - 1] : undefined
+  const next = index < siblings.length - 1 ? siblings[index + 1] : undefined
 
   return (
     <nav

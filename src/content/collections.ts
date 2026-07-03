@@ -36,6 +36,29 @@ import coverCoastLqip from "@/assets/landscape/coast/coast_2.jpg?w=24&format=web
 import coverWinter from "@/assets/landscape/winter/winter_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import coverWinterLqip from "@/assets/landscape/winter/winter_1.jpg?w=24&format=webp&inline"
 
+/* Portrait covers */
+// prettier-ignore
+import coverDance from "@/assets/portrait/dance/dance_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverDanceLqip from "@/assets/portrait/dance/dance_3.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import coverSunset from "@/assets/portrait/sunset/sunset_6.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverSunsetLqip from "@/assets/portrait/sunset/sunset_6.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import coverNature from "@/assets/portrait/nature/nature_4.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverNatureLqip from "@/assets/portrait/nature/nature_4.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import coverCity from "@/assets/portrait/city/city_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverCityLqip from "@/assets/portrait/city/city_2.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import coverLevitation from "@/assets/portrait/levitation/levitation_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverLevitationLqip from "@/assets/portrait/levitation/levitation_2.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import coverCloseup from "@/assets/portrait/closeup/closeup_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverCloseupLqip from "@/assets/portrait/closeup/closeup_1.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import coverStudio from "@/assets/portrait/studio/studio_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverStudioLqip from "@/assets/portrait/studio/studio_2.jpg?w=24&format=webp&inline"
+
 export const COLLECTIONS: Collection[] = [
   {
     slug: "niagara-falls",
@@ -395,6 +418,236 @@ export const COLLECTIONS: Collection[] = [
       },
     ],
   },
+  {
+    slug: "dance",
+    folder: "portrait/dance",
+    title: "Dance",
+    description:
+      "Dancers in the wild — golden water, drifting smoke, and fabric mid-flight.",
+    tags: ["portrait", "dance"],
+    cover: { picture: coverDance, lqip: coverDanceLqip },
+    coverAlt: "Dancer lunging low across golden lake water, arms extended",
+    photos: [
+      {
+        file: "dance_3",
+        alt: "Dancer lunging low across golden lake water, arms extended",
+        tags: ["dance", "water", "sunset"],
+      },
+      {
+        file: "dance_2",
+        alt: "Dancer mid-turn, black skirt billowing against the sea",
+        tags: ["dance", "water", "sunset"],
+      },
+      {
+        file: "dance_4",
+        alt: "Dancer poised in a forest clearing of autumn light",
+        tags: ["dance", "forest"],
+      },
+      {
+        file: "dance_1",
+        alt: "Ballerina in a white tutu kneeling beside a chain-link fence",
+        tags: ["dance", "nature"],
+      },
+      {
+        file: "dance_5",
+        alt: "Dancer arched back over the shore as teal smoke drifts past",
+        tags: ["dance", "water"],
+      },
+    ],
+  },
+  {
+    slug: "sunset",
+    folder: "portrait/sunset",
+    title: "Sunset",
+    description:
+      "The golden hour on skin — backlit hair, sea-wet portraits, and last-light smiles.",
+    tags: ["portrait", "sunset"],
+    cover: { picture: coverSunset, lqip: coverSunsetLqip },
+    coverAlt: "Lying in golden shallows, sea light rippling around her",
+    photos: [
+      {
+        file: "sunset_6",
+        alt: "Lying in golden shallows, sea light rippling around her",
+        tags: ["sunset", "water"],
+      },
+      {
+        file: "sunset_4",
+        alt: "Golden hour backlight through long hair on a quiet street",
+        tags: ["sunset", "city"],
+      },
+      {
+        file: "sunset_1",
+        alt: "Dappled sunset light across her face and shoulders",
+        tags: ["sunset", "closeup"],
+      },
+      {
+        file: "sunset_7",
+        alt: "A couple laughing close together against sunset bokeh",
+        tags: ["sunset"],
+      },
+      {
+        file: "sunset_5",
+        alt: "Sunset rim light over a black sweater, eyes to the camera",
+        tags: ["sunset", "city"],
+      },
+      {
+        file: "sunset_2",
+        alt: "Black-and-white close portrait with wet hair by the sea",
+        tags: ["sunset", "water", "closeup", "monochrome"],
+      },
+      {
+        file: "sunset_3",
+        alt: "Backlit black-and-white portrait, windblown hair glowing",
+        tags: ["sunset", "closeup", "monochrome"],
+      },
+    ],
+  },
+  {
+    slug: "nature",
+    folder: "portrait/nature",
+    title: "Nature",
+    description:
+      "Portraits grown into the landscape — tall grass, mossy trunks, and beds of fallen leaves.",
+    tags: ["portrait", "nature"],
+    cover: { picture: coverNature, lqip: coverNatureLqip },
+    coverAlt: "Reclined in tall sunlit grass, arm outstretched",
+    photos: [
+      {
+        file: "nature_4",
+        alt: "Reclined in tall sunlit grass, arm outstretched",
+        tags: ["nature", "sunset"],
+      },
+      {
+        file: "nature_5",
+        alt: "Golden backlight over the meadow as she leans back in the grass",
+        tags: ["nature", "sunset"],
+      },
+      {
+        file: "nature_2",
+        alt: "Leaning against a mossy trunk, hand reaching toward the camera",
+        tags: ["nature", "forest"],
+      },
+      {
+        file: "nature_3",
+        alt: "Lying among fallen autumn leaves in dark knitwear",
+        tags: ["nature", "forest"],
+      },
+      {
+        file: "nature_1",
+        alt: "Red scarf and a vintage film camera in hand",
+        tags: ["closeup"],
+      },
+      {
+        file: "nature_6",
+        alt: "Aerial dancer folded over silks in black and white",
+        tags: ["dance", "studio", "monochrome"],
+      },
+    ],
+  },
+  {
+    slug: "city",
+    folder: "portrait/city",
+    title: "City",
+    description:
+      "Evening portraits in the city — fairy lights, rooftop ledges, and streets melting into bokeh.",
+    tags: ["portrait", "city"],
+    cover: { picture: coverCity, lqip: coverCityLqip },
+    coverAlt:
+      "Woman in round glasses cradling a string of fairy lights at dusk",
+    photos: [
+      {
+        file: "city_2",
+        alt: "Woman in round glasses cradling a string of fairy lights at dusk",
+        tags: ["city", "lights"],
+      },
+      {
+        file: "city_3",
+        alt: "Fairy lights glowing in her hands on a blurred evening street",
+        tags: ["city", "lights"],
+      },
+      {
+        file: "city_1",
+        alt: "Portrait through a window, gold earring catching light among city reflections",
+        tags: ["city", "closeup"],
+      },
+      {
+        file: "city_4",
+        alt: "White off-the-shoulder sweater against soft city bokeh",
+        tags: ["city"],
+      },
+      {
+        file: "city_5",
+        alt: "Seated on a rooftop ledge above a glowing evening street",
+        tags: ["city"],
+      },
+    ],
+  },
+  {
+    slug: "levitation",
+    folder: "portrait/levitation",
+    title: "Levitation",
+    description:
+      "Small acts of floating — gravity loosened at the water's edge.",
+    tags: ["portrait", "levitation"],
+    cover: { picture: coverLevitation, lqip: coverLevitationLqip },
+    coverAlt: "Floating cross-legged above a still lake in a floral dress",
+    photos: [
+      {
+        file: "levitation_2",
+        alt: "Floating cross-legged above a still lake in a floral dress",
+        tags: ["levitation", "water", "forest"],
+      },
+      {
+        file: "levitation_1",
+        alt: "Arched over the surf in a blue dress, hair trailing the water",
+        tags: ["levitation", "water", "sunset"],
+      },
+    ],
+  },
+  {
+    slug: "closeup",
+    folder: "portrait/closeup",
+    title: "Close-up",
+    description:
+      "Faces up close — quiet expressions and the details that carry a frame.",
+    tags: ["portrait", "closeup"],
+    cover: { picture: coverCloseup, lqip: coverCloseupLqip },
+    coverAlt: "Close portrait with green eyes and a choker, framed by ivy",
+    photos: [
+      {
+        file: "closeup_1",
+        alt: "Close portrait with green eyes and a choker, framed by ivy",
+        tags: ["closeup", "nature"],
+      },
+      {
+        file: "closeup_2",
+        alt: "Resting her head on her arm, hand reaching toward the lens",
+        tags: ["closeup"],
+      },
+    ],
+  },
+  {
+    slug: "studio",
+    folder: "portrait/studio",
+    title: "Studio",
+    description:
+      "Controlled light, split into red and blue — studio experiments in color.",
+    tags: ["portrait", "studio"],
+    cover: { picture: coverStudio, lqip: coverStudioLqip },
+    coverAlt: "Seated studio pose in a red dress under colored gels",
+    photos: [
+      {
+        file: "studio_2",
+        alt: "Seated studio pose in a red dress under colored gels",
+        tags: ["studio"],
+      },
+      {
+        file: "studio_1",
+        alt: "Studio portrait in split red and blue light, arms crossed",
+        tags: ["studio"],
+      },
+    ],
+  },
 ]
 
 /** Total photograph count across all collections (used in intro copy). */
@@ -424,22 +677,68 @@ export function requireCollection(slug: string): Collection {
 }
 
 /**
- * Curated filter chips shown on /photography (user-approved: fixed set,
- * kept to one uncluttered row). Every other tag stays on photos and
- * remains reachable via ?tag= URLs — it just doesn't render a chip.
+ * Photography categories — the top-level split of the photography wing.
+ * A collection's category is its asset folder's first segment, so the
+ * filesystem, content model, and UI all agree.
  */
-export const TAG_CHIPS = [
-  "night",
-  "snow",
-  "sunset",
-  "sunrise",
-  "moon",
-  "waterfall",
-  "lake",
-  "mountains",
-  "mist",
-  "ocean",
-] as const
+export const PHOTO_CATEGORIES = ["landscape", "portrait"] as const
+export type PhotoCategory = (typeof PHOTO_CATEGORIES)[number]
+
+/** Display labels for the category sub-menu and section headings. */
+export const CATEGORY_LABELS: Record<PhotoCategory, string> = {
+  landscape: "Landscape",
+  portrait: "Portrait",
+}
+
+/** A collection's category, derived from its folder ("landscape/x"). */
+export function collectionCategory(collection: Collection): PhotoCategory {
+  return collection.folder.split("/")[0] as PhotoCategory
+}
+
+/** Collections of one category, in curated order. */
+export function collectionsIn(category: PhotoCategory): Collection[] {
+  return COLLECTIONS.filter(
+    (collection) => collectionCategory(collection) === category,
+  )
+}
+
+/** Photograph count within one category (section intro lines). */
+export function photoCountIn(category: PhotoCategory): number {
+  return collectionsIn(category).reduce(
+    (sum, collection) => sum + collection.photos.length,
+    0,
+  )
+}
+
+/**
+ * Curated filter chips per category (user-approved: fixed sets, each kept
+ * to one uncluttered row). Every other tag stays on photos and remains
+ * reachable via ?tag= URLs — it just doesn't render a chip.
+ */
+export const TAG_CHIPS: Record<PhotoCategory, readonly string[]> = {
+  landscape: [
+    "night",
+    "snow",
+    "sunset",
+    "sunrise",
+    "moon",
+    "waterfall",
+    "lake",
+    "mountains",
+    "mist",
+    "ocean",
+  ],
+  portrait: [
+    "dance",
+    "sunset",
+    "water",
+    "city",
+    "nature",
+    "closeup",
+    "forest",
+    "studio",
+  ],
+}
 
 /** A photo paired with the collection it belongs to (pooled tag views). */
 export interface TaggedPhoto {
@@ -447,9 +746,13 @@ export interface TaggedPhoto {
   collection: Collection
 }
 
-/** All photos matching a tag, in curated collection-then-photo order. */
-export function getTaggedPhotos(tag: string): TaggedPhoto[] {
-  return COLLECTIONS.flatMap((collection) =>
+/** Photos matching a tag WITHIN a category, in curated order — tag pools
+ *  never mix landscape and portrait (the page keeps them separated). */
+export function getTaggedPhotos(
+  tag: string,
+  category: PhotoCategory,
+): TaggedPhoto[] {
+  return collectionsIn(category).flatMap((collection) =>
     collection.photos
       .filter((photo) => photo.tags.includes(tag))
       .map((photo) => ({ photo, collection })),
