@@ -6,6 +6,13 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
+> **M6 done (2026-07-02), awaiting user commit + review of per-photo tag
+> drafts (content-draft.md §8) and chip placement.** Per-photo subject
+> tags (user decision — 51 photos tagged), curated chip row on
+> /photography, URL-driven single-tag filter (?tag=), pooled cross-
+> collection masonry with lightbox deep-links, empty state, keyboard
+> roving. Verified: refresh/back survival, deep-link, a11y, mobile
+> scroll chips.
 > **M5 done (2026-07-02), awaiting user commit.** Lightbox: URL-driven
 > (?photo=), hover-reveal chrome, directional slides, arrow/swipe nav
 > with hard stops, zoom 2.5×, copy-link, neighbor preload, 2000w+ tier,

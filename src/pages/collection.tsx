@@ -22,6 +22,9 @@ export default function Collection() {
 
   if (!collection) return <NotFoundView />
 
+  // One shared sequence for the grid AND the lightbox (same order)
+  const entries = collection.photos.map((photo) => ({ photo, collection }))
+
   return (
     <main className="mx-auto max-w-6xl px-6 pt-32 pb-24">
       <Reveal>
@@ -38,7 +41,7 @@ export default function Collection() {
         {/* key forces a clean grid remount when paging between collections */}
         <MasonryGrid
           key={collection.slug}
-          photos={collection.photos.map((photo) => ({ photo, collection }))}
+          photos={entries}
           onOpen={(entry) => lightbox.open(entry.photo.file)}
         />
       </div>
@@ -46,7 +49,8 @@ export default function Collection() {
       <CollectionPager current={collection} />
 
       <Lightbox
-        collection={collection}
+        photos={entries}
+        title={collection.title}
         file={lightbox.file}
         onNavigate={lightbox.goTo}
         onClose={lightbox.close}

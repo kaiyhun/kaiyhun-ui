@@ -3,13 +3,13 @@
  *
  * Default view: the curated collection-card grid. Selecting a tag chip
  * (or arriving at ?tag=x) switches to a pooled masonry of every matching
- * photo across collections; clicking one deep-links into that photo's
- * lightbox on its collection page. Filter state lives in the URL (pushed,
- * so back/forward walk filter history) and unknown tags get an empty
- * state rather than a blank page.
+ * photo across collections; clicking one opens the lightbox IN PLACE,
+ * navigating the tag pool (not the photo's home collection). Filter
+ * state lives in the URL (pushed, so back/forward walk filter history)
+ * and unknown tags get an empty state rather than a blank page.
  */
 import { AnimatePresence, motion } from "motion/react"
-import { Link, useNavigate, useSearchParams } from "react-router"
+import { Link, useSearchParams } from "react-router"
 
 import { ResponsiveImage } from "@/components/media/responsive-image"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"
@@ -19,13 +19,15 @@ import {
   PHOTO_COUNT,
   getTaggedPhotos,
 } from "@/content/collections"
+import { Lightbox } from "@/features/gallery/lightbox"
 import { MasonryGrid } from "@/features/gallery/masonry-grid"
 import { TagFilter } from "@/features/gallery/tag-filter"
+import { useLightboxState } from "@/features/gallery/use-lightbox-state"
 import { MOTION } from "@/lib/motion-tokens"
 
 export default function Photography() {
   const [searchParams, setSearchParams] = useSearchParams()
-  const navigate = useNavigate()
+  const lightbox = useLightboxState()
 
   const tag = searchParams.get("tag")
   const setTag = (next: string | null) => {
@@ -74,11 +76,7 @@ export default function Photography() {
                 <MasonryGrid
                   key={tag}
                   photos={tagged}
-                  onOpen={(entry) =>
-                    navigate(
-                      `/photography/${entry.collection.slug}?photo=${entry.photo.file}`,
-                    )
-                  }
+                  onOpen={(entry) => lightbox.open(entry.photo.file)}
                 />
               </>
             ) : (
@@ -133,6 +131,20 @@ export default function Photography() {
           )}
         </motion.div>
       </AnimatePresence>
+
+      {/* Lightbox over the pooled view: navigation, counter, and
+          preloading all follow TAG order — not the photos' home
+          collections. ?tag and ?photo coexist in the URL, so links
+          into a filtered viewer keep their context. */}
+      {tag && (
+        <Lightbox
+          photos={tagged}
+          title={`Photos tagged ${tag}`}
+          file={lightbox.file}
+          onNavigate={lightbox.goTo}
+          onClose={lightbox.close}
+        />
+      )}
     </main>
   )
 }

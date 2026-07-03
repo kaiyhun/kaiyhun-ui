@@ -1,5 +1,8 @@
 /**
- * Lightbox — full-screen photo viewer for a collection.
+ * Lightbox — full-screen viewer over a photo SEQUENCE: one collection's
+ * photos, or a pooled tag view spanning collections. Navigation,
+ * counters, and neighbor preloading all follow the given sequence, so a
+ * tag-filtered viewer flips through the tag pool, not the collection.
  *
  * Built directly on Radix Dialog primitives (focus trap, ESC, scroll
  * lock, aria wiring) with a custom full-screen skin — the shared ui/
@@ -24,7 +27,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { Dialog as DialogPrimitive, VisuallyHidden } from "radix-ui"
 
 import { PicturePreload } from "@/components/media/picture-preload"
-import type { Collection } from "@/content/types"
+import type { TaggedPhoto } from "@/content/collections"
 import { getLightboxImage } from "@/features/gallery/photos"
 import { mimeType } from "@/lib/images"
 import { MOTION } from "@/lib/motion-tokens"
@@ -47,7 +50,10 @@ const slideVariants = {
 const PRELOAD_RADIUS = 2
 
 interface LightboxProps {
-  collection: Collection
+  /** The sequence the viewer navigates (collection photos or tag pool). */
+  photos: TaggedPhoto[]
+  /** Accessible context name, e.g. "Moon" or "Photos tagged snow". */
+  title: string
   /** File stem of the open photo, or null when closed (from the URL). */
   file: string | null
   onNavigate: (file: string) => void
@@ -55,16 +61,17 @@ interface LightboxProps {
 }
 
 export function Lightbox({
-  collection,
+  photos,
+  title,
   file,
   onNavigate,
   onClose,
 }: LightboxProps) {
   const index = file
-    ? collection.photos.findIndex((photo) => photo.file === file)
+    ? photos.findIndex((entry) => entry.photo.file === file)
     : -1
   const open = index >= 0
-  const photo = open ? collection.photos[index] : null
+  const entry = open ? photos[index] : null
 
   /** +1 flips forward, -1 backward — drives the slide direction. */
   const [direction, setDirection] = useState(0)
@@ -77,13 +84,13 @@ export function Lightbox({
 
   const goTo = useCallback(
     (delta: number) => {
-      const next = collection.photos[index + delta]
+      const next = photos[index + delta]
       if (!next) return // hard stop at the ends
       setDirection(delta)
       setZoomed(false)
-      onNavigate(next.file)
+      onNavigate(next.photo.file)
     },
-    [collection.photos, index, onNavigate],
+    [photos, index, onNavigate],
   )
 
   // Reset per-photo state whenever the viewer opens fresh
@@ -116,15 +123,13 @@ export function Lightbox({
     else if (offset.x > SWIPE_OFFSET || velocity.x > SWIPE_VELOCITY) goTo(-1)
   }
 
-  if (!photo) return null
-  const image = getLightboxImage(collection.folder, photo.file)
-  // Warm ±PRELOAD_RADIUS so even fast flipping stays ahead of the network
-  const neighbors = []
+  if (!entry) return null
+  const photo = entry.photo
+  const image = getLightboxImage(entry.collection.folder, photo.file)
+  // Warm ±PRELOAD_RADIUS in SEQUENCE order (tag pools cross collections)
+  const neighbors: TaggedPhoto[] = []
   for (let offset = 1; offset <= PRELOAD_RADIUS; offset++) {
-    for (const candidate of [
-      collection.photos[index - offset],
-      collection.photos[index + offset],
-    ]) {
+    for (const candidate of [photos[index - offset], photos[index + offset]]) {
       if (candidate) neighbors.push(candidate)
     }
   }
@@ -172,8 +177,7 @@ export function Lightbox({
         >
           <VisuallyHidden.Root>
             <DialogPrimitive.Title>
-              {collection.title} — photo {index + 1} of{" "}
-              {collection.photos.length}
+              {title} — photo {index + 1} of {photos.length}
             </DialogPrimitive.Title>
             <DialogPrimitive.Description>
               {photo.alt}
@@ -266,9 +270,12 @@ export function Lightbox({
           {/* Neighbor warm-up (cached before the visitor flips) */}
           {neighbors.map((neighbor) => (
             <PicturePreload
-              key={neighbor.file}
+              key={neighbor.photo.file}
               picture={
-                getLightboxImage(collection.folder, neighbor.file).picture
+                getLightboxImage(
+                  neighbor.collection.folder,
+                  neighbor.photo.file,
+                ).picture
               }
             />
           ))}
@@ -281,7 +288,7 @@ export function Lightbox({
             )}
           >
             <p className="font-display text-xs font-semibold tracking-[0.15em] text-muted-foreground uppercase">
-              {index + 1} / {collection.photos.length}
+              {index + 1} / {photos.length}
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -343,7 +350,7 @@ export function Lightbox({
             <button
               type="button"
               onClick={() => goTo(1)}
-              disabled={index === collection.photos.length - 1}
+              disabled={index === photos.length - 1}
               aria-label="Next photo"
               className={cn(
                 "rounded-md p-3 text-foreground/80 transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-25",
