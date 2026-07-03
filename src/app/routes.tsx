@@ -9,6 +9,8 @@ import { Route, Routes, type Location } from "react-router"
 const Home = lazy(() => import("@/pages/home"))
 const Photography = lazy(() => import("@/pages/photography"))
 const Collection = lazy(() => import("@/pages/collection"))
+const Tutorials = lazy(() => import("@/pages/tutorials"))
+const Presets = lazy(() => import("@/pages/presets"))
 const NotFound = lazy(() => import("@/pages/not-found"))
 
 interface AppRoutesProps {
@@ -23,6 +25,8 @@ export function AppRoutes({ location }: AppRoutesProps) {
       <Route index element={<Home />} />
       <Route path="photography" element={<Photography />} />
       <Route path="photography/:slug" element={<Collection />} />
+      <Route path="tutorial" element={<Tutorials />} />
+      <Route path="preset" element={<Presets />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

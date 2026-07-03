@@ -26,6 +26,18 @@ import portraitPanelShot from "@/assets/portrait/nature/nature_5.jpg?w=400;800;1
 import portraitPanelLqip from "@/assets/portrait/nature/nature_5.jpg?w=24&format=webp&inline"
 // prettier-ignore
 import portraitPanelVertical from "@/assets/portrait/studio/studio_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+/* Editing-section panels (user picks): Tutorials = niagaraFalls_14 /
+   coast_1; Presets = goldenHour_7 / lake_3 */
+// prettier-ignore
+import tutorialsPanelShot from "@/assets/landscape/niagaraFalls/niagaraFalls_14.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import tutorialsPanelLqip from "@/assets/landscape/niagaraFalls/niagaraFalls_14.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import tutorialsPanelVertical from "@/assets/landscape/coast/coast_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import presetsPanelShot from "@/assets/landscape/goldenHour/goldenHour_7.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import presetsPanelLqip from "@/assets/landscape/goldenHour/goldenHour_7.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import presetsPanelVertical from "@/assets/landscape/lake/lake_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"
 import { Button } from "@/components/ui/button"
 import {
@@ -55,9 +67,10 @@ function countLine(category: "landscape" | "portrait") {
 }
 
 /** Sections the floating nav can jump to — grows as wings ship
- *  (drawings, lab, blog, presets, tutorials…). */
+ *  (drawings, lab, blog…). */
 const HOME_SECTIONS: HomeSection[] = [
   { id: "photography", label: "Photography" },
+  { id: "editing", label: "Editing" },
 ]
 
 export default function Home() {
@@ -103,8 +116,9 @@ export default function Home() {
         id="photography"
         aria-labelledby="explore"
         // scroll-mt keeps the heading clear of the fixed header when the
-        // floating section nav jumps here
-        className="mx-auto max-w-6xl scroll-mt-20 px-6 py-32"
+        // floating section nav jumps here; pb only (no pt) so both
+        // homepage sections share consistent spacing
+        className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
       >
         <Reveal>
           <h2 id="explore" className="text-display-sm">
@@ -134,6 +148,45 @@ export default function Home() {
               picture={portraitPanelShot}
               portraitPicture={portraitPanelVertical}
               placeholder={portraitPanelLqip}
+            />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============ Editing — tutorials & presets ============ */}
+      <section
+        id="editing"
+        aria-labelledby="editing-heading"
+        className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
+      >
+        <Reveal>
+          <h2 id="editing-heading" className="text-display-sm">
+            Editing
+          </h2>
+          <p className="mt-4 max-w-prose text-muted-foreground">
+            The tools behind the photos — learn the process or take the look
+            with you.
+          </p>
+        </Reveal>
+        <div className="mt-12 flex flex-col gap-6">
+          <Reveal>
+            <GatewayPanel
+              to="/tutorial"
+              title="Tutorials"
+              subtitle="Editing walkthroughs, in video"
+              picture={tutorialsPanelShot}
+              portraitPicture={tutorialsPanelVertical}
+              placeholder={tutorialsPanelLqip}
+            />
+          </Reveal>
+          <Reveal>
+            <GatewayPanel
+              to="/preset"
+              title="Presets"
+              subtitle="Free Lightroom presets (.xmp)"
+              picture={presetsPanelShot}
+              portraitPicture={presetsPanelVertical}
+              placeholder={presetsPanelLqip}
             />
           </Reveal>
         </div>
