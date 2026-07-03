@@ -1,3 +1,11 @@
+/**
+ * Restyled shadcn Dialog — bold portfolio aesthetic.
+ *
+ * Deviations from stock: deep blurred background overlay (cinematic wash
+ * instead of a light scrim), display-font bold title, motion-token
+ * durations. This is the centered-card dialog; the gallery's full-screen
+ * Lightbox builds on the same Radix primitives directly instead.
+ */
 import * as React from "react"
 import { Dialog as DialogPrimitive } from "radix-ui"
 

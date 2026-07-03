@@ -9,10 +9,11 @@
  */
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { TAG_CHIPS } from "@/content/collections"
-import { cn } from "@/lib/utils"
 
+/** Chip-specific styling only — typography, transitions, and the primary
+ *  on-state come from the restyled Toggle base (ui/toggle.tsx). */
 const CHIP_CLASS =
-  "h-8 shrink-0 rounded-full border border-input bg-transparent px-3.5 font-display text-[0.65rem] font-semibold tracking-[0.15em] uppercase text-muted-foreground transition-colors duration-(--motion-duration-fast) hover:border-primary hover:text-foreground data-[state=on]:border-transparent data-[state=on]:bg-primary data-[state=on]:text-primary-foreground"
+  "h-8 shrink-0 rounded-full border border-input bg-transparent px-3.5 text-[0.65rem] text-muted-foreground hover:border-primary data-[state=on]:border-transparent"
 
 interface TagFilterProps {
   /** Active tag, or null for "All". */
@@ -33,11 +34,11 @@ export function TagFilter({ value, onChange }: TagFilterProps) {
         aria-label="Filter photos by subject"
         className="flex-nowrap"
       >
-        <ToggleGroupItem value="all" className={cn(CHIP_CLASS)}>
+        <ToggleGroupItem value="all" className={CHIP_CLASS}>
           All
         </ToggleGroupItem>
         {TAG_CHIPS.map((tag) => (
-          <ToggleGroupItem key={tag} value={tag} className={cn(CHIP_CLASS)}>
+          <ToggleGroupItem key={tag} value={tag} className={CHIP_CLASS}>
             {tag}
           </ToggleGroupItem>
         ))}
