@@ -20,6 +20,10 @@ export interface Photo {
   file: string
   /** User-approved description for screen readers. Never empty. */
   alt: string
+  /** Per-photo subject tags from the controlled vocabulary (see
+   *  docs/content-draft.md §8) — the cross-collection filter layer.
+   *  Distinct from collection-level tags, which stay coarse. */
+  tags: string[]
 }
 
 /** A photography collection (one folder under src/assets/). */

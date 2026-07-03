@@ -8,7 +8,7 @@
  *
  * COLLECTIONS is in curated display order (user-approved, provisional).
  */
-import type { Collection } from "@/content/types"
+import type { Collection, Photo } from "@/content/types"
 
 /* Cover images — 400/800/1200w is plenty for card-sized rendering. */
 // prettier-ignore
@@ -51,58 +51,72 @@ export const COLLECTIONS: Collection[] = [
       {
         file: "niagaraFalls_3",
         alt: "Sunburst on the horizon directly above the glowing golden lip of the falls",
+        tags: ["sunrise", "waterfall"],
       },
       {
         file: "niagaraFalls_1",
         alt: "Long-exposure waterfall pouring over the brink in silky golden light",
+        tags: ["sunrise", "waterfall"],
       },
       {
         file: "niagaraFalls_5",
         alt: "Sun star breaking at the crest line, golden mist drifting off the edge",
+        tags: ["sunrise", "waterfall", "mist"],
       },
       {
         file: "niagaraFalls_4",
         alt: "Sunrise flaring under pink clouds where the river bends over the falls",
+        tags: ["sunrise", "waterfall"],
       },
       {
         file: "niagaraFalls_2",
         alt: "Tour boat dwarfed beneath the full curve of the falls and its towering mist",
+        tags: ["waterfall", "mist"],
       },
       {
         file: "niagaraFalls_6",
         alt: "Violet dusk clouds over the falls curling into soft mist below",
+        tags: ["sunset", "waterfall", "mist"],
       },
       {
         file: "niagaraFalls_7",
         alt: "The falls floodlit warm orange against the night, cliff dark alongside",
+        tags: ["night", "waterfall"],
       },
       {
         file: "niagaraFalls_14",
         alt: "The falls lit red-orange at night, a viewing platform glowing in the mist",
+        tags: ["night", "waterfall", "mist"],
       },
       {
         file: "niagaraFalls_8",
         alt: "Blue floodlit falls on a winter night, frozen cliff and lamplit lookout beside",
+        tags: ["night", "winter", "snow", "waterfall"],
       },
       {
         file: "niagaraFalls_9",
         alt: "Blue-lit cascade beside an ice-crusted cliff, a lone lamp glowing below",
+        tags: ["night", "winter", "snow", "waterfall"],
       },
       {
         file: "niagaraFalls_12",
         alt: "Pale blue falls dissolving into winter fog beneath an icicled cliff",
+        tags: ["night", "winter", "waterfall", "mist"],
       },
       {
         file: "niagaraFalls_10",
         alt: "Teal-lit falls above snow-crusted rocks sculpted into frozen shapes",
+        tags: ["night", "winter", "snow", "waterfall"],
       },
       {
         file: "niagaraFalls_11",
         alt: "Blizzard night in blue, pavilion lights glowing above the frozen brink",
+        tags: ["night", "winter", "snow"],
       },
       {
         file: "niagaraFalls_13",
         alt: "Lamplit snowy promenade above the gorge, old streetlights in the winter night",
+        tags: ["night", "winter", "snow"],
       },
     ],
   },
@@ -120,30 +134,37 @@ export const COLLECTIONS: Collection[] = [
       {
         file: "moon_7",
         alt: "Huge orange blood moon behind a ridgeline, a tiny hiker silhouetted against it",
+        tags: ["moon", "night", "stars"],
       },
       {
         file: "moon_1",
         alt: "Red eclipsed moon hanging above an endless range of snow-covered peaks",
+        tags: ["moon", "night", "mountains", "snow"],
       },
       {
         file: "moon_3",
         alt: "Eclipsed moon above a valley filled with a sea of clouds between dark ridges",
+        tags: ["moon", "night", "mist", "mountains"],
       },
       {
         file: "moon_4",
         alt: "Golden full moon glowing through thin cloud above a moonlit cloud sea",
+        tags: ["moon", "night", "mist"],
       },
       {
         file: "moon_2",
         alt: "Full moon over the open sea, moonlight laying a silver path across the water",
+        tags: ["moon", "night", "ocean", "reflection"],
       },
       {
         file: "moon_5",
         alt: "Low moon over dark water, its reflection scattered into molten gold",
+        tags: ["moon", "night", "ocean", "reflection"],
       },
       {
         file: "moon_6",
         alt: "Moon setting into ocean swell, warm light tracing the black waves",
+        tags: ["moon", "night", "ocean"],
       },
     ],
   },
@@ -161,30 +182,37 @@ export const COLLECTIONS: Collection[] = [
       {
         file: "iceland_7",
         alt: "Jagged mountain range mirrored on wet tidal sand under burning evening clouds",
+        tags: ["mountains", "reflection", "sunset", "ocean"],
       },
       {
         file: "iceland_1",
         alt: "Sunset breaking under storm clouds above a village on a black-sand beach",
+        tags: ["sunset", "ocean", "storm"],
       },
       {
         file: "iceland_2",
         alt: "Small church on a road through a flower-filled valley beneath jagged peaks",
+        tags: ["mountains"],
       },
       {
         file: "iceland_3",
         alt: "Aerial view of a braided blue river winding through a moss-green canyon",
+        tags: ["aerial", "mountains"],
       },
       {
         file: "iceland_5",
         alt: "Storm sky over a mossy gorge with a glacial river rushing through it",
+        tags: ["storm", "mountains"],
       },
       {
         file: "iceland_4",
         alt: "Thin waterfall dropping down a green escarpment behind red-roofed farm buildings",
+        tags: ["waterfall", "aerial"],
       },
       {
         file: "iceland_6",
         alt: "Immense grey mountain wall dwarfing a tiny white camper van on the plain below",
+        tags: ["mountains", "mist"],
       },
     ],
   },
@@ -202,30 +230,37 @@ export const COLLECTIONS: Collection[] = [
       {
         file: "lakeLouise_1",
         alt: "Mirror-still mountain lake with red canoes docked by a boathouse, glacier beyond",
+        tags: ["lake", "mountains", "reflection"],
       },
       {
         file: "lakeLouise_6",
         alt: "Storm clouds over the lake, red canoes waiting at a rain-wet dock",
+        tags: ["lake", "storm", "mountains"],
       },
       {
         file: "lakeLouise_3",
         alt: "Boathouse and red canoes on teal water below a sunlit forest wall",
+        tags: ["lake", "forest"],
       },
       {
         file: "lakeLouise_4",
         alt: "Turquoise water meeting a stony shore, golden larches climbing the hillside",
+        tags: ["lake", "forest"],
       },
       {
         file: "lakeLouise_2",
         alt: "Rounded stones under clear shallow water, a boathouse on the far shore",
+        tags: ["lake"],
       },
       {
         file: "lakeLouise_7",
         alt: "Boathouse across pale misty water at dawn, wet boulders in blue fog",
+        tags: ["lake", "mist", "sunrise"],
       },
       {
         file: "lakeLouise_5",
         alt: "Winter sunset burning orange over snow-dusted peaks and a frozen lakeshore",
+        tags: ["lake", "winter", "sunset", "snow", "mountains"],
       },
     ],
   },
@@ -243,22 +278,27 @@ export const COLLECTIONS: Collection[] = [
       {
         file: "lake_1",
         alt: "Lakeside lodge and wooden bridge in morning mist, peaks catching first light",
+        tags: ["lake", "mist", "sunrise", "mountains"],
       },
       {
         file: "lake_2",
         alt: "Snow-dusted mountain above a cloud bank rolling over a turquoise forest lake",
+        tags: ["lake", "snow", "mountains", "mist"],
       },
       {
         file: "lake_4",
         alt: "Bright turquoise lake beneath hazy pink mountain light, lodge at the treeline",
+        tags: ["lake", "mountains"],
       },
       {
         file: "lake_3",
         alt: "Lodge across dark teal water, mist rising against a snowy forest shore",
+        tags: ["lake", "mist", "snow"],
       },
       {
         file: "lake_5",
         alt: "Wooden bridge leading to a lodge through golden mist over a frozen lake",
+        tags: ["lake", "mist", "winter"],
       },
     ],
   },
@@ -276,26 +316,32 @@ export const COLLECTIONS: Collection[] = [
       {
         file: "goldenHour_4",
         alt: "Tiered pagoda rising from golden autumn trees, a hazy mountain in the distance",
+        tags: ["sunset", "mountains"],
       },
       {
         file: "goldenHour_2",
         alt: "Cloud-wrapped mountain looming over a still lake in soft grey-gold dusk light",
+        tags: ["mountains", "lake", "mist", "sunset"],
       },
       {
         file: "goldenHour_3",
         alt: "Sunset clouds mirrored in a lotus-lined canal between traditional tiled houses",
+        tags: ["sunset", "reflection"],
       },
       {
         file: "goldenHour_5",
         alt: "Towering bamboo grove glowing in backlight, a lone figure on the path below",
+        tags: ["forest"],
       },
       {
         file: "goldenHour_1",
         alt: "Fiery orange sunset sky reflected across a calm sea, mountains on the horizon",
+        tags: ["sunset", "ocean"],
       },
       {
         file: "goldenHour_6",
         alt: "Crimson and blue sunset clouds mirrored perfectly on a glassy lake",
+        tags: ["sunset", "lake", "reflection"],
       },
     ],
   },
@@ -313,10 +359,12 @@ export const COLLECTIONS: Collection[] = [
       {
         file: "coast_2",
         alt: "Sunlit dune grass above a misty beach where rounded sea stacks rise from the surf",
+        tags: ["ocean", "mist"],
       },
       {
         file: "coast_1",
         alt: "Storm clouds over a coastal town, waves breaking around dark sea stacks offshore",
+        tags: ["ocean", "storm"],
       },
     ],
   },
@@ -333,14 +381,17 @@ export const COLLECTIONS: Collection[] = [
       {
         file: "winter_1",
         alt: "Suspension bridge curving through snow-laden conifer forest",
+        tags: ["winter", "snow", "forest"],
       },
       {
         file: "winter_2",
         alt: "Looking straight down a suspension bridge into snowy forest, a figure mid-span",
+        tags: ["winter", "snow", "forest"],
       },
       {
         file: "winter_3",
         alt: "Aerial view of a dark river cutting through snow-covered canyon forest",
+        tags: ["winter", "snow", "forest", "aerial"],
       },
     ],
   },
@@ -370,4 +421,37 @@ export function requireCollection(slug: string): Collection {
     )
   }
   return collection
+}
+
+/**
+ * Curated filter chips shown on /photography (user-approved: fixed set,
+ * kept to one uncluttered row). Every other tag stays on photos and
+ * remains reachable via ?tag= URLs — it just doesn't render a chip.
+ */
+export const TAG_CHIPS = [
+  "night",
+  "snow",
+  "sunset",
+  "sunrise",
+  "moon",
+  "waterfall",
+  "lake",
+  "mountains",
+  "mist",
+  "ocean",
+] as const
+
+/** A photo paired with the collection it belongs to (pooled tag views). */
+export interface TaggedPhoto {
+  photo: Photo
+  collection: Collection
+}
+
+/** All photos matching a tag, in curated collection-then-photo order. */
+export function getTaggedPhotos(tag: string): TaggedPhoto[] {
+  return COLLECTIONS.flatMap((collection) =>
+    collection.photos
+      .filter((photo) => photo.tags.includes(tag))
+      .map((photo) => ({ photo, collection })),
+  )
 }
