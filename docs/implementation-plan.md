@@ -6,6 +6,11 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
+> **M5 done (2026-07-02), awaiting user commit.** Lightbox: URL-driven
+> (?photo=), hover-reveal chrome, directional slides, arrow/swipe nav
+> with hard stops, zoom 2.5×, copy-link, neighbor preload, 2000w+ tier,
+> ESC/X/backdrop/swipe-down close with focus return. Verified: keyboard
+> walk, a11y tree, network tiers, all interactions.
 > **M4 done (2026-07-02), awaiting user commit + photo-order approval.**
 > Masonry collection pages (natural ratios, hairline gaps, 3-col balanced
 > distribution), hover zoom + caption, cinematic page transitions

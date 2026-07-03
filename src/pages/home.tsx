@@ -16,7 +16,9 @@ import heroLqip from "@/assets/landscape/niagaraFalls/niagaraFalls_8.jpg?w=24&fo
    matching orientation is ever downloaded) */
 // prettier-ignore
 import heroShotPortrait from "@/assets/landscape/niagaraFalls/niagaraFalls_9.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
-import { ResponsiveImage } from "@/components/media/responsive-image"
+/* Vertical gateway crop for small screens (user pick: lakeLouise_6) */
+// prettier-ignore
+import gatewayPortrait from "@/assets/landscape/lakeLouise/lakeLouise_6.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import { Parallax } from "@/components/motion/parallax"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"
 import { Button } from "@/components/ui/button"
@@ -26,7 +28,8 @@ import {
   requireCollection,
 } from "@/content/collections"
 import { SITE } from "@/content/site"
-import { HeroBackdrop } from "@/features/home/hero-backdrop"
+import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
+import { MEDIA } from "@/lib/media-queries"
 
 /** Hero photo metadata comes from the content model, not re-written here. */
 const HERO_ALT =
@@ -43,11 +46,12 @@ export default function Home() {
     <main>
       {/* ============ Hero — identity statement ============ */}
       <section className="relative flex min-h-svh items-center overflow-hidden">
-        <HeroBackdrop
+        <ArtDirectedBackdrop
           picture={heroShot}
-          portrait={heroShotPortrait}
+          variant={{ media: MEDIA.portrait, picture: heroShotPortrait }}
           placeholder={heroLqip}
           alt={HERO_ALT}
+          className="absolute inset-0"
         />
         {/* Legibility scrim: slightly stronger through the middle since the
             centered text sits over the brightest part of the falls */}
@@ -95,12 +99,16 @@ export default function Home() {
             className="group relative block overflow-hidden rounded-2xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
           >
             <Parallax speed={0.08} aria-hidden className="absolute inset-0">
-              {/* Slight overscan so the parallax drift never exposes edges */}
-              <ResponsiveImage
+              {/* Slight overscan so the parallax drift never exposes edges;
+                  swaps to the vertical crop below `sm` — the same line
+                  where the frame flips to aspect-[4/5] */}
+              <ArtDirectedBackdrop
                 picture={GATEWAY_COVER.cover.picture}
+                variant={{ media: MEDIA.belowSm, picture: gatewayPortrait }}
                 placeholder={GATEWAY_COVER.cover.lqip}
                 alt=""
                 sizes="(min-width: 72rem) 72rem, 100vw"
+                prefetchSizes="40rem"
                 className="h-[120%] w-full scale-105 transition-transform duration-(--motion-duration-slower) ease-(--ease-cinematic) group-hover:scale-110"
               />
             </Parallax>

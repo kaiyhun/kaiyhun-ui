@@ -1,15 +1,14 @@
 /**
- * useColumnCount — responsive column count for the masonry grid,
- * matching Tailwind's breakpoints (sm 40rem, lg 64rem) so the JS layout
- * agrees with the CSS the rest of the page uses.
+ * useColumnCount — responsive column count for the masonry grid, keyed
+ * to the shared breakpoint queries so the JS layout agrees with the CSS
+ * the rest of the page uses.
  */
 import { useSyncExternalStore } from "react"
 
-const SM = "(min-width: 40rem)"
-const LG = "(min-width: 64rem)"
+import { MEDIA } from "@/lib/media-queries"
 
 function subscribe(onChange: () => void) {
-  const queries = [window.matchMedia(SM), window.matchMedia(LG)]
+  const queries = [window.matchMedia(MEDIA.sm), window.matchMedia(MEDIA.lg)]
   for (const query of queries) query.addEventListener("change", onChange)
   return () => {
     for (const query of queries) query.removeEventListener("change", onChange)
@@ -17,8 +16,8 @@ function subscribe(onChange: () => void) {
 }
 
 function getSnapshot(): number {
-  if (window.matchMedia(LG).matches) return 3
-  if (window.matchMedia(SM).matches) return 2
+  if (window.matchMedia(MEDIA.lg).matches) return 3
+  if (window.matchMedia(MEDIA.sm).matches) return 2
   return 1
 }
 

@@ -72,9 +72,10 @@ attributes prevent layout shift either way).
 queries — e.g. the homepage hero serves a portrait image on portrait
 screens: `variants={[{ media: "(orientation: portrait)", picture: … }]}`.
 Variant `<source>`s precede the defaults, so only the matching crop is
-ever downloaded. For a _animated_ orientation swap see
-`src/features/home/hero-backdrop.tsx`, which dissolves a cached ghost of
-the previous frame over the new one.
+ever downloaded. For an _animated_ swap see
+`src/features/home/art-directed-backdrop.tsx` (used by the homepage hero
+and gateway panel), which dissolves a cached ghost of the previous frame
+over the new one and prefetches the inactive crop.
 
 **Get `sizes` right** — it's the browser's only pre-layout width hint.
 Account for container caps: a 50vw column inside `max-w-5xl` never exceeds
