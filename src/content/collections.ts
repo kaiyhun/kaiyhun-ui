@@ -38,26 +38,26 @@ import coverWinterLqip from "@/assets/landscape/winter/winter_1.jpg?w=24&format=
 
 /* Portrait covers */
 // prettier-ignore
-import coverDance from "@/assets/portrait/dance/dance_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverDanceLqip from "@/assets/portrait/dance/dance_3.jpg?w=24&format=webp&inline"
+import coverDance from "@/assets/portrait/dance/dance_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverDanceLqip from "@/assets/portrait/dance/dance_2.jpg?w=24&format=webp&inline"
 // prettier-ignore
 import coverSunset from "@/assets/portrait/sunset/sunset_6.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import coverSunsetLqip from "@/assets/portrait/sunset/sunset_6.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverNature from "@/assets/portrait/nature/nature_4.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverNatureLqip from "@/assets/portrait/nature/nature_4.jpg?w=24&format=webp&inline"
+import coverNature from "@/assets/portrait/levitation/levitation_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverNatureLqip from "@/assets/portrait/levitation/levitation_2.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverCity from "@/assets/portrait/city/city_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverCityLqip from "@/assets/portrait/city/city_2.jpg?w=24&format=webp&inline"
+import coverCity from "@/assets/portrait/city/city_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverCityLqip from "@/assets/portrait/city/city_1.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverLevitation from "@/assets/portrait/levitation/levitation_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverLevitationLqip from "@/assets/portrait/levitation/levitation_2.jpg?w=24&format=webp&inline"
+import coverLevitation from "@/assets/portrait/levitation/levitation_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverLevitationLqip from "@/assets/portrait/levitation/levitation_1.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverCloseup from "@/assets/portrait/closeup/closeup_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverCloseupLqip from "@/assets/portrait/closeup/closeup_1.jpg?w=24&format=webp&inline"
+import coverCloseup from "@/assets/portrait/closeup/closeup_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverCloseupLqip from "@/assets/portrait/closeup/closeup_2.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import coverStudio from "@/assets/portrait/studio/studio_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import coverStudioLqip from "@/assets/portrait/studio/studio_2.jpg?w=24&format=webp&inline"
+import coverStudio from "@/assets/portrait/studio/studio_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import coverStudioLqip from "@/assets/portrait/studio/studio_1.jpg?w=24&format=webp&inline"
 
 export const COLLECTIONS: Collection[] = [
   {
@@ -439,11 +439,6 @@ export const COLLECTIONS: Collection[] = [
         tags: ["dance", "water", "sunset"],
       },
       {
-        file: "dance_4",
-        alt: "Dancer poised in a forest clearing of autumn light",
-        tags: ["dance", "forest"],
-      },
-      {
         file: "dance_1",
         alt: "Ballerina in a white tutu kneeling beside a chain-link fence",
         tags: ["dance", "nature"],
@@ -452,6 +447,11 @@ export const COLLECTIONS: Collection[] = [
         file: "dance_5",
         alt: "Dancer arched back over the shore as teal smoke drifts past",
         tags: ["dance", "water"],
+      },
+      {
+        file: "dance_4",
+        alt: "Dancer poised in a forest clearing of autumn light",
+        tags: ["dance", "forest"],
       },
     ],
   },
@@ -471,14 +471,9 @@ export const COLLECTIONS: Collection[] = [
         tags: ["sunset", "water"],
       },
       {
-        file: "sunset_4",
-        alt: "Golden hour backlight through long hair on a quiet street",
+        file: "sunset_5",
+        alt: "Sunset rim light over a black sweater, eyes to the camera",
         tags: ["sunset", "city"],
-      },
-      {
-        file: "sunset_1",
-        alt: "Dappled sunset light across her face and shoulders",
-        tags: ["sunset", "closeup"],
       },
       {
         file: "sunset_7",
@@ -486,19 +481,14 @@ export const COLLECTIONS: Collection[] = [
         tags: ["sunset"],
       },
       {
-        file: "sunset_5",
-        alt: "Sunset rim light over a black sweater, eyes to the camera",
-        tags: ["sunset", "city"],
+        file: "sunset_1",
+        alt: "Dappled sunset light across her face and shoulders",
+        tags: ["sunset", "closeup"],
       },
       {
         file: "sunset_2",
         alt: "Black-and-white close portrait with wet hair by the sea",
         tags: ["sunset", "water", "closeup", "monochrome"],
-      },
-      {
-        file: "sunset_3",
-        alt: "Backlit black-and-white portrait, windblown hair glowing",
-        tags: ["sunset", "closeup", "monochrome"],
       },
     ],
   },
@@ -522,11 +512,11 @@ export const COLLECTIONS: Collection[] = [
         alt: "Golden backlight over the meadow as she leans back in the grass",
         tags: ["nature", "sunset"],
       },
-      {
-        file: "nature_2",
-        alt: "Leaning against a mossy trunk, hand reaching toward the camera",
-        tags: ["nature", "forest"],
-      },
+      // {
+      //   file: "nature_2",
+      //   alt: "Leaning against a mossy trunk, hand reaching toward the camera",
+      //   tags: ["nature", "forest"],
+      // },
       {
         file: "nature_3",
         alt: "Lying among fallen autumn leaves in dark knitwear",
@@ -555,16 +545,16 @@ export const COLLECTIONS: Collection[] = [
     coverAlt:
       "Woman in round glasses cradling a string of fairy lights at dusk",
     photos: [
-      {
-        file: "city_2",
-        alt: "Woman in round glasses cradling a string of fairy lights at dusk",
-        tags: ["city", "lights"],
-      },
-      {
-        file: "city_3",
-        alt: "Fairy lights glowing in her hands on a blurred evening street",
-        tags: ["city", "lights"],
-      },
+      // {
+      //   file: "city_2",
+      //   alt: "Woman in round glasses cradling a string of fairy lights at dusk",
+      //   tags: ["city", "lights"],
+      // },
+      // {
+      //   file: "city_3",
+      //   alt: "Fairy lights glowing in her hands on a blurred evening street",
+      //   tags: ["city", "lights"],
+      // },
       {
         file: "city_1",
         alt: "Portrait through a window, gold earring catching light among city reflections",
@@ -614,11 +604,11 @@ export const COLLECTIONS: Collection[] = [
     cover: { picture: coverCloseup, lqip: coverCloseupLqip },
     coverAlt: "Close portrait with green eyes and a choker, framed by ivy",
     photos: [
-      {
-        file: "closeup_1",
-        alt: "Close portrait with green eyes and a choker, framed by ivy",
-        tags: ["closeup", "nature"],
-      },
+      // {
+      //   file: "closeup_1",
+      //   alt: "Close portrait with green eyes and a choker, framed by ivy",
+      //   tags: ["closeup", "nature"],
+      // },
       {
         file: "closeup_2",
         alt: "Resting her head on her arm, hand reaching toward the lens",
