@@ -60,18 +60,18 @@ incrementally — a door appears on the homepage only when its page is real
 
 ## Route map (target)
 
-| Route                | Page                                                     |
-| -------------------- | -------------------------------------------------------- |
-| `/`                  | Homepage hub                                             |
-| `/photography`       | Collection index + related writing + satellite links     |
-| `/photography/:slug` | Collection gallery (replaces `/c/:slug`)                 |
-| `/presets`           | Free preset downloads (photography satellite)            |
-| `/tutorials`         | Tutorial videos, embedded/linked (photography satellite) |
-| `/drawings`          | Drawings gallery                                         |
-| `/lab`               | Research & code pillar (naming TBD with user)            |
-| `/blog`              | All posts, filterable by topic                           |
-| `/blog/:slug`        | Post                                                     |
-| `/about`             | Bio + contact                                            |
+| Route                | Page                                                                       |
+| -------------------- | -------------------------------------------------------------------------- |
+| `/`                  | Homepage hub                                                               |
+| `/photography`       | Collection index + related writing + satellite links                       |
+| `/photography/:slug` | Collection gallery (replaces `/c/:slug`)                                   |
+| `/preset`            | Free preset downloads (photography satellite; LIVE placeholder)            |
+| `/tutorial`          | Tutorial videos, embedded/linked (photography satellite; LIVE placeholder) |
+| `/drawings`          | Drawings gallery                                                           |
+| `/lab`               | Research & code pillar (naming TBD with user)                              |
+| `/blog`              | All posts, filterable by topic                                             |
+| `/blog/:slug`        | Post                                                                       |
+| `/about`             | Bio + contact                                                              |
 
 ## Homepage composition (top to bottom)
 

@@ -12,23 +12,30 @@ own their domain, shared building blocks live in `components/`**.
 ```
 src/
   app/                    # Application shell — wiring, not features
-    app.tsx               #   Providers (MotionConfig) + router + site layout
+    app.tsx               #   Providers (MotionConfig) + AnimatePresence route
+                          #   transitions + site layout
     routes.tsx            #   Route table; every page is lazy-loaded
   pages/                  # One file per route. Thin: compose features, no logic
-    home.tsx              #   /            hero + collection index
-    collection.tsx        #   /c/:slug     one collection's gallery
-    not-found.tsx         #   *            404
+    home.tsx              #   /              hero + gateway sections + section nav
+    photography.tsx       #   /photography   category sub-menu + sections + tags
+    collection.tsx        #   /photography/:slug  one collection's gallery
+    tutorials.tsx         #   /tutorial      placeholder until M10
+    presets.tsx           #   /preset        placeholder until M10
+    not-found.tsx         #   *              404
   features/               # Domain modules — a feature's components/hooks/types
-    gallery/              #   Grid, lightbox, filtering; internal pieces stay here
+    gallery/              #   Masonry, lightbox, tag filter, category menu,
+                          #   pager, photo resolver (globs of LIVE categories)
+    home/                 #   GatewayPanel, ArtDirectedBackdrop, SectionNav
   components/             # Shared, feature-agnostic building blocks
     ui/                   #   shadcn primitives (editable source, restyled)
     motion/               #   Reveal, RevealGroup, Parallax
-    layout/               #   Site chrome: header, footer, nav
-    media/                #   ResponsiveImage (picture/srcset/LQIP)
-  content/                # Typed content model — collections, image metadata,
-                          #   alt text, tags. The single place content is defined.
-  lib/                    # Generic utilities (cn, motion-tokens). No JSX here.
-  assets/                 # Image masters (optimized, committed) + logo
+    layout/               #   Site chrome: header, footer, NotFoundView
+    media/                #   ResponsiveImage, PicturePreload
+  content/                # Typed content model — site identity, collections
+                          #   (categories, curation, per-photo alt + tags)
+  lib/                    # Generic utilities (cn, motion-tokens,
+                          #   media-queries, images). No JSX here.
+  assets/                 # Image masters: <category>/<collection>/ + logo
   index.css               # DESIGN TOKENS — single source of truth for styling
 ```
 
@@ -56,6 +63,10 @@ expectation there.
 - `<BrowserRouter basename={import.meta.env.BASE_URL}>` — the basename
   derives from Vite's `base`, so the GitHub Pages subpath stays configured
   in exactly one place (`vite.config.ts`).
+- Live routes: `/`, `/photography` (state in `?category` / `?tag` /
+  `?photo` — all shareable), `/photography/:slug` (`?photo` lightbox),
+  `/tutorial`, `/preset`, `*` 404. Future wings per
+  `docs/homepage-brief.md`.
 - Every page is code-split with `React.lazy()` in `routes.tsx`, wrapped in
   one `<Suspense>` in the shell — visitors don't download the lightbox to
   see the home page.

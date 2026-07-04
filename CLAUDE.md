@@ -1,75 +1,135 @@
 # kaiyhun-ui
 
-Bold, motion-heavy image gallery / portfolio. Static client-side SPA, deployed to GitHub Pages. Performance and cost-efficiency are first-class priorities. Full kickoff spec: `docs/claude-code-kickoff.md`.
+Kaiyhun's multi-domain personal site — bold, motion-heavy, dark/cinematic.
+Static client-side SPA on GitHub Pages; performance and cost-efficiency are
+first-class. Original kickoff spec: `docs/claude-code-kickoff.md`; current
+architecture of the "personal universe": `docs/homepage-brief.md`.
+
+**Wings & status:** Photography (LIVE — landscape + portrait categories),
+Editing (routes `/tutorial` + `/preset` live as placeholders; content =
+M10), Drawings (M7), Blog (M8, cross-cutting via tags), Lab/research+code
+(M9), About (M11). Milestone truth: `docs/implementation-plan.md`.
+
+## Identity & content rules
+
+- "Kaiyhun" capitalized everywhere (incl. wordmark); "Kai" for later
+  mentions in the same body of text. Tagline and socials: `src/content/site.ts`
+  (social URLs are placeholders except YouTube).
+- **All user-facing words are user-approved content.** Titles,
+  descriptions, alt text, tags, image picks, UI copy: Claude DRAFTS
+  (recorded in `docs/content-draft.md`), the user reviews/edits. Never
+  invent silently; always flag drafts as pending review.
+- Content lives in `src/content/` only — no strings hard-coded in
+  components. `collections.ts` is the photography model: categories
+  (`landscape` | `portrait`, derived from the asset folder's first
+  segment), curated collection & photo order, per-photo `tags` from a
+  controlled vocabulary, per-category `TAG_CHIPS`. Use
+  `requireCollection()` for compile-time-known slugs (throws loudly),
+  `getCollection()` for route params (undefined → 404 view).
 
 ## Tech stack (fixed)
 
-- React 19 + TypeScript, Vite (SPA)
-- Tailwind CSS v4 (`@tailwindcss/vite` plugin, `@import "tailwindcss"` in `src/index.css`)
-- shadcn/ui — treat components as **editable source**, restyle to fit the bold aesthetic; never ship default-looking shadcn
-- Motion library + react-router: confirm current package/API via Context7 before use
+- React 19 + TypeScript 6, Vite (SPA), Tailwind CSS v4, react-router v7
+  (single `react-router` package), Motion (`motion/react`), shadcn/ui on
+  the unified `radix-ui` package.
+- shadcn components are **editable source** — restyle to the system
+  (see `ui/button.tsx` / `ui/toggle.tsx` for the pattern); never ship
+  default-looking shadcn.
+- **Context7 MCP first** before writing against fast-moving APIs; shadcn
+  registry (MCP or CLI) is the only source of component primitives.
+- Approved MCP set (never add more without user approval): shadcn,
+  context7, chrome-devtools, playwright.
 
-## MCP servers (fixed set — never add more without user approval)
+## Architecture (details: docs/architecture.md)
 
-- **shadcn MCP** (foundation) — source of truth for component primitives; pull real source, never hallucinate APIs
-- **Context7 MCP** (foundation) — fetch current docs before writing code against any fast-moving library (Tailwind v4, React 19, motion lib, react-router). No API code from training memory.
-- **chrome-devtools MCP** (approved) — visual verification of animations, `prefers-reduced-motion` checks, performance traces
-- **playwright MCP** (approved) — browser automation for verifying interactions and keyboard navigation
+```
+src/app        shell: providers, AnimatePresence route transitions, route table
+src/pages      thin route components (ONLY default exports; pages are leaves —
+               never import a page from anywhere but routes.tsx)
+src/features   gallery/ (masonry, lightbox, tag filter, category menu, pager)
+               home/ (gateway panels, art-directed backdrop, section nav)
+src/components ui/ (shadcn, restyled) · motion/ (Reveal, Parallax) ·
+               media/ (ResponsiveImage, PicturePreload) · layout/
+src/content    site.ts, collections.ts, types.ts — the content model
+src/lib        utils, motion-tokens, media-queries (MEDIA constants), images
+```
 
-## Hosting: GitHub Pages (rules)
+Routes: `/` · `/photography` (?category, ?tag, ?photo — all URL-driven) ·
+`/photography/:slug` · `/tutorial` · `/preset` · `*` 404. Deep links work
+on Pages via the 404.html postbuild copy (served with HTTP 404 status —
+expected and harmless).
 
-- Repo: `github.com/kaiyhun/kaiyhun-ui` → deploys to `kaiyhun.github.io/kaiyhun-ui/`
-- `base: '/kaiyhun-ui/'` in `vite.config.ts` is required — removing it breaks every asset path in production
-- Deploys via GitHub Actions (`.github/workflows/deploy.yml`) on push to `main`
-- GitHub's built-in Fastly edge is the CDN. **Never add a separate/paid CDN, image CDN, or runtime backend.** Static-only.
-- Pages serves fixed `Cache-Control: max-age=600` (custom headers impossible) — rely on content-hashed filenames (Vite default) for cache-busting
-- Soft limit ~100 GB/month bandwidth. If outgrown: free Cloudflare layer via custom domain is the _future_ option — do not build now.
+## Images (workflow: use the `add-collection` skill)
 
-## Image strategy (build-time, static)
+- Raw originals: `originals/<category>/<collection>/` (git-ignored) →
+  `npm run prepare-masters` → committed masters in
+  `src/assets/<category>/<collection>/` (≤2560px, q80). Never commit raws.
+- Build pipeline: vite-imagetools directives; render ONLY through
+  `ResponsiveImage` (LQIP blur-up, lazy, `eager` for LCP images,
+  `fit="contain"` for viewers, `variants` for art direction). The gallery
+  globs in `features/gallery/photos.ts` list LIVE categories explicitly —
+  widen them when a new category's wing ships, not before (unused masters
+  otherwise bloat dist).
+- `sizes` must reflect real rendered width incl. container caps — wrong
+  hints silently over-fetch. Media queries that pair with responsive
+  classes come from `lib/media-queries.ts` so CSS and JS flip together.
+- Warm-the-cache pattern: `PicturePreload` (hero orientation swap,
+  lightbox ±2 neighbors, tile hover intent). Full reference: `docs/images.md`.
 
-- Curated set optimized at build time (sharp / Vite image plugin — confirm options via Context7). No upload backend, ever.
-- AVIF + WebP + JPEG fallback; responsive widths (~400/800/1200/2000) via `<picture>`/`srcset`+`sizes`
-- Blur placeholder (LQIP/BlurHash) per image; lazy-load below the fold; hero images eager + `fetchpriority="high"`
-- Keep committed images optimized; watch repo size (Git LFS if collection grows large)
+## Styling & motion (hard rules)
 
-## Design direction
+- **Single source of truth**: every color (OKLCH), font, radius, duration,
+  easing is a CSS custom property in `src/index.css`. JS animations read
+  the same tokens via `lib/motion-tokens.ts`. Never hard-code visual
+  values elsewhere.
+- `--primary-foreground` is near-black (white on the primary blue fails
+  WCAG at 3.36:1) — keep dark text on filled primary/accent surfaces.
+- Font stacks include metric-matched Arial fallbacks (CLS 0.00) —
+  re-measure the `@font-face` overrides if the fonts ever change.
+- Animate transform/opacity only; `<MotionConfig reducedMotion="user">`
+  wraps the app; use `Reveal`/`RevealGroup`/`Parallax` primitives, not
+  one-off animations. Full-screen overlays: chrome strips are
+  `pointer-events-none` scaffolding, only the buttons take events (see
+  lightbox — full-height arrow columns once covered the X button).
 
-- Big confident imagery, strong typographic contrast, generous scale, intentional negative space
-- Purposeful motion: scroll reveals, page transitions, microinteractions, parallax where it enhances
-- Animate only transform/opacity (GPU-friendly); **always respect `prefers-reduced-motion`** with a reduced fallback
-- Design tokens (palette, type scale, spacing, radii, motion durations/easings) must be confirmed with the user before locking
+## Verification norms (workflow: use the `verify-ui` skill)
 
-## Styling — single source of truth (hard rule)
-
-- **All visual values live in `src/index.css` as CSS custom properties** — colors (OKLCH), fonts, radii, motion durations/easings. Full reference: `docs/design-system.md`.
-- Components consume tokens only (semantic Tailwind utilities / CSS vars). Never hard-code a color, font name, duration, or bezier outside `index.css`.
-- JS animations get the same tokens through `src/lib/motion-tokens.ts` (parses `--motion-*` vars at startup) — don't define separate JS constants.
-- Palette = "cinematic ratio": ~65% dark blue-cast surfaces, ~30% blue (interactive), ~5% orange accent. Dark-only, no theme toggle.
-- Fonts: Space Grotesk (`font-display`, headings) + Roboto Flex (`font-sans`, body), self-hosted via @fontsource.
-- Motion library is `motion`, imported from `motion/react`; app is wrapped in `<MotionConfig reducedMotion="user">`. Use the `Reveal`/`RevealGroup`/`Parallax` primitives in `src/components/motion/` rather than one-off animations.
-
-## Documentation conventions
-
-- Every component/module gets a file-header docstring: what it is, notable deviations/decisions, accessibility behavior
-- Inline comments for larger or non-obvious blocks; props documented with JSDoc on the interface
-- Features and system-level decisions get a markdown doc in `docs/` (e.g. `docs/design-system.md`, `docs/phase-0-scaffold.md`); keep them updated as things change
+- Verify against the PRODUCTION build (`npm run preview`), in the browser,
+  via chrome-devtools/playwright MCP — network tiers, a11y tree, keyboard
+  walks, screenshots shown to the user.
+- **Use hit-tested clicks** (coordinate-based tools), not
+  `element.click()` — programmatic clicks bypass hit-testing and once hid
+  a real overlay bug.
+- `npm run check` (typecheck + lint + format) must be green before
+  handing work back. Zero lint warnings is the baseline.
 
 ## Working rules
 
-- **Never commit or push.** The user reviews all changes and commits themselves. Leave work in the working tree.
-- Ask, don't assume — never invent requirements, content, or design decisions
-- Keep changes small and scoped (the user commits in reviewable units); explain notable decisions
-- Accessibility is mandatory: alt text, keyboard navigation, reduced-motion fallbacks
+- **Never commit or push.** The user reviews and commits. Leave work in
+  the tree; keep change-sets scoped to one reviewable unit (≈ milestone).
+- Each milestone starts with thorough kickoff questions (AskUserQuestion).
+  If a question times out unanswered, HOLD the work and re-ask — never
+  proceed on assumed answers (explicit user instruction).
+- Ask, don't assume; flag judgment calls explicitly so they're easy to veto.
+- Accessibility is mandatory: approved alt text, keyboard operability,
+  reduced-motion fallbacks, labelled dialogs/landmarks.
+- Docstrings on every module (what/why/deviations/a11y); inline comments
+  for non-obvious blocks; feature docs in `docs/` kept current.
 
 ## Key docs (read before structural work)
 
-- `docs/architecture.md` — folder structure, dependency rules, routing, image pipeline
-- `docs/code-conventions.md` — exports (named only; default only for lazy route pages), interfaces, naming, comments, tooling
-- `docs/design-system.md` — design tokens reference
-- `docs/implementation-plan.md` — approved milestones; no feature work outside the current one
+- `docs/homepage-brief.md` — site vision, wings, revised milestones
+- `docs/implementation-plan.md` — milestone status ledger (top of file)
+- `docs/architecture.md` — folders, dependency rules, routing, pipeline
+- `docs/code-conventions.md` — exports, naming, lint exceptions, tooling
+- `docs/design-system.md` — tokens (locked) + contrast/font-fallback notes
+- `docs/images.md` — image pipeline + ResponsiveImage API
+- `docs/content-draft.md` — ALL approved copy/tags/curation (edit here first)
 
 ## Commands
 
-- `npm run dev` — dev server
-- `npm run build` — typecheck (`tsc -b`) + production build to `dist/`
-- Note: this template uses TypeScript 6 — `baseUrl` is deprecated; `paths` is set without it
+- `npm run dev` / `npm run build` (typecheck + build + 404.html copy) /
+  `npm run preview`
+- `npm run check` — typecheck + lint + format check (run before handoff)
+- `npm run prepare-masters` — originals → optimized masters (idempotent)
+- TypeScript 6: `baseUrl` is deprecated; the `@/*` alias uses `paths` only.
