@@ -1,5 +1,5 @@
 /**
- * SectionNav — the homepage's floating "on this page" menu.
+ * SectionNav — the homepage's floating "Scroll to" section menu.
  *
  * Hidden at the top of the page; fades in (bottom-right, deliberately
  * faint until hovered) once the visitor starts scrolling. Entries smooth-
@@ -11,13 +11,8 @@
  * page just adds entries to its `sections` prop.
  */
 import { List, Minus } from "lucide-react"
-import {
-  AnimatePresence,
-  motion,
-  useMotionValueEvent,
-  useScroll,
-} from "motion/react"
-import { useState } from "react"
+import { AnimatePresence, motion } from "motion/react"
+import { useEffect, useState } from "react"
 
 import { MOTION } from "@/lib/motion-tokens"
 
@@ -36,13 +31,19 @@ interface SectionNavProps {
 }
 
 export function SectionNav({ sections }: SectionNavProps) {
-  const { scrollY } = useScroll()
   const [scrolled, setScrolled] = useState(false)
   const [collapsed, setCollapsed] = useState(
     () => sessionStorage.getItem(COLLAPSE_KEY) === "1",
   )
 
-  useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > SHOW_AFTER))
+  // Plain window listener (passive), checked once on mount too — so
+  // arriving mid-page (e.g. via a #hash link) shows the nav immediately
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > SHOW_AFTER)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   const setCollapsedPersistent = (next: boolean) => {
     setCollapsed(next)
