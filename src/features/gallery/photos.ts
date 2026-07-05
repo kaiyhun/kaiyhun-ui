@@ -7,8 +7,9 @@
  * Because this module lives in the lazy-loaded gallery feature, the
  * image metadata ships only with the collection-page chunk.
  *
- * The globs cover LIVE categories only (landscape + portrait) — masters
- * can sit in src/assets ahead of their wing shipping (e.g. drawings)
+ * The globs cover LIVE categories only (landscape, portrait, drawing) —
+ * masters
+ * can sit in src/assets ahead of their wing shipping
  * without being built into dist. Add a pattern to the three globs when
  * a category's wing goes live.
  */
@@ -18,7 +19,11 @@ import type { ImageRef } from "@/content/types"
 
 /** category/collection/file → responsive picture (all masters). */
 const PICTURES = import.meta.glob(
-  ["/src/assets/landscape/*/*.jpg", "/src/assets/portrait/*/*.jpg"],
+  [
+    "/src/assets/landscape/*/*.jpg",
+    "/src/assets/portrait/*/*.jpg",
+    "/src/assets/drawing/*/*.jpg",
+  ],
   {
     query: "?w=400;800;1200&format=avif;webp;jpeg&as=picture",
     import: "default",
@@ -28,7 +33,11 @@ const PICTURES = import.meta.glob(
 
 /** category/collection/file → inline LQIP data URL (all masters). */
 const LQIPS = import.meta.glob(
-  ["/src/assets/landscape/*/*.jpg", "/src/assets/portrait/*/*.jpg"],
+  [
+    "/src/assets/landscape/*/*.jpg",
+    "/src/assets/portrait/*/*.jpg",
+    "/src/assets/drawing/*/*.jpg",
+  ],
   {
     query: "?w=24&format=webp&inline",
     import: "default",
@@ -39,7 +48,11 @@ const LQIPS = import.meta.glob(
 /** Full-size tiers for the lightbox — the one full-viewport context
  *  where the largest derivatives are justified. */
 const LIGHTBOX_PICTURES = import.meta.glob(
-  ["/src/assets/landscape/*/*.jpg", "/src/assets/portrait/*/*.jpg"],
+  [
+    "/src/assets/landscape/*/*.jpg",
+    "/src/assets/portrait/*/*.jpg",
+    "/src/assets/drawing/*/*.jpg",
+  ],
   {
     query: "?w=1200;2000;2560&format=avif;webp;jpeg&as=picture",
     import: "default",
