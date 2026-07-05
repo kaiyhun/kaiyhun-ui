@@ -26,9 +26,8 @@ import portraitPanelShot from "@/assets/portrait/nature/nature_5.jpg?w=400;800;1
 import portraitPanelLqip from "@/assets/portrait/nature/nature_5.jpg?w=24&format=webp&inline"
 // prettier-ignore
 import portraitPanelVertical from "@/assets/portrait/studio/studio_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-/* Drawings-section panel (Claude picks, flagged for review): horizontal
-   random_3 (girl vs machines — the imagination work), vertical
-   fromReference_2 (the strongest study) */
+/* Drawings-section panel (user picks): horizontal random_3 (girl vs
+   machines — the imagination work), vertical fromReference_3 */
 // prettier-ignore
 import drawingPanelShot from "@/assets/drawing/random/random_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import drawingPanelLqip from "@/assets/drawing/random/random_3.jpg?w=24&format=webp&inline"
@@ -172,7 +171,7 @@ export default function Home() {
           <h2 id="editing-heading" className="text-right text-display-sm">
             Editing
           </h2>
-          <p className="text-right ml-auto mt-4 max-w-prose text-muted-foreground">
+          <p className="mt-4 ml-auto max-w-prose text-right text-muted-foreground">
             The tools behind the photos — learn the process or take the look
             with you.
           </p>

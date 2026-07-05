@@ -1,15 +1,18 @@
 /**
- * JourneyRail — VARIANT B of the journey thread (comparison build at
- * /drawing/alt; journey.tsx stays untouched as variant A).
+ * JourneyRail — the drawing page's narrative spine: a thin vertical
+ * thread of first-person chapters, with the work living inside the
+ * timeline. The gap years render as a tall, nearly-empty stretch of
+ * dashed thread; the current chapter's dot is primary — the thread is
+ * live again.
  *
- * Same quiet chapter thread, but chapters with work attached carry a
- * collapsible image rail on their left. Collapsed, the drawings peek out
- * as thin slivers beside the thread and the chapter wears a count pill
- * ("6 drawings") — the discoverability cues. Expanded, the rail slides in
- * and pushes the thread dot + prose to the right; the prose does NOT
- * rewrap — it slides under a soft right-edge fade (overflow hidden, per
- * the brief). This variant replaces the record section: one lightbox
- * spans all drawings in page order, opened from the rail tiles.
+ * Chapters with work attached (CHAPTER_WORK in content/drawings.ts)
+ * carry a collapsible image rail on their left. Collapsed, the drawings
+ * peek out as thin slivers beside the thread and the chapter wears a
+ * count pill ("6 drawings") — the discoverability cues. Expanded, the
+ * rail slides in and pushes the thread dot + prose to the right; the
+ * prose does NOT rewrap — it slides under a soft right-edge fade. Rails
+ * are height-capped and scroll (wheel/touch + chevrons). One lightbox
+ * spans ALL drawings in page order, opened from the rail tiles.
  *
  * a11y: the pill is the real disclosure control (aria-expanded /
  * aria-controls); the sliver strip is a pointer-only duplicate target
@@ -25,9 +28,9 @@ import type { TaggedPhoto } from "@/content/collections"
 import {
   DRAWING_SEQUENCE,
   JOURNEY,
+  workForChapter,
   type JourneyChapter,
 } from "@/content/drawings"
-import { workForChapter } from "@/content/drawings-alt"
 import { Lightbox } from "@/features/gallery/lightbox"
 import { PhotoTile } from "@/features/gallery/photo-tile"
 import { getPhotoImage } from "@/features/gallery/photos"
@@ -44,7 +47,7 @@ const RAIL_VARS =
   "[--rail-w:11.5rem] [--rail-peek:1.75rem] [--rail-max-h:24rem] sm:[--rail-w:20.5rem] sm:[--rail-max-h:32rem]"
 
 /** One standard: a single column of tiles, rail width minus the gutter. */
-const RAIL_SIZES = "(min-width: 40rem) 16rem, 8.75rem"
+const RAIL_SIZES = "(min-width: 40rem) 19.75rem, 10.75rem"
 
 export function JourneyRail() {
   const lightbox = useLightboxState()

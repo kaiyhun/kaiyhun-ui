@@ -215,3 +215,25 @@ export const DRAWING_GROUPS: Collection[] = [
 export const DRAWING_SEQUENCE: TaggedPhoto[] = DRAWING_GROUPS.flatMap((group) =>
   group.photos.map((photo) => ({ photo, collection: group })),
 )
+
+/**
+ * Chapter marker → group slugs: which work hangs off which journey
+ * chapter as an inline image rail (user-curated). Keyed by chapter
+ * `marker` — if a marker is reworded above, update the key here too.
+ */
+const CHAPTER_WORK: Record<string, string[]> = {
+  "2021": ["studies"],
+  "2026": ["sketches-2022"],
+}
+
+/** The drawings attached to a chapter, in page order — or [] if none. */
+export function workForChapter(marker: string): TaggedPhoto[] {
+  const slugs = CHAPTER_WORK[marker]
+  if (!slugs) return []
+  return slugs.flatMap((slug) => {
+    const group = DRAWING_GROUPS.find((candidate) => candidate.slug === slug)
+    return group
+      ? group.photos.map((photo) => ({ photo, collection: group }))
+      : []
+  })
+}

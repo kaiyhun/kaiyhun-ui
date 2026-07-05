@@ -2,15 +2,14 @@
  * Drawing page — /drawing
  *
  * A progress record, not a showcase (docs/drawing-page-context.md): a
- * quiet narrative thread through the journey — origin, the 2022 year,
- * the cost, the five-year silence, now — ending in the actual work.
- * All narrative text is a PLACEHOLDER DRAFT awaiting the user's own
- * voice (see src/content/drawings.ts).
+ * quiet narrative thread through the journey, with the work living
+ * INSIDE the timeline — chapters with drawings carry a collapsible
+ * image rail (JourneyRail) instead of a separate record section.
+ * Narrative text lives in src/content/drawings.ts (user's own voice).
  */
 import { Reveal } from "@/components/motion/reveal"
 import { JOURNEY_CLOSER } from "@/content/drawings"
-import { Journey } from "@/features/drawing/journey"
-import { Record } from "@/features/drawing/record"
+import { JourneyRail } from "@/features/drawing/journey-rail"
 
 export default function Drawing() {
   return (
@@ -23,12 +22,11 @@ export default function Drawing() {
         </p>
       </Reveal>
 
-      <Journey />
-      <Record />
+      <JourneyRail />
 
       {/* The thread ends open — this page is meant to keep growing */}
       <Reveal distance={16}>
-        <p className="border-l border-dashed border-border/60 pt-2 pb-10 pl-8 text-sm text-muted-foreground italic sm:pl-12">
+        <p className="ml-7 border-l border-dashed border-border/60 pt-2 pb-10 pl-8 text-sm text-muted-foreground italic sm:pl-12">
           {JOURNEY_CLOSER}
         </p>
       </Reveal>

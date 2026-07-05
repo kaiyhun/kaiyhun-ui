@@ -12,8 +12,6 @@ const Collection = lazy(() => import("@/pages/collection"))
 const Tutorials = lazy(() => import("@/pages/tutorials"))
 const Presets = lazy(() => import("@/pages/presets"))
 const Drawing = lazy(() => import("@/pages/drawing"))
-// Comparison build of the drawing page (unlinked) — see pages/drawing-alt
-const DrawingAlt = lazy(() => import("@/pages/drawing-alt"))
 const NotFound = lazy(() => import("@/pages/not-found"))
 
 interface AppRoutesProps {
@@ -31,7 +29,6 @@ export function AppRoutes({ location }: AppRoutesProps) {
       <Route path="tutorial" element={<Tutorials />} />
       <Route path="preset" element={<Presets />} />
       <Route path="drawing" element={<Drawing />} />
-      <Route path="drawing/alt" element={<DrawingAlt />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
