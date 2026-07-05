@@ -29,8 +29,8 @@ import portraitPanelVertical from "@/assets/portrait/studio/studio_1.jpg?w=400;8
 /* Drawings-section panel (user picks): horizontal random_3 (girl vs
    machines — the imagination work), vertical fromReference_3 */
 // prettier-ignore
-import drawingPanelShot from "@/assets/drawing/random/random_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import drawingPanelLqip from "@/assets/drawing/random/random_3.jpg?w=24&format=webp&inline"
+import drawingPanelShot from "@/assets/landscape/lake/lake_4.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import drawingPanelLqip from "@/assets/landscape/lake/lake_4.jpg?w=24&format=webp&inline"
 // prettier-ignore
 import drawingPanelVertical from "@/assets/drawing/fromReference/fromReference_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 /* Editing-section panels (user picks): Tutorials = niagaraFalls_14 /
