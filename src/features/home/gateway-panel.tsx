@@ -13,6 +13,7 @@ import type { Picture } from "vite-imagetools"
 import { Parallax } from "@/components/motion/parallax"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
 import { MEDIA } from "@/lib/media-queries"
+import { cn } from "@/lib/utils"
 
 interface GatewayPanelProps {
   to: string
@@ -24,6 +25,8 @@ interface GatewayPanelProps {
   /** Vertical crop for small screens (frame flips to 4/5 below `sm`). */
   portraitPicture: Picture
   placeholder: string
+  /** Which side the title/count/Enter sit on (default left). */
+  align?: "left" | "right"
 }
 
 export function GatewayPanel({
@@ -33,6 +36,7 @@ export function GatewayPanel({
   picture,
   portraitPicture,
   placeholder,
+  align = "left",
 }: GatewayPanelProps) {
   return (
     <Link
@@ -57,7 +61,12 @@ export function GatewayPanel({
         aria-hidden
         className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/30 to-transparent"
       />
-      <div className="relative flex aspect-[4/5] flex-col justify-end p-8 sm:aspect-[21/10] sm:p-12">
+      <div
+        className={cn(
+          "relative flex aspect-[4/5] flex-col justify-end p-8 sm:aspect-[21/10] sm:p-12",
+          align === "right" && "items-end text-right",
+        )}
+      >
         <h3 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">
           {title}
         </h3>
