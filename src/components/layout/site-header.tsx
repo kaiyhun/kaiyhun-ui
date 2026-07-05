@@ -11,7 +11,10 @@ import reactLogo from "@/assets/react.svg"
 import { SITE } from "@/content/site"
 import { cn } from "@/lib/utils"
 
-const NAV_LINKS = [{ label: "Photography", to: "/photography" }]
+const NAV_LINKS = [
+  { label: "Photography", to: "/photography" },
+  { label: "Drawing", to: "/drawing" },
+]
 
 export function SiteHeader() {
   return (
@@ -26,7 +29,7 @@ export function SiteHeader() {
             {SITE.name}
           </span>
         </Link>
-        <nav aria-label="Primary">
+        <nav aria-label="Primary" className="flex items-center gap-6">
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.to}
