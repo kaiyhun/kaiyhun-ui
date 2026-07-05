@@ -97,28 +97,60 @@ async function subdirs(dir) {
 }
 
 // Two-level walk: originals/<category>/<collection>/*
-const collections = []
-for (const category of await subdirs(ORIGINALS_DIR)) {
-  for (const collection of await subdirs(path.join(ORIGINALS_DIR, category))) {
-    collections.push(path.join(category, collection))
+// Runs processCollection over each relDir and prints per-collection + total stats.
+async function runCollections(collections) {
+  if (collections.length === 0) {
+    console.error(`No <category>/<collection> folders found — nothing to do.`)
+    process.exit(1)
   }
+
+  let totalIn = 0
+  let totalOut = 0
+  for (const relDir of collections) {
+    const result = await processCollection(relDir)
+    totalIn += result.inBytes
+    totalOut += result.outBytes
+    console.log(
+      `${result.relDir}: ${result.count} images, ${mb(result.inBytes)} → ${mb(result.outBytes)}`,
+    )
+  }
+  console.log(`\ntotal: ${mb(totalIn)} → ${mb(totalOut)}`)
 }
 
-if (collections.length === 0) {
-  console.error(
-    `No <category>/<collection> folders found in ${ORIGINALS_DIR}/ — nothing to do.`,
-  )
-  process.exit(1)
+// Process every category/collection found under ORIGINALS_DIR.
+async function processAllCategories() {
+  const collections = []
+  for (const category of await subdirs(ORIGINALS_DIR)) {
+    for (const collection of await subdirs(path.join(ORIGINALS_DIR, category))) {
+      collections.push(path.join(category, collection))
+    }
+  }
+  await runCollections(collections)
 }
 
-let totalIn = 0
-let totalOut = 0
-for (const relDir of collections) {
-  const result = await processCollection(relDir)
-  totalIn += result.inBytes
-  totalOut += result.outBytes
-  console.log(
-    `${result.relDir}: ${result.count} images, ${mb(result.inBytes)} → ${mb(result.outBytes)}`,
+// Process only one category (and its collections) by name, e.g. "drawing".
+async function processCategory(categoryName) {
+  const categoryPath = path.join(ORIGINALS_DIR, categoryName)
+
+  try {
+    const s = await stat(categoryPath)
+    if (!s.isDirectory()) throw new Error("not a directory")
+  } catch {
+    console.error(`Category "${categoryName}" not found in ${ORIGINALS_DIR}/`)
+    process.exit(1)
+  }
+
+  const collections = (await subdirs(categoryPath)).map((collection) =>
+    path.join(categoryName, collection),
   )
+  await runCollections(collections)
 }
-console.log(`\ntotal: ${mb(totalIn)} → ${mb(totalOut)}`)
+
+const [categoryArg] = process.argv.slice(2)
+if (categoryArg) {
+  await processCategory(categoryArg)
+} else {
+  await processAllCategories()
+}
+
+// node scripts/prepare-masters.mjs drawing
