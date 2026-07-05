@@ -2,7 +2,7 @@
  * Home — the hub of the multi-domain site (docs/homepage-brief.md).
  *
  * Sections: identity hero (user-approved statement over niagaraFalls_8) →
- * gateway (pillar doors — only live wings render, currently Photography) →
+ * gateway sections (Photography, Editing, Drawings — doors appear as wings ship) →
  * footer (site-wide). The recent-writing band (M8) and about teaser (M11)
  * appear when their wings are real.
  */
@@ -26,6 +26,14 @@ import portraitPanelShot from "@/assets/portrait/nature/nature_5.jpg?w=400;800;1
 import portraitPanelLqip from "@/assets/portrait/nature/nature_5.jpg?w=24&format=webp&inline"
 // prettier-ignore
 import portraitPanelVertical from "@/assets/portrait/studio/studio_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+/* Drawings-section panel (Claude picks, flagged for review): horizontal
+   random_3 (girl vs machines — the imagination work), vertical
+   fromReference_2 (the strongest study) */
+// prettier-ignore
+import drawingPanelShot from "@/assets/drawing/random/random_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import drawingPanelLqip from "@/assets/drawing/random/random_3.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import drawingPanelVertical from "@/assets/drawing/fromReference/fromReference_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 /* Editing-section panels (user picks): Tutorials = niagaraFalls_14 /
    coast_1; Presets = goldenHour_7 / lake_3 */
 // prettier-ignore
@@ -71,6 +79,7 @@ function countLine(category: "landscape" | "portrait") {
 const HOME_SECTIONS: HomeSection[] = [
   { id: "photography", label: "Photography" },
   { id: "editing", label: "Editing" },
+  { id: "drawings", label: "Drawings" },
 ]
 
 export default function Home() {
@@ -160,10 +169,10 @@ export default function Home() {
         className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
       >
         <Reveal>
-          <h2 id="editing-heading" className="text-display-sm">
+          <h2 id="editing-heading" className="text-right text-display-sm">
             Editing
           </h2>
-          <p className="mt-4 max-w-prose text-muted-foreground">
+          <p className="text-right ml-auto mt-4 max-w-prose text-muted-foreground">
             The tools behind the photos — learn the process or take the look
             with you.
           </p>
@@ -177,6 +186,7 @@ export default function Home() {
               picture={tutorialsPanelShot}
               portraitPicture={tutorialsPanelVertical}
               placeholder={tutorialsPanelLqip}
+              align="right"
             />
           </Reveal>
           <Reveal>
@@ -187,6 +197,36 @@ export default function Home() {
               picture={presetsPanelShot}
               portraitPicture={presetsPanelVertical}
               placeholder={presetsPanelLqip}
+              align="right"
+            />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ============ Drawings — the progress record ============ */}
+      <section
+        id="drawings"
+        aria-labelledby="drawings-heading"
+        className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
+      >
+        <Reveal>
+          <h2 id="drawings-heading" className="text-display-sm">
+            Drawings
+          </h2>
+          <p className="mt-4 max-w-prose text-muted-foreground">
+            Not a showcase — an honest record of learning to draw, five years
+            later.
+          </p>
+        </Reveal>
+        <div className="mt-12">
+          <Reveal>
+            <GatewayPanel
+              to="/drawing"
+              title="Drawing"
+              subtitle="Studies, sketches, and the gap between them"
+              picture={drawingPanelShot}
+              portraitPicture={drawingPanelVertical}
+              placeholder={drawingPanelLqip}
             />
           </Reveal>
         </div>
