@@ -18,7 +18,6 @@ import { DRAWING_GROUPS } from "@/content/drawings"
 const CHAPTER_WORK: Record<string, string[]> = {
   "2021": ['studies'],
   "2026": ["sketches-2022"],
-  Now: ["imagination"],
 }
 
 /** The drawings attached to a chapter, in page order — or [] if none. */
