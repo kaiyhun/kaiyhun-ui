@@ -1,12 +1,6 @@
 /**
  * Drawing wing content — the journey narrative and the work record.
  *
- * ⚠ NARRATIVE TEXT IS A PLACEHOLDER DRAFT. The user's brief
- * (docs/drawing-page-context.md) is explicit that this story is personal
- * and the final voice must be theirs — every string in JOURNEY below is
- * scaffolding to be rewritten, not shipped copy. Alt text and group
- * labels are drafts pending review like all content (content-draft §10).
- *
  * Groups reuse the Collection shape so the gallery machinery (tiles,
  * lightbox, image resolver) works unchanged; they are deliberately NOT in
  * COLLECTIONS — the photography pages must never pick them up.
@@ -17,9 +11,12 @@ import type { TaggedPhoto } from "@/content/collections"
 // prettier-ignore
 import coverStudies from "@/assets/drawing/fromReference/fromReference_2.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import coverStudiesLqip from "@/assets/drawing/fromReference/fromReference_2.jpg?w=24&format=webp&inline"
+/* Imagination group is commented out below until those pieces return —
+   restore these imports with it.
 // prettier-ignore
 import coverImagination from "@/assets/drawing/random/random_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import coverImaginationLqip from "@/assets/drawing/random/random_3.jpg?w=24&format=webp&inline"
+*/
 // prettier-ignore
 import coverSketches from "@/assets/drawing/sketches/sketch_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import coverSketchesLqip from "@/assets/drawing/sketches/sketch_1.jpg?w=24&format=webp&inline"
@@ -181,33 +178,33 @@ export const DRAWING_GROUPS: Collection[] = [
       },
     ],
   },
-  {
-    slug: "imagination",
-    folder: "drawing/random",
-    title: "Now — from imagination",
-    description:
-      "The point of all of it — scenes that only exist in my head. None of these turned out how they looked in there. Unfinished.",
-    tags: ["drawing"],
-    cover: { picture: coverImagination, lqip: coverImaginationLqip },
-    coverAlt: "A girl raising a blade of light before three giant machines",
-    photos: [
-      {
-        file: "random_1",
-        alt: "A small figure with a suitcase in a vast flooded hall, unfinished",
-        tags: ["drawing"],
-      },
-      {
-        file: "random_2",
-        alt: "A dragon breathing fire through storm clouds @pinterest_reference_add_later",
-        tags: ["drawing"],
-      },
-      {
-        file: "random_3",
-        alt: "A girl raising a blade of light before three giant machines @pinterest_reference_add_later",
-        tags: ["drawing"],
-      },
-    ],
-  },
+  // {
+  //   slug: "imagination",
+  //   folder: "drawing/random",
+  //   title: "Now — from imagination",
+  //   description:
+  //     "The point of all of it — scenes that only exist in my head. None of these turned out how they looked in there. Unfinished.",
+  //   tags: ["drawing"],
+  //   cover: { picture: coverImagination, lqip: coverImaginationLqip },
+  //   coverAlt: "A girl raising a blade of light before three giant machines",
+  //   photos: [
+  //     {
+  //       file: "random_1",
+  //       alt: "A small figure with a suitcase in a vast flooded hall, unfinished",
+  //       tags: ["drawing"],
+  //     },
+  //     {
+  //       file: "random_2",
+  //       alt: "A dragon breathing fire through storm clouds @pinterest_reference_add_later",
+  //       tags: ["drawing"],
+  //     },
+  //     {
+  //       file: "random_3",
+  //       alt: "A girl raising a blade of light before three giant machines @pinterest_reference_add_later",
+  //       tags: ["drawing"],
+  //     },
+  //   ],
+  // },
 ]
 
 /** Every drawing as one flat lightbox sequence, in page order —
