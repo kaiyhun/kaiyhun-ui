@@ -121,7 +121,9 @@ async function runCollections(collections) {
 async function processAllCategories() {
   const collections = []
   for (const category of await subdirs(ORIGINALS_DIR)) {
-    for (const collection of await subdirs(path.join(ORIGINALS_DIR, category))) {
+    for (const collection of await subdirs(
+      path.join(ORIGINALS_DIR, category),
+    )) {
       collections.push(path.join(category, collection))
     }
   }
