@@ -249,7 +249,10 @@ function RailChapter({
             )}
           </div>
         </div>
-        <div className="relative w-full shrink-0 border-l border-border pb-14 pl-8 sm:pl-12">
+        {/* Prose column is (li width − peek) wide: collapsed it then ends
+            exactly at the clip edge — same wrapping as plain chapters —
+            and only the expanded push slides it under the fade */}
+        <div className="relative w-[calc(100%-var(--rail-peek))] shrink-0 border-l border-border pb-14 pl-8 sm:pl-12">
           <span
             aria-hidden
             className={cn(
