@@ -26,8 +26,9 @@ import portraitPanelShot from "@/assets/portrait/nature/nature_5.jpg?w=400;800;1
 import portraitPanelLqip from "@/assets/portrait/nature/nature_5.jpg?w=24&format=webp&inline"
 // prettier-ignore
 import portraitPanelVertical from "@/assets/portrait/studio/studio_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-/* Drawings-section panel (user picks): horizontal random_3 (girl vs
-   machines — the imagination work), vertical fromReference_3 */
+/* Drawings-section panel (user picks): horizontal lake_4 is a TEMP
+   placeholder until a suitable wide drawing exists; vertical
+   fromReference_3 */
 // prettier-ignore
 import drawingPanelShot from "@/assets/landscape/lake/lake_4.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
 import drawingPanelLqip from "@/assets/landscape/lake/lake_4.jpg?w=24&format=webp&inline"
@@ -212,7 +213,8 @@ export default function Home() {
             Drawing
           </h2>
           <p className="mt-4 max-w-prose text-muted-foreground">
-            Not a showcase — an honest record of learning to draw, and failing at it.
+            Not a showcase — an honest record of learning to draw, and failing
+            at it.
           </p>
         </Reveal>
         <div className="mt-12">

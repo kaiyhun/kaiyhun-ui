@@ -23,18 +23,19 @@ import coverSketchesLqip from "@/assets/drawing/sketches/sketch_1.jpg?w=24&forma
 
 /** One chapter of the journey thread. */
 export interface JourneyChapter {
-  /** Small marker on the thread ("01", "2022", "now"…). */
+  /** Small marker on the thread ("2004", "2022", "Now"…). Rail chapters
+   *  are keyed by this in CHAPTER_WORK below — rename both together. */
   marker: string
-  /** PLACEHOLDER first-person paragraphs — user rewrites. */
+  /** First-person paragraphs — the user's own voice, never edited. */
   paragraphs: string[]
-  /** Renders as the five-year silence: tall, sparse, dashed thread. */
+  /** Renders as the years of silence: tall, sparse, dashed thread. */
   gap?: boolean
-  /** The "now" beat — thread dot turns primary. */
+  /** The "Now" beat — thread dot turns primary. */
   current?: boolean
 }
 
-/** PLACEHOLDER DRAFT — see file docstring. Beats follow
- *  docs/drawing-page-context.md §Narrative Arc. */
+/** The journey, in the user's own words (committed 2026-07-05); beats
+ *  follow docs/drawing-page-context.md §Narrative Arc. */
 export const JOURNEY: JourneyChapter[] = [
   {
     marker: "2004",
@@ -107,12 +108,13 @@ export const JOURNEY: JourneyChapter[] = [
   },
 ]
 
-/** Closing line under the record (PLACEHOLDER). */
+/** Closing line at the open end of the thread. */
 export const JOURNEY_CLOSER = "Still drawing."
 
 /**
- * The work, grouped and ordered as it appears on the page:
- * the 2022 sketches → current studies → imagined pieces.
+ * The work, grouped in lightbox order: the 2022 sketches → current
+ * studies from reference. The imagination group is commented out until
+ * those pieces return (restore its cover imports with it).
  */
 export const DRAWING_GROUPS: Collection[] = [
   {
