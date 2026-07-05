@@ -172,8 +172,7 @@ export default function Home() {
             Editing
           </h2>
           <p className="mt-4 ml-auto max-w-prose text-right text-muted-foreground">
-            The tools behind the photos — learn the process or take the look
-            with you.
+            Behind each of my photos is a mountain of editing.
           </p>
         </Reveal>
         <div className="mt-12 flex flex-col gap-6">
@@ -210,19 +209,18 @@ export default function Home() {
       >
         <Reveal>
           <h2 id="drawings-heading" className="text-display-sm">
-            Drawings
+            Drawing
           </h2>
           <p className="mt-4 max-w-prose text-muted-foreground">
-            Not a showcase — an honest record of learning to draw, five years
-            later.
+            Not a showcase — an honest record of learning to draw, and failing at it.
           </p>
         </Reveal>
         <div className="mt-12">
           <Reveal>
             <GatewayPanel
               to="/drawing"
-              title="Drawing"
-              subtitle="Studies, sketches, and the gap between them"
+              title="The Story"
+              subtitle="Twenty years of picking it up, putting it down, and starting again."
               picture={drawingPanelShot}
               portraitPicture={drawingPanelVertical}
               placeholder={drawingPanelLqip}
