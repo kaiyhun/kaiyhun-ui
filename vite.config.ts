@@ -3,13 +3,41 @@ import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import tailwindcss from "@tailwindcss/vite"
 import { imagetools } from "vite-imagetools"
+import mdx from "@mdx-js/rollup"
+import remarkFrontmatter from "remark-frontmatter"
+import remarkGfm from "remark-gfm"
+import rehypeSlug from "rehype-slug"
+import rehypeShiki from "@shikijs/rehype"
+import { createCssVariablesTheme } from "shiki/core"
+
+import { blogPostsPlugin } from "./config/blog-posts-plugin.ts"
+
+/* Code blocks are highlighted AT BUILD TIME (zero runtime JS); the theme
+   emits --shiki-* CSS variables so code colors live in index.css with
+   every other design token (docs/design-system.md) */
+const shikiCssTheme = createCssVariablesTheme({
+  name: "css-variables",
+  variablePrefix: "--shiki-",
+  fontStyle: true,
+})
 
 // https://vite.dev/config/
 export default defineConfig({
   // Project site deploys to kaiyhun.github.io/kaiyhun-ui/ — asset URLs break without this
   base: "/kaiyhun-ui/",
   plugins: [
-    react(),
+    // Blog pipeline (docs/blog.md): .mdx posts compile to lazy React
+    // components at build; frontmatter is stripped from the render and
+    // served as metadata by blogPostsPlugin. Must run before React.
+    {
+      enforce: "pre",
+      ...mdx({
+        remarkPlugins: [remarkFrontmatter, remarkGfm],
+        rehypePlugins: [rehypeSlug, [rehypeShiki, { theme: shikiCssTheme }]],
+      }),
+    },
+    blogPostsPlugin(),
+    react({ include: /\.(mdx|js|jsx|ts|tsx)$/ }),
     tailwindcss(),
     // Build-time image pipeline: imports with ?w=…&format=…&as=picture
     // directives emit responsive AVIF/WebP/JPEG derivatives (docs/images.md)
