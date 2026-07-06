@@ -6,9 +6,11 @@ first-class. Original kickoff spec: `docs/claude-code-kickoff.md`; current
 architecture of the "personal universe": `docs/homepage-brief.md`.
 
 **Wings & status:** Photography (LIVE — landscape + portrait categories),
-Editing (routes `/tutorial` + `/preset` live as placeholders; content =
-M10), Drawings (M7), Blog (M8, cross-cutting via tags), Lab/research+code
-(M9), About (M11). Milestone truth: `docs/implementation-plan.md`.
+Drawing (LIVE — journey timeline w/ inline work rails, user-voiced
+narrative; `docs/drawing-wing.md`), Editing (routes `/tutorial` +
+`/preset` live as placeholders; content = M10), Blog (M8, cross-cutting
+via tags), Lab/research+code (M9), About (M11). Milestone truth:
+`docs/implementation-plan.md`.
 
 ## Identity & content rules
 
@@ -26,6 +28,10 @@ M10), Drawings (M7), Blog (M8, cross-cutting via tags), Lab/research+code
   controlled vocabulary, per-category `TAG_CHIPS`. Use
   `requireCollection()` for compile-time-known slugs (throws loudly),
   `getCollection()` for route params (undefined → 404 view).
+- `drawings.ts` is the drawing model: `JOURNEY` chapters (the user's own
+  deeply personal narrative — NEVER edit the prose), `DRAWING_GROUPS`
+  (Collection shape, deliberately NOT in `COLLECTIONS`), `CHAPTER_WORK`
+  (marker → groups; keys must match `JOURNEY` markers).
 
 ## Tech stack (fixed)
 
@@ -48,14 +54,16 @@ src/pages      thin route components (ONLY default exports; pages are leaves —
                never import a page from anywhere but routes.tsx)
 src/features   gallery/ (masonry, lightbox, tag filter, category menu, pager)
                home/ (gateway panels, art-directed backdrop, section nav)
+               drawing/ (JourneyRail: chapter thread + collapsible image rails)
 src/components ui/ (shadcn, restyled) · motion/ (Reveal, Parallax) ·
                media/ (ResponsiveImage, PicturePreload) · layout/
-src/content    site.ts, collections.ts, types.ts — the content model
+src/content    site.ts, collections.ts, drawings.ts, types.ts — the content model
 src/lib        utils, motion-tokens, media-queries (MEDIA constants), images
 ```
 
 Routes: `/` · `/photography` (?category, ?tag, ?photo — all URL-driven) ·
-`/photography/:slug` · `/tutorial` · `/preset` · `*` 404. Deep links work
+`/photography/:slug` · `/drawing` (?view, ?photo) · `/tutorial` · `/preset` ·
+`*` 404. Deep links work
 on Pages via the 404.html postbuild copy (served with HTTP 404 status —
 expected and harmless).
 
@@ -124,6 +132,7 @@ expected and harmless).
 - `docs/code-conventions.md` — exports, naming, lint exceptions, tooling
 - `docs/design-system.md` — tokens (locked) + contrast/font-fallback notes
 - `docs/images.md` — image pipeline + ResponsiveImage API
+- `docs/drawing-wing.md` — /drawing layout, rail mechanics, content model
 - `docs/content-draft.md` — ALL approved copy/tags/curation (edit here first)
 
 ## Commands

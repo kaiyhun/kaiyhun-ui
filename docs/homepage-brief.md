@@ -60,18 +60,18 @@ incrementally — a door appears on the homepage only when its page is real
 
 ## Route map (target)
 
-| Route                | Page                                                                       |
-| -------------------- | -------------------------------------------------------------------------- |
-| `/`                  | Homepage hub                                                               |
-| `/photography`       | Collection index + related writing + satellite links                       |
-| `/photography/:slug` | Collection gallery (replaces `/c/:slug`)                                   |
-| `/preset`            | Free preset downloads (photography satellite; LIVE placeholder)            |
-| `/tutorial`          | Tutorial videos, embedded/linked (photography satellite; LIVE placeholder) |
-| `/drawings`          | Drawings gallery                                                           |
-| `/lab`               | Research & code pillar (naming TBD with user)                              |
-| `/blog`              | All posts, filterable by topic                                             |
-| `/blog/:slug`        | Post                                                                       |
-| `/about`             | Bio + contact                                                              |
+| Route                | Page                                                                                                              |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `/`                  | Homepage hub                                                                                                      |
+| `/photography`       | Collection index + related writing + satellite links                                                              |
+| `/photography/:slug` | Collection gallery (replaces `/c/:slug`)                                                                          |
+| `/preset`            | Free preset downloads (photography satellite; LIVE placeholder)                                                   |
+| `/tutorial`          | Tutorial videos, embedded/linked (photography satellite; LIVE placeholder)                                        |
+| `/drawing`           | Drawing wing (LIVE — shipped as journey timeline w/ inline work rails, not a gallery; see `docs/drawing-wing.md`) |
+| `/lab`               | Research & code pillar (naming TBD with user)                                                                     |
+| `/blog`              | All posts, filterable by topic                                                                                    |
+| `/blog/:slug`        | Post                                                                                                              |
+| `/about`             | Bio + contact                                                                                                     |
 
 ## Homepage composition (top to bottom)
 
@@ -127,17 +127,17 @@ URL, presets add download file). Everything declared in `src/content/`.
 
 ## Revised milestone sequence (PROPOSED — replaces approved M3–M7)
 
-| #   | Delivers                                                                                                            |
-| --- | ------------------------------------------------------------------------------------------------------------------- |
-| M3  | Unified content model + homepage hub (hero, gateway, about teaser) + `/photography` index page                      |
-| M4  | Collection pages `/photography/:slug` (as approved, re-homed)                                                       |
-| M5  | Lightbox (as approved)                                                                                              |
-| M6  | Cross-domain tags/filtering (as approved, now spanning types; subject vocabulary defined here)                      |
-| M7  | Drawings wing (`/drawings`, reusing gallery machinery) + cross-medium "related work" modules on both visual pillars |
-| M8  | Blog engine (markdown pipeline, `/blog`, post pages, homepage writing band, "related writing" on pillars)           |
-| M9  | Research & Code pillar (`/lab`: research shelf from blog engine + project cards)                                    |
-| M10 | Presets + Tutorials satellites (`/presets` downloads, `/tutorials` embeds, photography cross-links)                 |
-| M11 | About page + full polish/SEO/a11y/performance audit (absorbs old M7)                                                |
+| #   | Delivers                                                                                                                                                                                          |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| M3  | Unified content model + homepage hub (hero, gateway, about teaser) + `/photography` index page                                                                                                    |
+| M4  | Collection pages `/photography/:slug` (as approved, re-homed)                                                                                                                                     |
+| M5  | Lightbox (as approved)                                                                                                                                                                            |
+| M6  | Cross-domain tags/filtering (as approved, now spanning types; subject vocabulary defined here)                                                                                                    |
+| M7  | ✅ Drawing wing — shipped at `/drawing` as a personal journey timeline with inline work rails (reuses gallery tiles/lightbox); cross-medium "related work" modules deferred until drawings mature |
+| M8  | Blog engine (markdown pipeline, `/blog`, post pages, homepage writing band, "related writing" on pillars)                                                                                         |
+| M9  | Research & Code pillar (`/lab`: research shelf from blog engine + project cards)                                                                                                                  |
+| M10 | Presets + Tutorials satellites (`/presets` downloads, `/tutorials` embeds, photography cross-links)                                                                                               |
+| M11 | About page + full polish/SEO/a11y/performance audit (absorbs old M7)                                                                                                                              |
 
 Every milestone still ships deploy-green with docs updated.
 

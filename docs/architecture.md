@@ -21,11 +21,14 @@ src/
     collection.tsx        #   /photography/:slug  one collection's gallery
     tutorials.tsx         #   /tutorial      placeholder until M10
     presets.tsx           #   /preset        placeholder until M10
+    drawing.tsx           #   /drawing       journey timeline + inline work rails
     not-found.tsx         #   *              404
   features/               # Domain modules — a feature's components/hooks/types
     gallery/              #   Masonry, lightbox, tag filter, category menu,
                           #   pager, photo resolver (globs of LIVE categories)
     home/                 #   GatewayPanel, ArtDirectedBackdrop, SectionNav
+    drawing/              #   JourneyRail — chapter thread + collapsible image
+                          #   rails (docs/drawing-wing.md)
   components/             # Shared, feature-agnostic building blocks
     ui/                   #   shadcn primitives (editable source, restyled)
     motion/               #   Reveal, RevealGroup, Parallax
@@ -49,7 +52,10 @@ content ← (pages, features)        assets ← (content, components)
 
 - `components/` never imports from `features/` or `pages/`.
 - `features/` never import other features (if two need the same thing, it
-  moves down into `components/` or `lib/`).
+  moves down into `components/` or `lib/`). **Accepted exception:**
+  `features/drawing` imports the gallery's `PhotoTile`/`Lightbox`/photo
+  resolver — gallery is the shared media machinery for all visual wings;
+  if a third wing needs it, promote those pieces to `components/media/`.
 - `lib/` imports nothing app-specific.
 
 **Promotion rule:** a component starts inside its feature; the moment a
@@ -65,8 +71,8 @@ expectation there.
   in exactly one place (`vite.config.ts`).
 - Live routes: `/`, `/photography` (state in `?category` / `?tag` /
   `?photo` — all shareable), `/photography/:slug` (`?photo` lightbox),
-  `/tutorial`, `/preset`, `*` 404. Future wings per
-  `docs/homepage-brief.md`.
+  `/drawing` (`?photo` lightbox), `/tutorial`, `/preset`, `*` 404.
+  Future wings per `docs/homepage-brief.md`.
 - Every page is code-split with `React.lazy()` in `routes.tsx`, wrapped in
   one `<Suspense>` in the shell — visitors don't download the lightbox to
   see the home page.

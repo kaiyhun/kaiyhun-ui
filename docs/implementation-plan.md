@@ -6,6 +6,23 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
+> **M7 done & committed (2026-07-05).** Drawing wing live at /drawing:
+> journey timeline in the USER'S OWN VOICE (10 chapters, 2004→Now; the
+> two-year gap as dashed silence) with the record folded INTO the
+> timeline as per-chapter collapsible, scrollable image rails
+> (CHAPTER_WORK: 2023 → 6 studies, 2025 → 2 sketches; sliver + count-pill
+> indicators, right-edge fades, height-capped scroll w/ chevrons; one
+> URL-driven lightbox over all drawings in page order). Imagination group
+> commented out until pieces return. Homepage Drawings section
+> (right-aligned panel — horizontal lake_4 is a TEMP placeholder per the
+> user's commit; vertical fromReference_3), header nav link. Earlier
+> record-section layout + /drawing/alt comparison build deleted.
+> Feature doc: docs/drawing-wing.md. Cross-medium related-work modules
+> still deferred (revisit when drawings mature).
+> **M7 addendum (2026-07-05):** Story/Gallery sub-menu on /drawing
+> (?view, URL-driven, mirrors the photography CategoryMenu) — Gallery =
+> grouped masonry of just the work; one page-owned lightbox serves both
+> views; closer stays Story-only.
 > **M6.5 done (2026-07-03), awaiting user commit + review of portrait
 > content drafts (content-draft.md §9).** Portrait wing added to the
 > photography pillar: 7 collections / 29 photos in the content model,
