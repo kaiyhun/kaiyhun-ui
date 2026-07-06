@@ -163,7 +163,7 @@ export const DRAWING_GROUPS: Collection[] = [
     slug: "sketches-2025",
     folder: "drawing/sketches",
     title: "2025 — Quick Sketches",
-    description: "Picking it backup. Unfinished.",
+    description: "Picking it backup. Unfinished doodles.",
     tags: ["drawing"],
     cover: { picture: coverSketches, lqip: coverSketchesLqip },
     coverAlt: "Quick grayscale sketch of a short-haired girl",
