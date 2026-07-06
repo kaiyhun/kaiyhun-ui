@@ -72,13 +72,13 @@ export const JOURNEY: JourneyChapter[] = [
     ],
   },
   {
-    marker: "2021",
+    marker: "2022",
     paragraphs: [
       "I gave myself a year to get good. I started from the fundamentals: shapes, then portrait drawing, since it's the most covered topic out there. I experimented with different styles (realism, anime, stylized), trying to find what my style even was, filling pencil drawing books and digital PSD files along the way.",
     ],
   },
   {
-    marker: "2022",
+    marker: "2023",
     paragraphs: [
       "One year later, I could draw from reference well enough, but through imagination, what landed on paper kept refusing to match what I saw in my head. The anatomy I'd learned, when faced with different angles, didn't translate. I felt like my skills were the same as when I started. Deep down, I felt like I lacked talent, and no matter how much time I invested, it wouldn't improve.",
       "I didn't want to just draw from reference; I wanted to draw from thought. I'd picked up drawing many times before, and never once felt like I'd reached the next milestone. I kept going down that rabbit hole. Even after the year was up, I kept going.",
@@ -91,7 +91,7 @@ export const JOURNEY: JourneyChapter[] = [
     paragraphs: ["Four years later."],
   },
   {
-    marker: "2026",
+    marker: "2025",
     paragraphs: [
       "Over the years, my confidence in myself and my abilities kept dropping. But I still wanted to draw.",
       "For the first time in four years, I picked up my pen and started doodling again.",
@@ -118,10 +118,52 @@ export const JOURNEY_CLOSER = "Still drawing."
  */
 export const DRAWING_GROUPS: Collection[] = [
   {
-    slug: "sketches-2022",
+    slug: "studies",
+    folder: "drawing/fromReference",
+    title: "Studies — Finished",
+    description:
+      "20+ hours of study per drawing, using tutorials & reference images.",
+    tags: ["drawing"],
+    cover: { picture: coverStudies, lqip: coverStudiesLqip },
+    coverAlt: "Grayscale study of a short-haired under soft light",
+    photos: [
+      {
+        file: "fromReference_1",
+        alt: "Grayscale study of a woman with long dark hair @pinterest_reference_add_later",
+        tags: ["drawing"],
+      },
+      {
+        file: "fromReference_5",
+        alt: "Study following one of @wlop's drawing videos",
+        tags: ["drawing"],
+      },
+      {
+        file: "fromReference_6",
+        alt: "Study of Aoelian following one of @wlop's drawing videos",
+        tags: ["drawing"],
+      },
+      {
+        file: "fromReference_3",
+        alt: "Study of a freckled portrait @pinterest_reference_add_later",
+        tags: ["drawing"],
+      },
+      {
+        file: "fromReference_2",
+        alt: "Grayscale study of a short-haired woman @pinterest_reference_add_later",
+        tags: ["drawing"],
+      },
+      {
+        file: "fromReference_4",
+        alt: "Portrait study @pinterest_reference_add_later",
+        tags: ["drawing"],
+      },
+    ],
+  },
+  {
+    slug: "sketches-2025",
     folder: "drawing/sketches",
-    title: "2022 — quick sketches",
-    description: "What's left from the year of chasing everything. Unfinished.",
+    title: "2025 — Quick Sketches",
+    description: "Picking it backup. Unfinished.",
     tags: ["drawing"],
     cover: { picture: coverSketches, lqip: coverSketchesLqip },
     coverAlt: "Quick grayscale sketch of a short-haired girl",
@@ -134,48 +176,6 @@ export const DRAWING_GROUPS: Collection[] = [
       {
         file: "sketch_2",
         alt: "Light line art from @pinterest_reference_add_later",
-        tags: ["drawing"],
-      },
-    ],
-  },
-  {
-    slug: "studies",
-    folder: "drawing/fromReference",
-    title: "Now — studies from reference",
-    description:
-      "Value studies from tutorials and reference. Where the practice actually happens.",
-    tags: ["drawing"],
-    cover: { picture: coverStudies, lqip: coverStudiesLqip },
-    coverAlt: "Grayscale study of a short-haired blonde woman in soft light",
-    photos: [
-      {
-        file: "fromReference_1",
-        alt: "Grayscale study of a woman with long dark hair @pinterest_reference_add_later",
-        tags: ["drawing"],
-      },
-      {
-        file: "fromReference_2",
-        alt: "Grayscale study of a short-haired woman @pinterest_reference_add_later",
-        tags: ["drawing"],
-      },
-      {
-        file: "fromReference_3",
-        alt: "Study of a freckled portrait @pinterest_reference_add_later",
-        tags: ["drawing"],
-      },
-      {
-        file: "fromReference_4",
-        alt: "Portrait study @pinterest_reference_add_later",
-        tags: ["drawing"],
-      },
-      {
-        file: "fromReference_5",
-        alt: "Study following one of @wlop's drawing videos",
-        tags: ["drawing"],
-      },
-      {
-        file: "fromReference_6",
-        alt: "Study of Aoelian following one of @wlop's drawing videos",
         tags: ["drawing"],
       },
     ],
@@ -221,8 +221,8 @@ export const DRAWING_SEQUENCE: TaggedPhoto[] = DRAWING_GROUPS.flatMap((group) =>
  * `marker` — if a marker is reworded above, update the key here too.
  */
 const CHAPTER_WORK: Record<string, string[]> = {
-  "2021": ["studies"],
-  "2026": ["sketches-2022"],
+  "2023": ["studies"],
+  "2025": ["sketches-2025"],
 }
 
 /** The drawings attached to a chapter, in page order — or [] if none. */
