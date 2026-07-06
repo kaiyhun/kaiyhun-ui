@@ -11,8 +11,9 @@
  * count pill ("6 drawings") — the discoverability cues. Expanded, the
  * rail slides in and pushes the thread dot + prose to the right; the
  * prose does NOT rewrap — it slides under a soft right-edge fade. Rails
- * are height-capped and scroll (wheel/touch + chevrons). One lightbox
- * spans ALL drawings in page order, opened from the rail tiles.
+ * are height-capped and scroll (wheel/touch + chevrons). Rail tiles
+ * report clicks up via `onOpen` — the page owns the lightbox (shared
+ * with the Gallery view).
  *
  * a11y: the pill is the real disclosure control (aria-expanded /
  * aria-controls); the sliver strip is a pointer-only duplicate target
@@ -26,15 +27,12 @@ import { useEffect, useRef, useState } from "react"
 import { Reveal } from "@/components/motion/reveal"
 import type { TaggedPhoto } from "@/content/collections"
 import {
-  DRAWING_SEQUENCE,
   JOURNEY,
   workForChapter,
   type JourneyChapter,
 } from "@/content/drawings"
-import { Lightbox } from "@/features/gallery/lightbox"
 import { PhotoTile } from "@/features/gallery/photo-tile"
 import { getPhotoImage } from "@/features/gallery/photos"
-import { useLightboxState } from "@/features/gallery/use-lightbox-state"
 import { cn } from "@/lib/utils"
 
 /* Rail geometry, shared by every chapter so the thread stays aligned:
@@ -49,35 +47,28 @@ const RAIL_VARS =
 /** One standard: a single column of tiles, rail width minus the gutter. */
 const RAIL_SIZES = "(min-width: 40rem) 19.75rem, 10.75rem"
 
-export function JourneyRail() {
-  const lightbox = useLightboxState()
+interface JourneyRailProps {
+  /** Opens the page-level lightbox on this photo file. */
+  onOpen: (file: string) => void
+}
 
+export function JourneyRail({ onOpen }: JourneyRailProps) {
   return (
-    <>
-      <ol className="mt-16">
-        {JOURNEY.map((chapter, index) => {
-          const work = workForChapter(chapter.marker)
-          return work.length > 0 ? (
-            <RailChapter
-              key={index}
-              chapter={chapter}
-              work={work}
-              onOpen={lightbox.open}
-            />
-          ) : (
-            <PlainChapter key={index} chapter={chapter} />
-          )
-        })}
-      </ol>
-
-      <Lightbox
-        photos={DRAWING_SEQUENCE}
-        title="Drawing record"
-        file={lightbox.file}
-        onNavigate={lightbox.goTo}
-        onClose={lightbox.close}
-      />
-    </>
+    <ol className="mt-16">
+      {JOURNEY.map((chapter, index) => {
+        const work = workForChapter(chapter.marker)
+        return work.length > 0 ? (
+          <RailChapter
+            key={index}
+            chapter={chapter}
+            work={work}
+            onOpen={onOpen}
+          />
+        ) : (
+          <PlainChapter key={index} chapter={chapter} />
+        )
+      })}
+    </ol>
   )
 }
 
@@ -200,9 +191,9 @@ function RailChapter({
               </div>
             </div>
 
-            {/* Soften the drawings' right edge toward the thread — same
-                treatment as the clipped prose, only while expanded so the
-                collapsed slivers stay visible */}
+            {/* Half-opacity right-edge fade softens the collapsed
+                slivers (user-tuned); expanded drawings show at full
+                contrast */}
             <div
               aria-hidden
               className={cn(
