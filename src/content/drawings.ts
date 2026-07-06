@@ -88,13 +88,13 @@ export const JOURNEY: JourneyChapter[] = [
   {
     marker: "",
     gap: true,
-    paragraphs: ["Four years later."],
+    paragraphs: ["Two years later."],
   },
   {
     marker: "2025",
     paragraphs: [
       "Over the years, my confidence in myself and my abilities kept dropping. But I still wanted to draw.",
-      "For the first time in four years, I picked up my pen and started doodling again.",
+      "For the first time in two years, I picked up my pen and started doodling again.",
     ],
   },
   {
