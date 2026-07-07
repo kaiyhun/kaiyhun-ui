@@ -134,7 +134,7 @@ URL, presets add download file). Everything declared in `src/content/`.
 | M5  | Lightbox (as approved)                                                                                                                                                                            |
 | M6  | Cross-domain tags/filtering (as approved, now spanning types; subject vocabulary defined here)                                                                                                    |
 | M7  | ✅ Drawing wing — shipped at `/drawing` as a personal journey timeline with inline work rails (reuses gallery tiles/lightbox); cross-medium "related work" modules deferred until drawings mature |
-| M8  | Blog engine (markdown pipeline, `/blog`, post pages, homepage writing band, "related writing" on pillars)                                                                                         |
+| M8  | ✅ Blog engine — shipped: MDX pipeline, `/blog` + post pages, homepage Writing band, related-writing modules on both visual pillars                                                               |
 | M9  | Research & Code pillar (`/lab`: research shelf from blog engine + project cards)                                                                                                                  |
 | M10 | Presets + Tutorials satellites (`/presets` downloads, `/tutorials` embeds, photography cross-links)                                                                                               |
 | M11 | About page + full polish/SEO/a11y/performance audit (absorbs old M7)                                                                                                                              |

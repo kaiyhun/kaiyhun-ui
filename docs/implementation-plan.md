@@ -6,6 +6,20 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
+> **M8 blog engine done (2026-07-06), awaiting user review + commit.**
+> MDX pipeline (build-time compile, per-post lazy chunks, Shiki
+> highlighting on --shiki-* tokens, reading time via
+> config/blog-posts-plugin.ts virtual module): /blog quiet-list index
+> with ?topic filter (photography/drawing/editing/code), /blog/:slug
+> reading page (ToC w/ scroll-spy, date + reading time + copy-link,
+> prev/next pager), homepage Writing band + section-nav entry, Related
+> writing modules on /photography + /drawing (hidden until their topic
+> has posts), per-post static meta shells + sitemap.xml at postbuild.
+> First real post: why-i-started-coding (user's words, converted from
+> blog_1.md — description/date/topics are Claude picks pending review).
+> TWO FLAGGED PLACEHOLDER POSTS must be deleted before publishing.
+> No RSS, no comments, no drafts mechanism (user decisions).
+> Feature doc: docs/blog.md. Copy drafts: content-draft §12.
 > **M7 done & committed (2026-07-05).** Drawing wing live at /drawing:
 > journey timeline in the USER'S OWN VOICE (10 chapters, 2004→Now; the
 > two-year gap as dashed silence) with the record folded INTO the

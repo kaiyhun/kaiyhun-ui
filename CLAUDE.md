@@ -7,9 +7,10 @@ architecture of the "personal universe": `docs/homepage-brief.md`.
 
 **Wings & status:** Photography (LIVE — landscape + portrait categories),
 Drawing (LIVE — journey timeline w/ inline work rails, user-voiced
-narrative; `docs/drawing-wing.md`), Editing (routes `/tutorial` +
-`/preset` live as placeholders; content = M10), Blog (M8, cross-cutting
-via tags), Lab/research+code (M9), About (M11). Milestone truth:
+narrative; `docs/drawing-wing.md`), Blog (ENGINE LIVE — MDX pipeline,
+`docs/blog.md`; placeholders await real posts), Editing (routes
+`/tutorial` + `/preset` live as placeholders; content = M10),
+Lab/research+code (M9), About (M11). Milestone truth:
 `docs/implementation-plan.md`.
 
 ## Identity & content rules
@@ -28,6 +29,10 @@ via tags), Lab/research+code (M9), About (M11). Milestone truth:
   controlled vocabulary, per-category `TAG_CHIPS`. Use
   `requireCollection()` for compile-time-known slugs (throws loudly),
   `getCollection()` for route params (undefined → 404 view).
+- `posts.ts` + `posts/*.mdx` are the blog model: frontmatter via the
+  `virtual:blog-posts` plugin (NEVER eager-glob MDX — it kills per-post
+  chunks), controlled topic vocabulary, build fails loudly on bad
+  frontmatter. Authoring workflow: `docs/blog.md`.
 - `drawings.ts` is the drawing model: `JOURNEY` chapters (the user's own
   deeply personal narrative — NEVER edit the prose), `DRAWING_GROUPS`
   (Collection shape, deliberately NOT in `COLLECTIONS`), `CHAPTER_WORK`
@@ -55,15 +60,17 @@ src/pages      thin route components (ONLY default exports; pages are leaves —
 src/features   gallery/ (masonry, lightbox, tag filter, category menu, pager)
                home/ (gateway panels, art-directed backdrop, section nav)
                drawing/ (JourneyRail: chapter thread + collapsible image rails)
+               blog/ (post list, topic menu, ToC, MDX element map, bands)
 src/components ui/ (shadcn, restyled) · motion/ (Reveal, Parallax) ·
                media/ (ResponsiveImage, PicturePreload) · layout/
-src/content    site.ts, collections.ts, drawings.ts, types.ts — the content model
+src/content    site.ts, collections.ts, drawings.ts, posts.ts + posts/*.mdx,
+               types.ts — the content model
 src/lib        utils, motion-tokens, media-queries (MEDIA constants), images
 ```
 
 Routes: `/` · `/photography` (?category, ?tag, ?photo — all URL-driven) ·
-`/photography/:slug` · `/drawing` (?view, ?photo) · `/tutorial` · `/preset` ·
-`*` 404. Deep links work
+`/photography/:slug` · `/drawing` (?view, ?photo) · `/blog` (?topic) ·
+`/blog/:slug` · `/tutorial` · `/preset` · `*` 404. Deep links work
 on Pages via the 404.html postbuild copy (served with HTTP 404 status —
 expected and harmless).
 
@@ -133,6 +140,7 @@ expected and harmless).
 - `docs/design-system.md` — tokens (locked) + contrast/font-fallback notes
 - `docs/images.md` — image pipeline + ResponsiveImage API
 - `docs/drawing-wing.md` — /drawing layout, rail mechanics, content model
+- `docs/blog.md` — MDX pipeline, authoring posts, topics, meta shells
 - `docs/content-draft.md` — ALL approved copy/tags/curation (edit here first)
 
 ## Commands
