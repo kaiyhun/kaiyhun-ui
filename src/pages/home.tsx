@@ -81,8 +81,8 @@ function countLine(category: "landscape" | "portrait") {
 const HOME_SECTIONS: HomeSection[] = [
   { id: "photography", label: "Photography" },
   { id: "editing", label: "Editing" },
-  { id: "drawings", label: "Drawings" },
-  ...(POSTS.length > 0 ? [{ id: "writing", label: "Writing" }] : []),
+  { id: "drawing", label: "Drawing" },
+  ...(POSTS.length > 0 ? [{ id: "blog", label: "Blog" }] : []),
 ]
 
 export default function Home() {
@@ -207,7 +207,7 @@ export default function Home() {
 
       {/* ============ Drawings — the progress record ============ */}
       <section
-        id="drawings"
+        id="drawing"
         aria-labelledby="drawings-heading"
         className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
       >
@@ -237,7 +237,7 @@ export default function Home() {
       {/* ============ Blog — the hallway (hidden until real) ==== */}
       {POSTS.length > 0 && (
         <section
-          id="Blog"
+          id="blog"
           aria-labelledby="blog-heading"
           className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
         >
