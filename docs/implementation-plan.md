@@ -6,6 +6,16 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
+> **M10-A tutorials done (2026-07-07), awaiting user review + commit.**
+> /tutorial rebuilt from placeholder: Videos view (facade embeds —
+> zero YouTube JS until click, real titles/thumbnails via build-time
+> oEmbed w/ soft-fail + hand-written fallbacks, featured large + grid,
+> channel link) and Before & After view (?view — why-we-edit essay
+> PLACEHOLDER + draggable comparison sliders, pointer + keyboard
+> operable). UnderlineTabs promoted to components/ui (4th consumer;
+> migrating the 3 older menus queued for M11). ⚠ Slider image pairs are
+> PLACEHOLDER stand-ins; essay awaits the user's voice. M10-B (presets)
+> remains. Feature doc: docs/tutorials.md. Drafts: content-draft §14.
 > **M9 Lab done (2026-07-07), awaiting user review + commit.**
 > /lab pillar: project cards (status badges, tech chips, outbound
 > GitHub/demo/write-up links, build-time GitHub stars+last-push via
