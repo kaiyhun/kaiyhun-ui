@@ -11,6 +11,7 @@ import rehypeShiki from "@shikijs/rehype"
 import { createCssVariablesTheme } from "shiki/core"
 
 import { blogPostsPlugin } from "./config/blog-posts-plugin.ts"
+import { githubStatsPlugin } from "./config/github-stats-plugin.ts"
 
 /* Code blocks are highlighted AT BUILD TIME (zero runtime JS); the theme
    emits --shiki-* CSS variables so code colors live in index.css with
@@ -37,6 +38,8 @@ export default defineConfig({
       }),
     },
     blogPostsPlugin(),
+    // Lab enrichment: build-time GitHub stars/last-push, always fails soft
+    githubStatsPlugin(),
     react({ include: /\.(mdx|js|jsx|ts|tsx)$/ }),
     tailwindcss(),
     // Build-time image pipeline: imports with ?w=…&format=…&as=picture

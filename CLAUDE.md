@@ -10,7 +10,8 @@ Drawing (LIVE — journey timeline w/ inline work rails, user-voiced
 narrative; `docs/drawing-wing.md`), Blog (ENGINE LIVE — MDX pipeline,
 `docs/blog.md`; placeholders await real posts), Editing (routes
 `/tutorial` + `/preset` live as placeholders; content = M10),
-Lab/research+code (M9), About (M11). Milestone truth:
+Lab (ENGINE LIVE — /lab projects+papers, ALL MOCK content until user
+swaps real repos/papers; `docs/lab.md`), About (M11). Milestone truth:
 `docs/implementation-plan.md`.
 
 ## Identity & content rules
@@ -61,16 +62,17 @@ src/features   gallery/ (masonry, lightbox, tag filter, category menu, pager)
                home/ (gateway panels, art-directed backdrop, section nav)
                drawing/ (JourneyRail: chapter thread + collapsible image rails)
                blog/ (post list, topic menu, ToC, MDX element map, bands)
+               lab/ (project cards, papers shelf, page nav)
 src/components ui/ (shadcn, restyled) · motion/ (Reveal, Parallax) ·
                media/ (ResponsiveImage, PicturePreload) · layout/
 src/content    site.ts, collections.ts, drawings.ts, posts.ts + posts/*.mdx,
-               types.ts — the content model
+               lab.ts, types.ts — the content model
 src/lib        utils, motion-tokens, media-queries (MEDIA constants), images
 ```
 
 Routes: `/` · `/photography` (?category, ?tag, ?photo — all URL-driven) ·
 `/photography/:slug` · `/drawing` (?view, ?photo) · `/blog` (?topic) ·
-`/blog/:slug` · `/tutorial` · `/preset` · `*` 404. Deep links work
+`/blog/:slug` · `/lab` · `/tutorial` · `/preset` · `*` 404. Deep links work
 on Pages via the 404.html postbuild copy (served with HTTP 404 status —
 expected and harmless).
 
@@ -141,6 +143,7 @@ expected and harmless).
 - `docs/images.md` — image pipeline + ResponsiveImage API
 - `docs/drawing-wing.md` — /drawing layout, rail mechanics, content model
 - `docs/blog.md` — MDX pipeline, authoring posts, topics, meta shells
+- `docs/lab.md` — /lab model, GitHub enrichment (soft-fail), mock swap
 - `docs/content-draft.md` — ALL approved copy/tags/curation (edit here first)
 
 ## Commands
