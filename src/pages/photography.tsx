@@ -26,6 +26,7 @@ import {
   type PhotoCategory,
 } from "@/content/collections"
 import type { Collection } from "@/content/types"
+import { RelatedWriting } from "@/features/blog/related-writing"
 import { CategoryMenu } from "@/features/gallery/category-menu"
 import { Lightbox } from "@/features/gallery/lightbox"
 import { MasonryGrid } from "@/features/gallery/masonry-grid"
@@ -207,6 +208,9 @@ export default function Photography() {
           ))}
         </motion.div>
       </AnimatePresence>
+
+      {/* The hallway bridge: photography-topic posts (renders when real) */}
+      <RelatedWriting topic="photography" />
 
       {/* Lightbox over a pooled tag view: navigation, counter, and
           preloading all follow the TAG pool within one category.

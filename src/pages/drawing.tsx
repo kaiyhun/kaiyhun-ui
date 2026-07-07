@@ -14,6 +14,7 @@ import { useSearchParams } from "react-router"
 
 import { Reveal } from "@/components/motion/reveal"
 import { DRAWING_SEQUENCE, JOURNEY_CLOSER } from "@/content/drawings"
+import { RelatedWriting } from "@/features/blog/related-writing"
 import { DrawingGallery } from "@/features/drawing/gallery"
 import { JourneyRail } from "@/features/drawing/journey-rail"
 import { ViewMenu, type DrawingView } from "@/features/drawing/view-menu"
@@ -80,6 +81,9 @@ export default function Drawing() {
           )}
         </motion.div>
       </AnimatePresence>
+
+      {/* The hallway bridge: drawing-topic posts (renders when real) */}
+      <RelatedWriting topic="drawing" />
 
       {/* One lightbox for both views: all drawings in page order */}
       <Lightbox
