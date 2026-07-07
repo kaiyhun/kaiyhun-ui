@@ -234,19 +234,19 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ Writing — the hallway (hidden until real) ==== */}
+      {/* ============ Blog — the hallway (hidden until real) ==== */}
       {POSTS.length > 0 && (
         <section
-          id="writing"
-          aria-labelledby="writing-heading"
+          id="Blog"
+          aria-labelledby="blog-heading"
           className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
         >
           <Reveal>
-            <h2 id="writing-heading" className="text-display-sm">
-              Writing
+            <h2 id="blog-heading" className="text-display-sm">
+              Blog
             </h2>
             <p className="mt-4 max-w-prose text-muted-foreground">
-              Latest from the blog — notes across every wing.
+              Some interesting things I thought I'd share.
             </p>
           </Reveal>
           <div className="mt-8 max-w-3xl">
