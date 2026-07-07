@@ -53,7 +53,9 @@ import {
   photoCountIn,
   requireCollection,
 } from "@/content/collections"
+import { POSTS } from "@/content/posts"
 import { SITE } from "@/content/site"
+import { WritingBand } from "@/features/blog/writing-band"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
 import { GatewayPanel } from "@/features/home/gateway-panel"
 import { SectionNav, type HomeSection } from "@/features/home/section-nav"
@@ -75,11 +77,12 @@ function countLine(category: "landscape" | "portrait") {
 }
 
 /** Sections the floating nav can jump to — grows as wings ship
- *  (drawings, lab, blog…). */
+ *  (lab…). Writing appears only once posts exist ("hidden until real"). */
 const HOME_SECTIONS: HomeSection[] = [
   { id: "photography", label: "Photography" },
   { id: "editing", label: "Editing" },
   { id: "drawings", label: "Drawings" },
+  ...(POSTS.length > 0 ? [{ id: "writing", label: "Writing" }] : []),
 ]
 
 export default function Home() {
@@ -230,6 +233,27 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* ============ Writing — the hallway (hidden until real) ==== */}
+      {POSTS.length > 0 && (
+        <section
+          id="writing"
+          aria-labelledby="writing-heading"
+          className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
+        >
+          <Reveal>
+            <h2 id="writing-heading" className="text-display-sm">
+              Writing
+            </h2>
+            <p className="mt-4 max-w-prose text-muted-foreground">
+              Latest from the blog — notes across every wing.
+            </p>
+          </Reveal>
+          <div className="mt-8 max-w-3xl">
+            <WritingBand />
+          </div>
+        </section>
+      )}
 
       {/* Floating section menu — appears once the visitor scrolls */}
       <SectionNav sections={HOME_SECTIONS} />

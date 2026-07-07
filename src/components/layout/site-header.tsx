@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils"
 const NAV_LINKS = [
   { label: "Photography", to: "/photography" },
   { label: "Drawing", to: "/drawing" },
+  { label: "Blog", to: "/blog" },
 ]
 
 export function SiteHeader() {

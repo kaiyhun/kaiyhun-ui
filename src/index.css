@@ -168,6 +168,21 @@
   --sidebar-border: oklch(1 0 0 / 12%);
   --sidebar-ring: oklch(0.62 0.17 255);
 
+  /* Code highlighting — Shiki (build-time) reads var(--shiki-*): the
+     palette stays blue-family for structure, with the rare orange
+     reserved for string values (docs/blog.md) */
+  --shiki-foreground: oklch(0.9 0.02 255);
+  --shiki-background: oklch(0.19 0.014 255);
+  --shiki-token-comment: oklch(0.55 0.02 255);
+  --shiki-token-keyword: oklch(0.7 0.14 290);
+  --shiki-token-function: oklch(0.75 0.11 235);
+  --shiki-token-constant: oklch(0.78 0.1 210);
+  --shiki-token-parameter: oklch(0.85 0.04 255);
+  --shiki-token-string: oklch(0.76 0.11 60);
+  --shiki-token-string-expression: oklch(0.76 0.11 60);
+  --shiki-token-punctuation: oklch(0.68 0.015 255);
+  --shiki-token-link: oklch(0.62 0.17 255);
+
   /* Shape — one knob controls every radius */
   --radius: 0.5rem;
 

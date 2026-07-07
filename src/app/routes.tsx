@@ -12,6 +12,8 @@ const Collection = lazy(() => import("@/pages/collection"))
 const Tutorials = lazy(() => import("@/pages/tutorials"))
 const Presets = lazy(() => import("@/pages/presets"))
 const Drawing = lazy(() => import("@/pages/drawing"))
+const Blog = lazy(() => import("@/pages/blog"))
+const Post = lazy(() => import("@/pages/post"))
 const NotFound = lazy(() => import("@/pages/not-found"))
 
 interface AppRoutesProps {
@@ -29,6 +31,8 @@ export function AppRoutes({ location }: AppRoutesProps) {
       <Route path="tutorial" element={<Tutorials />} />
       <Route path="preset" element={<Presets />} />
       <Route path="drawing" element={<Drawing />} />
+      <Route path="blog" element={<Blog />} />
+      <Route path="blog/:slug" element={<Post />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
