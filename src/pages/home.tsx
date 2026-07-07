@@ -82,6 +82,7 @@ const HOME_SECTIONS: HomeSection[] = [
   { id: "photography", label: "Photography" },
   { id: "editing", label: "Editing" },
   { id: "drawing", label: "Drawing" },
+  { id: "lab", label: "Lab" },
   ...(POSTS.length > 0 ? [{ id: "blog", label: "Blog" }] : []),
 ]
 
@@ -232,6 +233,32 @@ export default function Home() {
             />
           </Reveal>
         </div>
+      </section>
+
+      {/* ============ Lab — research & code (text-only door) ======= */}
+      <section
+        id="lab"
+        aria-labelledby="lab-heading"
+        className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
+      >
+        <Reveal>
+          <h2 id="lab-heading" className="text-display-sm">
+            Lab
+          </h2>
+          <p className="mt-4 max-w-prose text-muted-foreground">
+            Research, projects, and the code behind them.
+          </p>
+          <Link
+            to="/lab"
+            className="group mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          >
+            Enter the lab
+            <ArrowRight
+              aria-hidden
+              className="size-4 transition-transform duration-(--motion-duration-fast) ease-(--ease-out-expo) group-hover:translate-x-1"
+            />
+          </Link>
+        </Reveal>
       </section>
 
       {/* ============ Blog — the hallway (hidden until real) ==== */}

@@ -13,6 +13,7 @@ const Tutorials = lazy(() => import("@/pages/tutorials"))
 const Presets = lazy(() => import("@/pages/presets"))
 const Drawing = lazy(() => import("@/pages/drawing"))
 const Blog = lazy(() => import("@/pages/blog"))
+const Lab = lazy(() => import("@/pages/lab"))
 const Post = lazy(() => import("@/pages/post"))
 const NotFound = lazy(() => import("@/pages/not-found"))
 
@@ -33,6 +34,7 @@ export function AppRoutes({ location }: AppRoutesProps) {
       <Route path="drawing" element={<Drawing />} />
       <Route path="blog" element={<Blog />} />
       <Route path="blog/:slug" element={<Post />} />
+      <Route path="lab" element={<Lab />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
