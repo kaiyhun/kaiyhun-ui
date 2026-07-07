@@ -4,3 +4,4 @@ package-lock.json
 src/assets/
 # Raw post drafts at the repo root (converted into src/content/posts/)
 blog_*.md
+docs/tutorial.md

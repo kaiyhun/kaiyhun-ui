@@ -8,8 +8,9 @@ architecture of the "personal universe": `docs/homepage-brief.md`.
 **Wings & status:** Photography (LIVE — landscape + portrait categories),
 Drawing (LIVE — journey timeline w/ inline work rails, user-voiced
 narrative; `docs/drawing-wing.md`), Blog (ENGINE LIVE — MDX pipeline,
-`docs/blog.md`; placeholders await real posts), Editing (routes
-`/tutorial` + `/preset` live as placeholders; content = M10),
+`docs/blog.md`; placeholders await real posts), Editing (Tutorials LIVE
+— facade embeds + before/after sliders, `docs/tutorials.md`, slider
+pairs + essay are placeholders; Presets = M10-B),
 Lab (ENGINE LIVE — /lab projects+papers, ALL MOCK content until user
 swaps real repos/papers; `docs/lab.md`), About (M11). Milestone truth:
 `docs/implementation-plan.md`.
@@ -66,7 +67,7 @@ src/features   gallery/ (masonry, lightbox, tag filter, category menu, pager)
 src/components ui/ (shadcn, restyled) · motion/ (Reveal, Parallax) ·
                media/ (ResponsiveImage, PicturePreload) · layout/
 src/content    site.ts, collections.ts, drawings.ts, posts.ts + posts/*.mdx,
-               lab.ts, types.ts — the content model
+               lab.ts, tutorials.ts, types.ts — the content model
 src/lib        utils, motion-tokens, media-queries (MEDIA constants), images
 ```
 
@@ -144,6 +145,7 @@ expected and harmless).
 - `docs/drawing-wing.md` — /drawing layout, rail mechanics, content model
 - `docs/blog.md` — MDX pipeline, authoring posts, topics, meta shells
 - `docs/lab.md` — /lab model, GitHub enrichment (soft-fail), mock swap
+- `docs/tutorials.md` — facade embeds, oEmbed enrichment, slider contract
 - `docs/content-draft.md` — ALL approved copy/tags/curation (edit here first)
 
 ## Commands
