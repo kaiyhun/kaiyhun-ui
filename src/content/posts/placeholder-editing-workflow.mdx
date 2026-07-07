@@ -1,0 +1,69 @@
+---
+title: "[PLACEHOLDER] A longer demo post — replace before publishing"
+description: "Placeholder copy exercising every element the reading page supports: headings, images, code, lists, quotes, tables."
+date: "2026-07-05"
+topics: ["editing", "photography"]
+---
+
+import demoShot from "@/assets/landscape/goldenHour/goldenHour_7.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+import demoLqip from "@/assets/landscape/goldenHour/goldenHour_7.jpg?w=24&format=webp&inline"
+import { ResponsiveImage } from "@/components/media/responsive-image"
+
+> ⚠ This is scaffolding, not writing. Every word here exists to shape the
+> reading layout and must be replaced by Kaiyhun's own post before the
+> blog ships.
+
+This placeholder demonstrates the full element set so the layout can be
+reviewed against realistic structure. The table of contents on the right
+(wide screens) is generated from the headings below.
+
+## Images use the site pipeline
+
+Posts embed photographs through the same `ResponsiveImage` + imagetools
+flow as every gallery — LQIP blur-up, AVIF/WebP tiers, lazy loading:
+
+<ResponsiveImage
+  picture={demoShot}
+  placeholder={demoLqip}
+  alt="Golden-hour light over the water (placeholder demo image)"
+  sizes="(min-width: 48rem) 42rem, 100vw"
+  className="my-2 rounded-xl"
+/>
+
+Plain markdown images work too, but the component form keeps the
+performance budget intact.
+
+## Code blocks are highlighted at build
+
+```ts
+// Shiki runs at build time — this block ships as colored spans, no JS
+export function readingTime(words: number): number {
+  return Math.max(1, Math.round(words / 220))
+}
+```
+
+Inline code like `npm run check` gets the same treatment.
+
+## Structure survives long posts
+
+A few more elements the design must hold:
+
+- Unordered lists with a couple of items
+- **Bold**, _italic_, and [links](https://example.com) inside prose
+- Ordered steps:
+
+1. Shoot the frame
+2. Edit the light
+3. Write it down
+
+| Element | Status |
+| ------- | ------ |
+| Tables  | Styled |
+| Quotes  | Below  |
+
+> Blockquotes carry pull-quote weight — one line of borrowed emphasis.
+
+## The closing section
+
+Enough headings now exist for the table of contents to render. Replace
+this file with a real post and delete both placeholders.
