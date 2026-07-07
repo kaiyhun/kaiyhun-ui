@@ -6,6 +6,15 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
+> **M9 Lab done (2026-07-07), awaiting user review + commit.**
+> /lab pillar: project cards (status badges, tech chips, outbound
+> GitHub/demo/write-up links, build-time GitHub stars+last-push via
+> virtual:github-stats — always fails soft), citation-style papers
+> shelf, code-topic related writing, sticky right-side page navigator
+> w/ scroll-spy. Nav link (desktop+mobile), homepage text-only Lab door
+> after Drawing, sitemap entry. ALL CONTENT IS MOCK ([MOCK] prefixes)
+> until the user swaps in real repos/papers post-UI (their decision).
+> Feature doc: docs/lab.md. Copy drafts: content-draft §13.
 > **M8 blog engine done (2026-07-06), awaiting user review + commit.**
 > MDX pipeline (build-time compile, per-post lazy chunks, Shiki
 > highlighting on --shiki-* tokens, reading time via
