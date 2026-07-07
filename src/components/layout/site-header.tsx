@@ -4,10 +4,13 @@
  * Nav shows only wings that exist ("hidden until real" —
  * docs/homepage-brief.md); more links land as milestones ship.
  * Backdrop-blurred so the cinematic imagery reads through it.
+ * Below `sm` the inline links collapse into the full-screen
+ * MobileMenu (hamburger) — same link list, one source.
  */
 import { Link, NavLink } from "react-router"
 
 import reactLogo from "@/assets/react.svg"
+import { MobileMenu } from "@/components/layout/mobile-menu"
 import { SITE } from "@/content/site"
 import { cn } from "@/lib/utils"
 
@@ -30,7 +33,7 @@ export function SiteHeader() {
             {SITE.name}
           </span>
         </Link>
-        <nav aria-label="Primary" className="flex items-center gap-6">
+        <nav aria-label="Primary" className="hidden items-center gap-6 sm:flex">
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.to}
@@ -46,6 +49,7 @@ export function SiteHeader() {
             </NavLink>
           ))}
         </nav>
+        <MobileMenu links={NAV_LINKS} />
       </div>
     </header>
   )
