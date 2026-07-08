@@ -17,7 +17,9 @@
 > in-character 404 line. Theme state now broadcasts via lib/theme.ts
 > (useMatrixTheme/useSyncExternalStore) so all triggers stay in sync.
 > Egg 6: hover-hold the header wordmark — the React starter logo spins
-> like it used to (CSS-only, reduced-motion safe).
+> like it used to (CSS-only, reduced-motion safe). Egg 7: Matrix-mode
+> terminal chrome — header as title bar (traffic lights,
+> kaiyhun@matrix: ~, mono nav) + blinking "➜ zsh" prompt bottom-left.
 > **M11 done (2026-07-08), awaiting user review + commit — SITE
 > COMPLETE pending checklist.** /about (bio + goals timeline + contact +
 > colophon — ALL PROSE DRAFT, content-draft §16) + nav/sitemap. Full

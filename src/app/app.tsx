@@ -17,6 +17,7 @@ import { BrowserRouter, useLocation } from "react-router"
 import { AppRoutes } from "@/app/routes"
 import { SiteFooter } from "@/components/layout/site-footer"
 import { SiteHeader } from "@/components/layout/site-header"
+import { TerminalPrompt } from "@/components/layout/terminal-prompt"
 import { MOTION } from "@/lib/motion-tokens"
 import { toggleMatrixTheme } from "@/lib/theme"
 
@@ -92,6 +93,7 @@ export function App() {
         <SiteHeader />
         <AnimatedRoutes />
         <SiteFooter />
+        <TerminalPrompt />
       </BrowserRouter>
     </MotionConfig>
   )
