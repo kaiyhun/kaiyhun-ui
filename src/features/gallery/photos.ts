@@ -7,7 +7,8 @@
  * Because this module lives in the lazy-loaded gallery feature, the
  * image metadata ships only with the collection-page chunk.
  *
- * The globs cover LIVE categories only (landscape, portrait, drawing) —
+ * The globs cover LIVE categories only (landscape, portrait, drawing,
+ * preset) —
  * masters
  * can sit in src/assets ahead of their wing shipping
  * without being built into dist. Add a pattern to the three globs when
@@ -23,6 +24,7 @@ const PICTURES = import.meta.glob(
     "/src/assets/landscape/*/*.jpg",
     "/src/assets/portrait/*/*.jpg",
     "/src/assets/drawing/*/*.jpg",
+    "/src/assets/preset/*/*.jpg",
   ],
   {
     query: "?w=400;800;1200&format=avif;webp;jpeg&as=picture",
@@ -37,6 +39,7 @@ const LQIPS = import.meta.glob(
     "/src/assets/landscape/*/*.jpg",
     "/src/assets/portrait/*/*.jpg",
     "/src/assets/drawing/*/*.jpg",
+    "/src/assets/preset/*/*.jpg",
   ],
   {
     query: "?w=24&format=webp&inline",
@@ -52,6 +55,7 @@ const LIGHTBOX_PICTURES = import.meta.glob(
     "/src/assets/landscape/*/*.jpg",
     "/src/assets/portrait/*/*.jpg",
     "/src/assets/drawing/*/*.jpg",
+    "/src/assets/preset/*/*.jpg",
   ],
   {
     query: "?w=1200;2000;2560&format=avif;webp;jpeg&as=picture",

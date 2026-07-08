@@ -71,6 +71,7 @@ const STATIC_ROUTES = [
   "blog",
   "tutorial",
   "preset",
+  "preset/2020",
 ]
 const urls = [
   ...STATIC_ROUTES.map((route) => ({ loc: `${ORIGIN}${BASE}${route}` })),
