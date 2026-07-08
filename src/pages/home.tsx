@@ -62,6 +62,7 @@ import { GatewayPanel } from "@/features/home/gateway-panel"
 import { MatrixRain } from "@/features/home/matrix-rain"
 import { SectionNav, type HomeSection } from "@/features/home/section-nav"
 import { MEDIA } from "@/lib/media-queries"
+import { applyMatrixTheme, isMatrixTheme } from "@/lib/theme"
 import { cn } from "@/lib/utils"
 
 /** Hero photo metadata comes from the content model, not re-written here. */
@@ -90,20 +91,18 @@ const HOME_SECTIONS: HomeSection[] = [
 ]
 
 export default function Home() {
-  /* Matrix mode — the easter-egg theme (index.css .theme-matrix).
-     Survives a round-trip to other pages via sessionStorage. */
-  const [matrix, setMatrix] = useState(
-    () => sessionStorage.getItem("home-theme") === "matrix",
-  )
+  /* Matrix mode — SITE-WIDE easter-egg theme (lib/theme.ts applies
+     .theme-matrix on <html>); this state just drives the hero UI */
+  const [matrix, setMatrix] = useState(isMatrixTheme)
   const toggleMatrix = () => {
     setMatrix((current) => {
-      sessionStorage.setItem("home-theme", current ? "" : "matrix")
+      applyMatrixTheme(!current)
       return !current
     })
   }
 
   return (
-    <main className={cn(matrix && "theme-matrix bg-background")}>
+    <main>
       {/* ============ Hero — identity statement ============ */}
       <section className="relative flex min-h-svh items-center overflow-hidden">
         {matrix ? (

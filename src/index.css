@@ -207,10 +207,11 @@
 }
 
 /*
- * Matrix mode — the homepage easter egg (hero theme toggle). Because
- * every color utility resolves var(--token), re-skinning the whole page
- * is this one scoped override: green phosphor on near-black. The
- * --matrix-rain-* tokens feed the canvas rain (features/home/matrix-rain).
+ * Matrix mode — the site-wide easter egg (hero theme toggle; lib/theme.ts
+ * puts this class on <html>). Because every color utility resolves
+ * var(--token), re-skinning the ENTIRE site — every page, chrome, and
+ * portal — is this one override block: green phosphor on near-black.
+ * The --matrix-rain-* tokens feed the canvas rain (features/home/matrix-rain).
  */
 .theme-matrix {
   --background: oklch(0.11 0.03 152);
@@ -233,6 +234,18 @@
   /* Rain glyphs: near-white head, phosphor trail */
   --matrix-rain-head: oklch(0.97 0.08 152);
   --matrix-rain-trail: oklch(0.75 0.22 152);
+  /* Code blocks follow the terminal into green */
+  --shiki-foreground: oklch(0.85 0.17 152);
+  --shiki-background: oklch(0.13 0.035 152);
+  --shiki-token-comment: oklch(0.55 0.08 152);
+  --shiki-token-keyword: oklch(0.92 0.23 152);
+  --shiki-token-function: oklch(0.88 0.2 140);
+  --shiki-token-constant: oklch(0.8 0.18 165);
+  --shiki-token-parameter: oklch(0.78 0.12 152);
+  --shiki-token-string: oklch(0.9 0.15 130);
+  --shiki-token-string-expression: oklch(0.9 0.15 130);
+  --shiki-token-punctuation: oklch(0.64 0.1 152);
+  --shiki-token-link: oklch(0.85 0.24 152);
 }
 
 @layer base {
