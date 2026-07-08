@@ -265,6 +265,24 @@
   }
 }
 
+/* Easter egg: the header logo is still the React starter atom ("for
+   now" — kickoff doc). Rest your cursor on it and it remembers what it
+   was born to do. Transform-only; skipped under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .logo-home:hover .logo-spin {
+    animation: logo-spin 2.4s linear infinite;
+    animation-delay: 0.6s;
+  }
+}
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

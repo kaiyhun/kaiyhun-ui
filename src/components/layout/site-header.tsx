@@ -28,9 +28,9 @@ export function SiteHeader() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
         <Link
           to="/"
-          className="flex items-center gap-2.5 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="logo-home flex items-center gap-2.5 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
-          <img src={reactLogo} alt="" className="size-6" />
+          <img src={reactLogo} alt="" className="logo-spin size-6" />
           <span className="font-display text-lg font-bold tracking-tight">
             {SITE.name}
           </span>
