@@ -20,6 +20,9 @@
 > like it used to (CSS-only, reduced-motion safe). Egg 7: Matrix-mode
 > terminal chrome — header as title bar (traffic lights,
 > kaiyhun@matrix: ~, mono nav) + blinking "➜ zsh" prompt bottom-left.
+> FINAL egg: the prompt is a working shell — cd <wing> navigates, ls /
+> help / clear / exit(wake) all real, unknown commands error in
+> character. Labelled input, a11y-clean.
 > **M11 done (2026-07-08), awaiting user review + commit — SITE
 > COMPLETE pending checklist.** /about (bio + goals timeline + contact +
 > colophon — ALL PROSE DRAFT, content-draft §16) + nav/sitemap. Full
