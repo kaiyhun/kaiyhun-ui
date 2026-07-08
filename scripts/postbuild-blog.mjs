@@ -68,6 +68,7 @@ const STATIC_ROUTES = [
   "photography",
   "drawing",
   "lab",
+  "about",
   "blog",
   "tutorial",
   "preset",

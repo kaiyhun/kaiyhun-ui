@@ -19,6 +19,7 @@ const NAV_LINKS = [
   { label: "Drawing", to: "/drawing" },
   { label: "Lab", to: "/lab" },
   { label: "Blog", to: "/blog" },
+  { label: "About", to: "/about" },
 ]
 
 export function SiteHeader() {
