@@ -25,6 +25,7 @@ import {
   photoCountIn,
   type PhotoCategory,
 } from "@/content/collections"
+import { SITE } from "@/content/site"
 import type { Collection } from "@/content/types"
 import { RelatedWriting } from "@/features/blog/related-writing"
 import { CategoryMenu } from "@/features/gallery/category-menu"
@@ -121,6 +122,13 @@ export default function Photography() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 pt-32 pb-24">
+      {/* React 19 hoists these into <head> (M11 SEO pass) */}
+      <title>{`Photography — ${SITE.name}`}</title>
+      <meta
+        name="description"
+        content="Landscape and portrait photography collections, filterable by subject."
+      />
+
       <Reveal>
         <h1 className="text-display-sm">Photography</h1>
         <div className="mt-8">

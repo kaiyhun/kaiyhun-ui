@@ -41,8 +41,8 @@ export function RelatedWriting({ topic }: RelatedWritingProps) {
       </Reveal>
       <ol className="mt-4">
         {posts.map((post) => (
-          <Reveal key={post.slug} distance={16}>
-            <li>
+          <li key={post.slug}>
+            <Reveal distance={16}>
               <Link
                 to={`/blog/${post.slug}`}
                 className="group flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-border/60 py-4 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
@@ -57,8 +57,8 @@ export function RelatedWriting({ topic }: RelatedWritingProps) {
                   {formatPostDate(post.date)}
                 </time>
               </Link>
-            </li>
-          </Reveal>
+            </Reveal>
+          </li>
         ))}
       </ol>
       <Reveal distance={16}>

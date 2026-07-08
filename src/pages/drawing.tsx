@@ -14,6 +14,7 @@ import { useSearchParams } from "react-router"
 
 import { Reveal } from "@/components/motion/reveal"
 import { DRAWING_SEQUENCE, JOURNEY_CLOSER } from "@/content/drawings"
+import { SITE } from "@/content/site"
 import { RelatedWriting } from "@/features/blog/related-writing"
 import { DrawingGallery } from "@/features/drawing/gallery"
 import { JourneyRail } from "@/features/drawing/journey-rail"
@@ -42,6 +43,13 @@ export default function Drawing() {
 
   return (
     <main className="mx-auto max-w-3xl px-6 pt-32 pb-24">
+      {/* React 19 hoists these into <head> (M11 SEO pass) */}
+      <title>{`Drawing — ${SITE.name}`}</title>
+      <meta
+        name="description"
+        content="A progress record of learning to draw — the story and the work."
+      />
+
       <Reveal>
         <h1 className="text-display-sm">Drawing</h1>
         <p className="mt-4 max-w-prose leading-relaxed text-muted-foreground">

@@ -90,7 +90,7 @@ export default function PostPage() {
 
       <Reveal>
         <header>
-          <p className="font-display text-xs font-semibold tracking-[0.15em] text-primary/80 uppercase">
+          <p className="font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase">
             {post.topics.map((topic) => TOPIC_LABELS[topic]).join(" · ")}
           </p>
           <h1 className="mt-3 text-display-sm">{post.title}</h1>
@@ -115,7 +115,9 @@ export default function PostPage() {
       </Reveal>
 
       <article className="mt-10">
-        <Suspense fallback={null}>
+        {/* Fallback reserves height so the pager/footer don't jump when
+            the lazy body mounts (CLS) */}
+        <Suspense fallback={<div className="min-h-[60svh]" aria-hidden />}>
           <Content components={MDX_COMPONENTS} />
           {/* Sibling inside the Suspense: mounts once the body commits,
               so it can read the rendered headings */}

@@ -16,8 +16,8 @@ export function PapersShelf() {
   return (
     <ol>
       {PAPERS.map((paper) => (
-        <Reveal key={paper.title} distance={16}>
-          <li className="border-b border-border py-6">
+        <li key={paper.title} className="border-b border-border py-6">
+          <Reveal distance={16}>
             <h3 className="max-w-prose font-medium">{paper.title}</h3>
             <p className="mt-1.5 text-sm text-muted-foreground">
               {paper.venue} · {paper.year}
@@ -59,8 +59,8 @@ export function PapersShelf() {
                 </a>
               )}
             </div>
-          </li>
-        </Reveal>
+          </Reveal>
+        </li>
       ))}
     </ol>
   )

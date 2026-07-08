@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button"
 export function NotFoundView() {
   return (
     <main className="flex min-h-svh flex-col items-center justify-center gap-6 px-6 text-center">
+      <title>404 — Kaiyhun</title>
       <Reveal>
         <h1 className="text-display">
           404<span className="text-accent">.</span>

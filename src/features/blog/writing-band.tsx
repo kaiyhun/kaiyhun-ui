@@ -22,8 +22,8 @@ export function WritingBand() {
     <div>
       <ol>
         {posts.map((post) => (
-          <Reveal key={post.slug} distance={16}>
-            <li className="border-b border-border">
+          <li key={post.slug} className="border-b border-border">
+            <Reveal distance={16}>
               <Link
                 to={`/blog/${post.slug}`}
                 className="group block py-6 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
@@ -36,15 +36,15 @@ export function WritingBand() {
                 <p className="mt-1.5 text-sm text-muted-foreground">
                   <time dateTime={post.date}>{formatPostDate(post.date)}</time>
                   <span aria-hidden> · </span>
-                  <span className="font-display text-xs font-semibold tracking-[0.15em] text-primary/80 uppercase">
+                  <span className="font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase">
                     {post.topics
                       .map((topic) => TOPIC_LABELS[topic])
                       .join(" · ")}
                   </span>
                 </p>
               </Link>
-            </li>
-          </Reveal>
+            </Reveal>
+          </li>
         ))}
       </ol>
       <Reveal distance={16}>

@@ -17,8 +17,8 @@ export function PostList({ posts }: PostListProps) {
     <RevealGroup>
       <ol>
         {posts.map((post) => (
-          <Reveal key={post.slug} distance={16}>
-            <li className="border-b border-border">
+          <li key={post.slug} className="border-b border-border">
+            <Reveal distance={16}>
               <Link
                 to={`/blog/${post.slug}`}
                 className="group block py-8 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
@@ -34,15 +34,15 @@ export function PostList({ posts }: PostListProps) {
                     {formatPostDate(post.date)}
                   </time>
                 </div>
-                <p className="mt-1.5 font-display text-xs font-semibold tracking-[0.15em] text-primary/80 uppercase">
+                <p className="mt-1.5 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase">
                   {post.topics.map((topic) => TOPIC_LABELS[topic]).join(" · ")}
                 </p>
                 <p className="mt-2.5 max-w-prose text-sm leading-relaxed text-muted-foreground">
                   {post.description}
                 </p>
               </Link>
-            </li>
-          </Reveal>
+            </Reveal>
+          </li>
         ))}
       </ol>
     </RevealGroup>

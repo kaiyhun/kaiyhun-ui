@@ -1,13 +1,18 @@
 /**
- * TopicMenu — the blog index's sub-menu (All / topic tabs), the same
- * underline-tab treatment as the photography CategoryMenu and the
- * drawing ViewMenu so sub-navigation reads identically across wings.
+ * TopicMenu — the blog index's sub-menu (All / topic tabs). Thin
+ * wrapper over the shared UnderlineTabs primitive (migrated in the
+ * M11 audit); "all" maps to null in the page's URL state.
  */
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { UnderlineTabs } from "@/components/ui/underline-tabs"
 import { BLOG_TOPICS, TOPIC_LABELS, type BlogTopic } from "@/content/posts"
 
-const TAB_CLASS =
-  "rounded-none border-b-2 border-transparent bg-transparent px-1 pb-2 text-sm text-muted-foreground hover:bg-transparent hover:text-foreground data-[state=on]:border-primary data-[state=on]:bg-transparent data-[state=on]:text-foreground"
+const TABS = [
+  { value: "all", label: "All" },
+  ...BLOG_TOPICS.map((topic) => ({
+    value: topic as string,
+    label: TOPIC_LABELS[topic],
+  })),
+]
 
 interface TopicMenuProps {
   /** Active topic, or null for "All". */
@@ -17,23 +22,11 @@ interface TopicMenuProps {
 
 export function TopicMenu({ value, onChange }: TopicMenuProps) {
   return (
-    <ToggleGroup
-      type="single"
+    <UnderlineTabs
+      tabs={TABS}
       value={value ?? "all"}
-      onValueChange={(next) =>
-        onChange(!next || next === "all" ? null : (next as BlogTopic))
-      }
-      aria-label="Post topic"
-      spacing={6}
-    >
-      <ToggleGroupItem value="all" className={TAB_CLASS}>
-        All
-      </ToggleGroupItem>
-      {BLOG_TOPICS.map((topic) => (
-        <ToggleGroupItem key={topic} value={topic} className={TAB_CLASS}>
-          {TOPIC_LABELS[topic]}
-        </ToggleGroupItem>
-      ))}
-    </ToggleGroup>
+      onChange={(next) => onChange(next === "all" ? null : (next as BlogTopic))}
+      label="Post topic"
+    />
   )
 }

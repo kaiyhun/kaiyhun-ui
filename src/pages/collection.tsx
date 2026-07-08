@@ -10,6 +10,7 @@ import { useParams } from "react-router"
 import { NotFoundView } from "@/components/layout/not-found-view"
 import { Reveal } from "@/components/motion/reveal"
 import { getCollection } from "@/content/collections"
+import { SITE } from "@/content/site"
 import { CollectionPager } from "@/features/gallery/collection-pager"
 import { Lightbox } from "@/features/gallery/lightbox"
 import { MasonryGrid } from "@/features/gallery/masonry-grid"
@@ -27,6 +28,10 @@ export default function Collection() {
 
   return (
     <main className="mx-auto max-w-6xl px-6 pt-32 pb-24">
+      {/* React 19 hoists these into <head> (M11 SEO pass) */}
+      <title>{`${collection.title} — ${SITE.name}`}</title>
+      <meta name="description" content={collection.description} />
+
       <Reveal>
         <h1 className="text-display-sm">{collection.title}</h1>
         <p className="mt-4 max-w-prose text-muted-foreground">

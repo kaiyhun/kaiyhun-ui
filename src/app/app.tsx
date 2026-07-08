@@ -40,9 +40,11 @@ function AnimatedRoutes() {
           ease: MOTION.ease.outExpo,
         }}
       >
+        {/* Fallback reserves a viewport of height so the footer never
+            paints high and jumps down when the page chunk mounts (CLS) */}
         {/* Suspense inside the animated wrapper: a suspending lazy page
             never interrupts the outgoing page's exit animation */}
-        <Suspense fallback={null}>
+        <Suspense fallback={<div className="min-h-svh" aria-hidden />}>
           <AppRoutes location={location} />
         </Suspense>
       </motion.div>
