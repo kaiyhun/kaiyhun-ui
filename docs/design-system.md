@@ -64,6 +64,30 @@ Fluid display sizes (clamp-based, scale with viewport):
 
 Body sizes use Tailwind's default scale.
 
+### Component-scoped color tokens (theme-switchable elements)
+
+Most elements use the core semantic colors (`text-foreground`,
+`text-primary`, …). When one _specific_ element must change color per
+theme, give it its **own semantic token** rather than a theme-scoped
+selector like `.theme-matrix .foo {…}` — that keeps theming to pure token
+overrides (the mechanism the Matrix easter egg uses to re-skin the whole
+site with one `.theme-matrix` block).
+
+- **`--wordmark`** — the hero wordmark (`{SITE.name}`) color. Defaults to
+  `var(--foreground)` in `:root`; Matrix mode overrides it in
+  `.theme-matrix`. Exposed as the `text-wordmark` utility via
+  `--color-wordmark` in `@theme inline`. Pattern to copy for any future
+  theme-switchable element color.
+
+> **⚠ Custom `text-*` utilities + `cn()` — load-bearing gotcha.** Every
+> _custom_ `text-*` utility (font-sizes `text-display` / `text-display-sm`,
+> color `text-wordmark`) MUST be registered in `extendTailwindMerge`
+> (`src/lib/utils.ts`). tailwind-merge only knows Tailwind's _built-in_
+> utilities; unregistered custom ones get lumped into a single `text-*`
+> conflict group, so `cn("text-display", "text-wordmark")` silently drops
+> `text-display` (the `<h1>` falls back to 16px). Register each new custom
+> text utility under its real group (`font-size` / `text-color`) there.
+
 ## Shape
 
 One knob: `--radius: 0.5rem`. All `rounded-*` sizes derive from it via

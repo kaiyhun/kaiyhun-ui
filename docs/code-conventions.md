@@ -76,6 +76,14 @@ what it can; the rest is convention documented here.
   `docs/design-system.md`. Never hard-code a color/font/duration/curve.
 - Tailwind utilities in JSX; `cn()` for conditional classes; cva for
   variant-driven components (as in `button.tsx`).
+- **`cn()` runs tailwind-merge, which only understands _built-in_
+  utilities.** Any CUSTOM `text-*` (or other prefix that collides with a
+  built-in group) utility — e.g. `text-display`, `text-display-sm`,
+  `text-wordmark` — must be registered in `extendTailwindMerge`
+  (`src/lib/utils.ts`) under its real group. Unregistered, twMerge treats
+  them as one conflicting `text-*` group and drops all but the last (this
+  once silently killed the hero's display size). Add new custom text
+  utilities there when you create them.
 
 ## Tooling (enforced)
 

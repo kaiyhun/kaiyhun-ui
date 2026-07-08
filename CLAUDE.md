@@ -103,7 +103,13 @@ expected and harmless).
 - **Single source of truth**: every color (OKLCH), font, radius, duration,
   easing is a CSS custom property in `src/index.css`. JS animations read
   the same tokens via `lib/motion-tokens.ts`. Never hard-code visual
-  values elsewhere.
+  values elsewhere. Theme-switchable element colors get their own semantic
+  token (e.g. `--wordmark`), overridden per theme — never a
+  `.theme-matrix .foo` selector.
+- **Custom `text-*` utilities MUST be registered in `extendTailwindMerge`
+  (`lib/utils.ts`)** — `cn()`/tailwind-merge only knows built-in utilities
+  and silently drops unregistered custom ones that share the `text-*`
+  group (details: `docs/design-system.md`, `docs/code-conventions.md`).
 - `--primary-foreground` is near-black (white on the primary blue fails
   WCAG at 3.36:1) — keep dark text on filled primary/accent surfaces.
 - Font stacks include metric-matched Arial fallbacks (CLS 0.00) —

@@ -118,7 +118,12 @@ export default function Home() {
         />
         <RevealGroup className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-6 py-32 text-center">
           <Reveal>
-            <h1 className={cn("text-display", matrix && "font-mono")}>
+            <h1
+              className={cn(
+                "text-display text-wordmark",
+                matrix && "font-mono",
+              )}
+            >
               {SITE.name}
             </h1>
           </Reveal>
