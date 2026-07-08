@@ -8,9 +8,10 @@ architecture of the "personal universe": `docs/homepage-brief.md`.
 **Wings & status:** Photography (LIVE — landscape + portrait categories),
 Drawing (LIVE — journey timeline w/ inline work rails, user-voiced
 narrative; `docs/drawing-wing.md`), Blog (ENGINE LIVE — MDX pipeline,
-`docs/blog.md`; placeholders await real posts), Editing (Tutorials LIVE
-— facade embeds + before/after sliders, `docs/tutorials.md`, slider
-pairs + essay are placeholders; Presets = M10-B),
+`docs/blog.md`; placeholders await real posts), Editing (LIVE —
+Tutorials: facade embeds + before/after sliders, `docs/tutorials.md`;
+Presets: /preset + /preset/2020 pack detail, `docs/presets.md`; both
+carry flagged placeholders),
 Lab (ENGINE LIVE — /lab projects+papers, ALL MOCK content until user
 swaps real repos/papers; `docs/lab.md`), About (M11). Milestone truth:
 `docs/implementation-plan.md`.
@@ -67,13 +68,14 @@ src/features   gallery/ (masonry, lightbox, tag filter, category menu, pager)
 src/components ui/ (shadcn, restyled) · motion/ (Reveal, Parallax) ·
                media/ (ResponsiveImage, PicturePreload) · layout/
 src/content    site.ts, collections.ts, drawings.ts, posts.ts + posts/*.mdx,
-               lab.ts, tutorials.ts, types.ts — the content model
+               lab.ts, tutorials.ts, presets.ts, types.ts — the content model
 src/lib        utils, motion-tokens, media-queries (MEDIA constants), images
 ```
 
 Routes: `/` · `/photography` (?category, ?tag, ?photo — all URL-driven) ·
 `/photography/:slug` · `/drawing` (?view, ?photo) · `/blog` (?topic) ·
-`/blog/:slug` · `/lab` · `/tutorial` · `/preset` · `*` 404. Deep links work
+`/blog/:slug` · `/lab` · `/tutorial` (?view) · `/preset` ·
+`/preset/:slug` · `*` 404. Deep links work
 on Pages via the 404.html postbuild copy (served with HTTP 404 status —
 expected and harmless).
 
@@ -146,6 +148,7 @@ expected and harmless).
 - `docs/blog.md` — MDX pipeline, authoring posts, topics, meta shells
 - `docs/lab.md` — /lab model, GitHub enrichment (soft-fail), mock swap
 - `docs/tutorials.md` — facade embeds, oEmbed enrichment, slider contract
+- `docs/presets.md` — preset rows, rotating backdrop, pack detail model
 - `docs/content-draft.md` — ALL approved copy/tags/curation (edit here first)
 
 ## Commands
