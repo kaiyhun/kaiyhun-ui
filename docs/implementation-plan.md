@@ -6,6 +6,11 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
+> **Post-M11 fun (2026-07-08):** homepage Matrix mode — hero toggle
+> ("Enter the Matrix"/"Wake up") swaps the photo backdrop for a canvas
+> digital-rain (katakana columns, reduced-motion-safe, pauses
+> off-screen) and re-themes the ENTIRE homepage through one scoped
+> token block (.theme-matrix) — proof the design-token system works.
 > **M11 done (2026-07-08), awaiting user review + commit — SITE
 > COMPLETE pending checklist.** /about (bio + goals timeline + contact +
 > colophon — ALL PROSE DRAFT, content-draft §16) + nav/sitemap. Full

@@ -206,6 +206,35 @@
   --motion-stagger: 90ms; /* delay between staggered children */
 }
 
+/*
+ * Matrix mode — the homepage easter egg (hero theme toggle). Because
+ * every color utility resolves var(--token), re-skinning the whole page
+ * is this one scoped override: green phosphor on near-black. The
+ * --matrix-rain-* tokens feed the canvas rain (features/home/matrix-rain).
+ */
+.theme-matrix {
+  --background: oklch(0.11 0.03 152);
+  --foreground: oklch(0.87 0.19 152);
+  --card: oklch(0.14 0.04 152);
+  --card-foreground: oklch(0.87 0.19 152);
+  --popover: oklch(0.15 0.04 152);
+  --popover-foreground: oklch(0.87 0.19 152);
+  --primary: oklch(0.85 0.24 152);
+  --primary-foreground: oklch(0.12 0.03 152);
+  --secondary: oklch(0.21 0.06 152);
+  --secondary-foreground: oklch(0.88 0.16 152);
+  --muted: oklch(0.17 0.05 152);
+  --muted-foreground: oklch(0.64 0.11 152);
+  --accent: oklch(0.92 0.23 152);
+  --accent-foreground: oklch(0.12 0.03 152);
+  --border: oklch(0.85 0.24 152 / 18%);
+  --input: oklch(0.85 0.24 152 / 24%);
+  --ring: oklch(0.85 0.24 152);
+  /* Rain glyphs: near-white head, phosphor trail */
+  --matrix-rain-head: oklch(0.97 0.08 152);
+  --matrix-rain-trail: oklch(0.75 0.22 152);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

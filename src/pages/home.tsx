@@ -6,7 +6,8 @@
  * footer (site-wide). The recent-writing band (M8) and about teaser (M11)
  * appear when their wings are real.
  */
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Terminal } from "lucide-react"
+import { useState } from "react"
 import { Link } from "react-router"
 
 // prettier-ignore
@@ -58,8 +59,10 @@ import { SITE } from "@/content/site"
 import { WritingBand } from "@/features/blog/writing-band"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
 import { GatewayPanel } from "@/features/home/gateway-panel"
+import { MatrixRain } from "@/features/home/matrix-rain"
 import { SectionNav, type HomeSection } from "@/features/home/section-nav"
 import { MEDIA } from "@/lib/media-queries"
+import { cn } from "@/lib/utils"
 
 /** Hero photo metadata comes from the content model, not re-written here. */
 const HERO_ALT =
@@ -87,17 +90,33 @@ const HOME_SECTIONS: HomeSection[] = [
 ]
 
 export default function Home() {
+  /* Matrix mode — the easter-egg theme (index.css .theme-matrix).
+     Survives a round-trip to other pages via sessionStorage. */
+  const [matrix, setMatrix] = useState(
+    () => sessionStorage.getItem("home-theme") === "matrix",
+  )
+  const toggleMatrix = () => {
+    setMatrix((current) => {
+      sessionStorage.setItem("home-theme", current ? "" : "matrix")
+      return !current
+    })
+  }
+
   return (
-    <main>
+    <main className={cn(matrix && "theme-matrix bg-background")}>
       {/* ============ Hero — identity statement ============ */}
       <section className="relative flex min-h-svh items-center overflow-hidden">
-        <ArtDirectedBackdrop
-          picture={heroShot}
-          variant={{ media: MEDIA.portrait, picture: heroShotPortrait }}
-          placeholder={heroLqip}
-          alt={HERO_ALT}
-          className="absolute inset-0"
-        />
+        {matrix ? (
+          <MatrixRain className="absolute inset-0 h-full w-full" />
+        ) : (
+          <ArtDirectedBackdrop
+            picture={heroShot}
+            variant={{ media: MEDIA.portrait, picture: heroShotPortrait }}
+            placeholder={heroLqip}
+            alt={HERO_ALT}
+            className="absolute inset-0"
+          />
+        )}
         {/* Legibility scrim: slightly stronger through the middle since the
             centered text sits over the brightest part of the falls */}
         <div
@@ -106,19 +125,39 @@ export default function Home() {
         />
         <RevealGroup className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-6 py-32 text-center">
           <Reveal>
-            <h1 className="text-display">{SITE.name}</h1>
+            <h1 className={cn("text-display", matrix && "font-mono")}>
+              {SITE.name}
+            </h1>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-4 max-w-xl text-lg text-foreground/85 sm:text-xl">
+            <p
+              className={cn(
+                "mt-4 max-w-xl text-lg text-foreground/85 sm:text-xl",
+                matrix && "font-mono text-base sm:text-lg",
+              )}
+            >
               {SITE.tagline}
             </p>
           </Reveal>
-          <Reveal delay={0.2} className="mt-8">
+          <Reveal
+            delay={0.2}
+            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+          >
             <Button asChild size="lg">
               <Link to="/photography">
                 View the photography
                 <ArrowRight data-icon="inline-end" aria-hidden />
               </Link>
+            </Button>
+            {/* The rabbit hole (labels: content-draft §17) */}
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={toggleMatrix}
+              aria-pressed={matrix}
+            >
+              <Terminal data-icon="inline-start" aria-hidden />
+              {matrix ? "Wake up" : "Enter the Matrix"}
             </Button>
           </Reveal>
         </RevealGroup>
