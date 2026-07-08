@@ -6,6 +6,14 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
+> **M11 done (2026-07-08), awaiting user review + commit — SITE
+> COMPLETE pending checklist.** /about (bio + goals timeline + contact +
+> colophon — ALL PROSE DRAFT, content-draft §16) + nav/sitemap. Full
+> audit: UnderlineTabs migration (3 menus), per-page SEO meta
+> everywhere, list-semantics fix (4 components), CLS fixes (route +
+> post Suspense fallbacks), contrast fix (topic tags) — home & post
+> pages re-audited to Lighthouse 100s. THE LEDGER: docs/audit-m11.md
+> holds every finding + the pre-launch checklist to tick off.
 > **M10-B presets done (2026-07-07), awaiting user review + commit.**
 > /preset rebuilt: intro (pay-it-forward framing, DRAFT) + V2.0
 > coming-soon row (badge, no dead buttons, lakeLouise_1 placeholder) +

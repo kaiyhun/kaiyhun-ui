@@ -13,7 +13,9 @@ Tutorials: facade embeds + before/after sliders, `docs/tutorials.md`;
 Presets: /preset + /preset/2020 pack detail, `docs/presets.md`; both
 carry flagged placeholders),
 Lab (ENGINE LIVE — /lab projects+papers, ALL MOCK content until user
-swaps real repos/papers; `docs/lab.md`), About (M11). Milestone truth:
+swaps real repos/papers; `docs/lab.md`), About (LIVE — all prose is
+draft; `docs/about.md`). ALL MILESTONES DONE — pre-launch checklist:
+`docs/audit-m11.md`. Milestone truth:
 `docs/implementation-plan.md`.
 
 ## Identity & content rules
@@ -68,13 +70,13 @@ src/features   gallery/ (masonry, lightbox, tag filter, category menu, pager)
 src/components ui/ (shadcn, restyled) · motion/ (Reveal, Parallax) ·
                media/ (ResponsiveImage, PicturePreload) · layout/
 src/content    site.ts, collections.ts, drawings.ts, posts.ts + posts/*.mdx,
-               lab.ts, tutorials.ts, presets.ts, types.ts — the content model
+               lab.ts, tutorials.ts, presets.ts, about.ts, types.ts — the content model
 src/lib        utils, motion-tokens, media-queries (MEDIA constants), images
 ```
 
 Routes: `/` · `/photography` (?category, ?tag, ?photo — all URL-driven) ·
 `/photography/:slug` · `/drawing` (?view, ?photo) · `/blog` (?topic) ·
-`/blog/:slug` · `/lab` · `/tutorial` (?view) · `/preset` ·
+`/blog/:slug` · `/lab` · `/about` · `/tutorial` (?view) · `/preset` ·
 `/preset/:slug` · `*` 404. Deep links work
 on Pages via the 404.html postbuild copy (served with HTTP 404 status —
 expected and harmless).
@@ -149,6 +151,7 @@ expected and harmless).
 - `docs/lab.md` — /lab model, GitHub enrichment (soft-fail), mock swap
 - `docs/tutorials.md` — facade embeds, oEmbed enrichment, slider contract
 - `docs/presets.md` — preset rows, rotating backdrop, pack detail model
+- `docs/audit-m11.md` — audit findings + THE pre-launch checklist
 - `docs/content-draft.md` — ALL approved copy/tags/curation (edit here first)
 
 ## Commands

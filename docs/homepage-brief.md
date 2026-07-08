@@ -137,7 +137,7 @@ URL, presets add download file). Everything declared in `src/content/`.
 | M8  | ✅ Blog engine — shipped: MDX pipeline, `/blog` + post pages, homepage Writing band, related-writing modules on both visual pillars                                                               |
 | M9  | ✅ Lab pillar — shipped: /lab project cards (+build-time GitHub stats), papers shelf, code-topic writing, page navigator; mock content until real repos/papers land                               |
 | M10 | ✅ A Tutorials (/tutorial: facade embeds + before/after view) · ✅ B Presets (/preset rows + /preset/2020 image-forward detail)                                                                   |
-| M11 | About page + full polish/SEO/a11y/performance audit (absorbs old M7)                                                                                                                              |
+| M11 | ✅ About page + audit complete — remaining pre-launch items tracked in docs/audit-m11.md                                                                                                          |
 
 Every milestone still ships deploy-green with docs updated.
 
