@@ -6,6 +6,15 @@
 > **SCOPE REVISED & APPROVED (2026-07-02):** multi-domain personal site.
 > M3–M7 below are superseded by the sequence in `docs/homepage-brief.md`
 > (approved). Content inputs approved in `docs/content-draft.md`.
+> **M10-B presets done (2026-07-07), awaiting user review + commit.**
+> /preset rebuilt: intro (pay-it-forward framing, DRAFT) + V2.0
+> coming-soon row (badge, no dead buttons, lakeLouise_1 placeholder) +
+> Pack 2020 row (rotating 3-shot backdrop — placeholder picks — row
+> links to detail, View/Download buttons below). /preset/2020 detail:
+> image-forward sections per preset (KY01–KY08 + BONUS, user's words),
+> large masonry + one 36-image lightbox. Preset category added to
+> gallery globs. ⚠ Gumroad URL, backdrop picks, alt text = placeholders.
+> M10 COMPLETE (A+B). Feature doc: docs/presets.md. Drafts: §15.
 > **M10-A tutorials done (2026-07-07), awaiting user review + commit.**
 > /tutorial rebuilt from placeholder: Videos view (facade embeds —
 > zero YouTube JS until click, real titles/thumbnails via build-time
