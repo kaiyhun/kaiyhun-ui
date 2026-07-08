@@ -10,7 +10,7 @@
  *   fade + lift in, fade out); reduced motion drops the lift
  *   automatically via MotionConfig.
  */
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
 import { AnimatePresence, MotionConfig, motion } from "motion/react"
 import { BrowserRouter, useLocation } from "react-router"
 
@@ -18,6 +18,7 @@ import { AppRoutes } from "@/app/routes"
 import { SiteFooter } from "@/components/layout/site-footer"
 import { SiteHeader } from "@/components/layout/site-header"
 import { MOTION } from "@/lib/motion-tokens"
+import { toggleMatrixTheme } from "@/lib/theme"
 
 /** Routes wrapped in per-pathname enter/exit animation (needs to be a
  *  child of BrowserRouter to read the location). */
@@ -52,7 +53,39 @@ function AnimatedRoutes() {
   )
 }
 
+/** ↑↑↓↓←→←→BA — flips Matrix mode from ANY page (easter egg). */
+const KONAMI = [
+  "ArrowUp",
+  "ArrowUp",
+  "ArrowDown",
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+  "ArrowLeft",
+  "ArrowRight",
+  "b",
+  "a",
+]
+
+function useKonamiCode(onUnlock: () => void) {
+  useEffect(() => {
+    let progress = 0
+    const onKeyDown = (event: KeyboardEvent) => {
+      const key = event.key.length === 1 ? event.key.toLowerCase() : event.key
+      progress =
+        key === KONAMI[progress] ? progress + 1 : key === KONAMI[0] ? 1 : 0
+      if (progress === KONAMI.length) {
+        progress = 0
+        onUnlock()
+      }
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [onUnlock])
+}
+
 export function App() {
+  useKonamiCode(toggleMatrixTheme)
   return (
     <MotionConfig reducedMotion="user">
       <BrowserRouter basename={import.meta.env.BASE_URL}>

@@ -10,8 +10,11 @@ import { Link } from "react-router"
 
 import { Reveal } from "@/components/motion/reveal"
 import { Button } from "@/components/ui/button"
+import { useMatrixTheme } from "@/lib/theme"
 
 export function NotFoundView() {
+  // In Matrix mode the 404 keeps the bit going (easter egg)
+  const matrix = useMatrixTheme()
   return (
     <main className="flex min-h-svh flex-col items-center justify-center gap-6 px-6 text-center">
       <title>404 — Kaiyhun</title>
@@ -22,7 +25,9 @@ export function NotFoundView() {
       </Reveal>
       <Reveal delay={0.1}>
         <p className="text-lg text-muted-foreground">
-          Nothing to see here — the shot you're after doesn't exist.
+          {matrix
+            ? "There is no page. Do not try to bend the URL — that's impossible."
+            : "Nothing to see here — what you're after doesn't exist."}
         </p>
       </Reveal>
       <Reveal delay={0.2}>

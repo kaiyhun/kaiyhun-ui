@@ -7,7 +7,6 @@
  * appear when their wings are real.
  */
 import { ArrowRight, Terminal } from "lucide-react"
-import { useState } from "react"
 import { Link } from "react-router"
 
 // prettier-ignore
@@ -60,9 +59,10 @@ import { WritingBand } from "@/features/blog/writing-band"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
 import { GatewayPanel } from "@/features/home/gateway-panel"
 import { MatrixRain } from "@/features/home/matrix-rain"
+import { TypeOut } from "@/features/home/type-out"
 import { SectionNav, type HomeSection } from "@/features/home/section-nav"
 import { MEDIA } from "@/lib/media-queries"
-import { applyMatrixTheme, isMatrixTheme } from "@/lib/theme"
+import { toggleMatrixTheme, useMatrixTheme } from "@/lib/theme"
 import { cn } from "@/lib/utils"
 
 /** Hero photo metadata comes from the content model, not re-written here. */
@@ -91,15 +91,9 @@ const HOME_SECTIONS: HomeSection[] = [
 ]
 
 export default function Home() {
-  /* Matrix mode — SITE-WIDE easter-egg theme (lib/theme.ts applies
-     .theme-matrix on <html>); this state just drives the hero UI */
-  const [matrix, setMatrix] = useState(isMatrixTheme)
-  const toggleMatrix = () => {
-    setMatrix((current) => {
-      applyMatrixTheme(!current)
-      return !current
-    })
-  }
+  /* Matrix mode — SITE-WIDE easter-egg theme; the hook stays in sync
+     with every trigger (hero button here, Konami code in app.tsx) */
+  const matrix = useMatrixTheme()
 
   return (
     <main>
@@ -135,7 +129,7 @@ export default function Home() {
                 matrix && "font-mono text-base sm:text-lg",
               )}
             >
-              {SITE.tagline}
+              {matrix ? <TypeOut text={SITE.tagline} /> : SITE.tagline}
             </p>
           </Reveal>
           <Reveal
@@ -152,7 +146,7 @@ export default function Home() {
             <Button
               size="lg"
               variant="outline"
-              onClick={toggleMatrix}
+              onClick={toggleMatrixTheme}
               aria-pressed={matrix}
             >
               <Terminal data-icon="inline-start" aria-hidden />

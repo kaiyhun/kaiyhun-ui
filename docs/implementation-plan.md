@@ -11,7 +11,11 @@
 > digital-rain (katakana columns, reduced-motion-safe, pauses
 > off-screen) and re-themes EVERY page/chrome/portal + Shiki code via
 > one token block (.theme-matrix on <html>, lib/theme.ts,
-> session-persistent) — proof the design-token system works.
+> session-persistent) — proof the design-token system works. Egg pack 2:
+> Konami code toggles the theme from any page, console greeting for
+> devtools visitors, Matrix-mode typewriter tagline (a11y-safe), and an
+> in-character 404 line. Theme state now broadcasts via lib/theme.ts
+> (useMatrixTheme/useSyncExternalStore) so all triggers stay in sync.
 > **M11 done (2026-07-08), awaiting user review + commit — SITE
 > COMPLETE pending checklist.** /about (bio + goals timeline + contact +
 > colophon — ALL PROSE DRAFT, content-draft §16) + nav/sitemap. Full
