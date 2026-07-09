@@ -1,48 +1,46 @@
 /**
  * useSectionPager — the homepage's "boundary page-turn" scroll behavior.
  *
- * Each `[data-page-section]` is a full-viewport "page". You scroll freely
- * WITHIN a section (tall ones scroll normally); once you reach a section's
- * edge and keep pushing past a delta threshold, the wheel is intercepted
- * and the page turns with a FADE-THROUGH: the visible page fades out to
- * the background, the scroll jumps instantly under the cover of black, and
- * the new page fades in (opacity only — user pick over the earlier
- * transform "cover" turn, which read as stiff). Pages land FLUSH at the
- * viewport top (their own padding clears the fixed header), and because
- * the jump is invisible the same fade serves any distance — adjacent
- * seams and far menu jumps alike.
+ * Each `[data-page-section]` is a full-viewport "page". You scroll within a
+ * section (tall ones scroll normally); at a section's edge, pushing past a
+ * delta threshold turns the page with a FADE-THROUGH: the visible page
+ * fades to the background, the scroll jumps instantly under cover, and the
+ * new page fades in (opacity only — user pick over the earlier transform
+ * "cover" turn, which read as stiff). Pages land FLUSH at the viewport top.
  *
  * The fade is a Motion tween (tokens: `duration.slow` + `ease.cinematic`)
- * fading every section (not just the pair — viewports mid-scroll can span
- * a boundary, and fading everything covers all cases). The mid-tween
- * `scrollTo` passes `behavior:"instant"` because the global CSS
+ * fading every section (viewports mid-scroll can span a boundary). The
+ * mid-tween `scrollTo` passes `behavior:"instant"` because the global CSS
  * `scroll-behavior:smooth` would otherwise animate the hidden jump. Any
- * keydown / pointerdown mid-turn cancels the tween, so scrollbar grabs
- * and paging keys always win over the animation.
+ * keydown / pointerdown mid-turn cancels the tween (scrollbar grabs and
+ * paging keys win).
  *
- * Momentum (Magic Mouse / trackpad) handling — the hard-won part:
- * - After a turn the accumulator parks at MOMENTUM_LOCK so the gesture's
- *   inertial tail can't cascade into a second turn.
- * - Tails can tick for SECONDS, constantly refreshing the idle clock — so
- *   a pause alone is not a reliable re-arm (a fresh swipe merging into the
- *   tail would be swallowed and scrolling would feel dead). The re-arm is
- *   therefore also magnitude-based: a tail's |deltaY| only ever decays, so
- *   a delta rising clearly above the decaying recent peak (RE_ARM_RATIO ×
- *   peak) is a fresh, deliberate swipe and unparks the accumulator.
- * - Gestures where deltaX dominates (Magic Mouse diagonal strokes) are
- *   ignored entirely — never judged, never swallowed.
+ * WHEEL OWNERSHIP (the reliability fix). We do NOT let the browser scroll
+ * natively inside a section: macOS scroll ACCELERATION makes a single wheel
+ * event scroll many times its `deltaY`, so a fast flick could leap clean
+ * over a section's seam before any event evaluated it — the page then
+ * scrolled straight through like a document (only tall sections; page-tall
+ * ones sit "at the seam" from their top). Instead, on pointer + motion we
+ * preventDefault EVERY wheel event and apply the scroll ourselves, CLAMPED
+ * to the anchored section's flush range. A boundary can never be
+ * overshot — a giant flick just lands on the wall — and only accumulated
+ * intent AT the wall turns the page. Carve-out: at the last section's
+ * bottom (and in the footer beneath it) we let native scroll through so the
+ * footer stays reachable.
  *
- * Deliberately a POINTER-ONLY, MOTION-ON enhancement (user decision):
- * - touch devices keep native scrolling (we never touch touch events),
- * - `prefers-reduced-motion` and keyboard users get plain continuous
- *   scroll (we only ever intercept `wheel`, never keys — so PageDown /
- *   Space / arrows / Tab always scroll natively). The escape hatch is
- *   simply not attaching the wheel listener.
+ * Momentum guard: after a turn the accumulator parks at MOMENTUM_LOCK and
+ * the inertial tail is held (no interior drift, no cascade) until a re-arm
+ * — a genuine pause (IDLE_RESET_MS), a direction reversal, or a rising
+ * edge above the decaying momentum peak (tails only ever decay).
+ *
+ * Deliberately POINTER-ONLY, MOTION-ON (user decision): touch keeps native
+ * scrolling (we never touch touch events); `prefers-reduced-motion` and
+ * keyboard users get plain continuous scroll (we only intercept `wheel`,
+ * never keys). The escape hatch is simply not attaching the wheel listener.
  *
  * Returns `goTo(id)` (Scroll-to menu — same fade turn, instant under
- * reduced motion), the live `activeId` (menu highlight — pinned to the
- * target while a turn runs so it can't flicker), and `moreBelow` (true
- * while any page content remains below the viewport — drives the
+ * reduced motion), the live `activeId` (menu highlight, pinned during a
+ * turn), and `moreBelow` (any page content below the viewport — drives the
  * ScrollHint chevron).
  */
 import { animate, type AnimationPlaybackControls } from "motion/react"
@@ -50,7 +48,7 @@ import { useCallback, useEffect, useRef, useState } from "react"
 
 import { MOTION } from "@/lib/motion-tokens"
 
-/** Accumulated |wheel delta| at an edge before a turn fires. */
+/** Accumulated |wheel delta| at a wall before a turn fires. */
 const TURN_THRESHOLD = 60
 /** A pause longer than this resets accumulated intent. */
 const IDLE_RESET_MS = 180
@@ -62,8 +60,7 @@ const MOMENTUM_LOCK = -1e6
 /** Re-arm when |deltaY| exceeds the decaying recent peak by this ratio —
  *  momentum only decays, so a rising edge means a fresh swipe. */
 const RE_ARM_RATIO = 1.5
-/** Per-event decay of the tracked peak (~0.9^20 ≈ 0.12 per ⅓s at 60 Hz,
- *  so even a mid-tail fresh swipe re-arms within a few hundred ms). */
+/** Per-event decay of the tracked peak. */
 const PEAK_DECAY = 0.9
 
 const sections = () =>
@@ -80,8 +77,7 @@ function currentIndex(els: HTMLElement[]): number {
 }
 
 /** Scroll position putting `el` flush at the viewport top, clamped to the
- *  document's scrollable range. Scroll-independent (absolute offset), so
- *  reading it at jump time tracks any reflow since the turn started. */
+ *  document's scrollable range. */
 function flushTop(el: HTMLElement): number {
   const max = document.documentElement.scrollHeight - window.innerHeight
   const top = window.scrollY + el.getBoundingClientRect().top
@@ -102,7 +98,11 @@ export function useSectionPager() {
   const lockedRef = useRef(false)
   const accumRef = useRef(0)
   const lastWheelRef = useRef(0)
+  const lastDirRef = useRef(0)
   const peakRef = useRef(0)
+  /** The section we're paged to — advances only via a turn, so native
+   *  scroll acceleration can't silently move us to another section. */
+  const anchorRef = useRef(0)
   const turnRef = useRef<AnimationPlaybackControls | null>(null)
   /** Restores the sections' inline styles and releases the lock. */
   const settleRef = useRef<(() => void) | null>(null)
@@ -121,6 +121,7 @@ export function useSectionPager() {
       if (!target) return
 
       cancelTurn()
+      anchorRef.current = index
       setActiveId(target.id || null)
 
       if (!animateTurn) {
@@ -144,8 +145,8 @@ export function useSectionPager() {
       }
       settleRef.current = settle
 
-      // Fade-through: first half fades the page out, the scroll jumps
-      // while everything is hidden, second half fades the new page in.
+      // Fade-through: first half fades out, the scroll jumps while hidden,
+      // second half fades the new page in.
       let jumped = false
       turnRef.current = animate(0, 1, {
         duration: MOTION.duration.slow,
@@ -184,7 +185,8 @@ export function useSectionPager() {
 
   useEffect(() => {
     const els = sections()
-    setActiveId(els[currentIndex(els)]?.id ?? null)
+    anchorRef.current = currentIndex(els)
+    setActiveId(els[anchorRef.current]?.id ?? null)
     setMoreBelow(hasMoreBelow(els))
 
     const fine = window.matchMedia("(pointer: fine)").matches
@@ -198,7 +200,6 @@ export function useSectionPager() {
     }
 
     // Escape hatch: no wheel paging for touch / keyboard / reduced-motion.
-    // We still track scroll so the menu highlight and hint stay live.
     if (!fine || reduce) {
       window.addEventListener("scroll", onScroll, { passive: true })
       window.addEventListener("resize", onScroll)
@@ -209,67 +210,93 @@ export function useSectionPager() {
     }
 
     const onWheel = (event: WheelEvent) => {
-      const mag = Math.abs(event.deltaY)
+      const dy = event.deltaY
+      const mag = Math.abs(dy)
       if (lockedRef.current) {
         event.preventDefault()
-        // Keep the wheel clock and peak tracking alive while locked —
-        // otherwise the first momentum tick after the turn looks "idle"
-        // and wipes the MOMENTUM_LOCK sentinel (cascade).
+        // Keep the wheel clock and peak alive while locked so the first
+        // momentum tick after the turn isn't mistaken for a fresh gesture.
         lastWheelRef.current = performance.now()
         peakRef.current = Math.max(mag, peakRef.current * PEAK_DECAY)
         return
       }
-      // Diagonal Magic Mouse / trackpad strokes where horizontal wins are
-      // not vertical scroll intent — never judge or swallow them.
-      if (Math.abs(event.deltaX) > mag) return
-      const dir = event.deltaY > 0 ? 1 : event.deltaY < 0 ? -1 : 0
+      const dir = dy > 0 ? 1 : dy < 0 ? -1 : 0
       if (dir === 0) return
 
       const list = sections()
-      const index = currentIndex(list)
-      const section = list[index]
+      const anchor = Math.min(anchorRef.current, list.length - 1)
+      const section = list[anchor]
       if (!section) return
 
-      const rect = section.getBoundingClientRect()
-      const atBottom = rect.bottom <= window.innerHeight + EDGE_EPS
-      const atTop = rect.top >= -EDGE_EPS
-
+      // Momentum bookkeeping / re-arm.
       const now = performance.now()
-      const parked = accumRef.current === MOMENTUM_LOCK
+      const wasParked = accumRef.current === MOMENTUM_LOCK
       if (now - lastWheelRef.current > IDLE_RESET_MS) {
-        // A genuine pause: new gesture, fresh slate.
         accumRef.current = 0
         peakRef.current = 0
-      } else if (parked && mag > peakRef.current * RE_ARM_RATIO) {
-        // Rising edge above the decaying momentum peak mid-tail: the user
-        // swiped again on purpose — re-arm without requiring a pause.
+      } else if (
+        wasParked &&
+        (dir !== lastDirRef.current || mag > peakRef.current * RE_ARM_RATIO)
+      ) {
         accumRef.current = 0
       }
+      lastDirRef.current = dir
       lastWheelRef.current = now
       peakRef.current = Math.max(mag, peakRef.current * PEAK_DECAY)
+      const parked = accumRef.current === MOMENTUM_LOCK
 
-      const goingNext = dir > 0 && atBottom && index < list.length - 1
-      const goingPrev = dir < 0 && atTop && index > 0
+      // The anchored section's flush scroll range — we OWN the scroll here
+      // and clamp to it, so acceleration can't leap past a boundary.
+      const top = flushTop(section)
+      const bottom =
+        top + Math.max(0, section.offsetHeight - window.innerHeight)
+      const y = window.scrollY
+      const atBottomWall = y >= bottom - EDGE_EPS
+      const atTopWall = y <= top + EDGE_EPS
 
-      if (goingNext || goingPrev) {
-        // At a seam: swallow native overscroll; gather intent unless the
-        // accumulator is still parked behind the momentum sentinel.
+      // Interior scroll — applied by us, clamped to the section. Parked
+      // (post-turn) momentum is held so the fresh landing stays flush.
+      if (dir > 0 && !atBottomWall) {
         event.preventDefault()
-        if (accumRef.current !== MOMENTUM_LOCK) {
-          accumRef.current += mag
-          if (accumRef.current >= TURN_THRESHOLD) {
-            scrollToIndex(index + (goingNext ? 1 : -1), true)
-          }
+        if (!parked) {
+          window.scrollTo({
+            top: Math.min(y + mag, bottom),
+            behavior: "instant",
+          })
+          accumRef.current = 0
         }
-      } else {
-        // Mid-section: let native scroll do its thing.
-        accumRef.current = 0
-        setActiveId(section.id || null)
+        return
       }
+      if (dir < 0 && !atTopWall) {
+        event.preventDefault()
+        if (!parked) {
+          window.scrollTo({ top: Math.max(y - mag, top), behavior: "instant" })
+          accumRef.current = 0
+        }
+        return
+      }
+
+      // At a wall in the scroll direction → gather intent for a turn.
+      if (dir > 0 && anchor < list.length - 1) {
+        event.preventDefault()
+        if (!parked) {
+          accumRef.current += mag
+          if (accumRef.current >= TURN_THRESHOLD)
+            scrollToIndex(anchor + 1, true)
+        }
+      } else if (dir < 0 && anchor > 0) {
+        event.preventDefault()
+        if (!parked) {
+          accumRef.current += mag
+          if (accumRef.current >= TURN_THRESHOLD)
+            scrollToIndex(anchor - 1, true)
+        }
+      }
+      // else: last section's bottom (footer) or first section's top —
+      // let native scroll through so the footer stays reachable.
     }
 
-    // A scrollbar grab or key press mid-turn hands control straight back
-    // to native scrolling (we never intercept either input).
+    // A scrollbar grab or key press mid-turn hands control back to native.
     const onInterrupt = () => {
       if (lockedRef.current) cancelTurn()
     }
