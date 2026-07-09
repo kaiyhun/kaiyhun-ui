@@ -89,6 +89,57 @@ incrementally — a door appears on the homepage only when its page is real
 4. **About teaser.** Short human paragraph + link. Copy is a user input.
 5. Footer (exists).
 
+### Boundary page-turn (paged section scrolling)
+
+Each homepage section is a full-viewport "page" (`[data-page-section]`,
+`min-h-svh`, FULL-BLEED with an opaque `bg-background`; the content column
+lives in an inner `max-w-6xl` div whose `py-24` clears the fixed header).
+You scroll freely _within_ a section (tall ones scroll normally); at a
+section's edge, accumulated wheel delta past a threshold turns the "page":
+the outgoing section recedes (lags the scroll at `RECEDE_LAG`, shrinks,
+dims — transform/opacity only) while the incoming one slides over it and
+lands FLUSH at the viewport top. Controller:
+`src/features/home/use-section-pager.ts`; drives (and syncs the active
+highlight of) the floating `SectionNav` menu.
+
+**Load-bearing decisions:**
+
+- **Pointer + motion only (a11y escape hatch, user decision).** We only
+  ever intercept `wheel`; keyboard (PageDown / Space / arrows / Tab),
+  touch, and `prefers-reduced-motion` all keep native continuous
+  scrolling. The escape hatch is literally "don't attach the wheel
+  listener" — so the paged behavior can never trap anyone, and the page
+  degrades to a normal scroll.
+- **Turns are a Motion tween driving `window.scrollTo` (tokens:
+  `duration.slower` + `ease.cinematic`).** This REVERSES the earlier
+  "native `scrollIntoView` only" decision — the cinematic cover transition
+  (user decision) needs per-frame progress that native smooth scroll can't
+  provide. The tween's historic fragility (stale target after mid-turn
+  reflow → under-shoot) is countered by re-deriving the landing position
+  every frame and snapping exactly onto it on completion. `scrollTo` must
+  pass `behavior:"instant"` (global CSS `scroll-behavior:smooth` would
+  re-smooth each frame). Any keydown/pointerdown mid-turn cancels the
+  tween, so scrollbar grabs and paging keys always beat the animation.
+- **Flush-top landings, no `scroll-mt`.** Sections carry no scroll margin;
+  header clearance is internal padding. This keeps the takeover truly
+  full-screen and the edge detection symmetric (with an 80px offset,
+  scrolling onward needed 80px of native creep before the next seam
+  engaged).
+- **Cover pairing is adjacent-only.** Menu jumps ≥2 pages away glide
+  without the recede effect — pairing pages viewports apart would animate
+  content that is never on screen. `activeId` is pinned to the target for
+  the duration so the menu highlight can't flicker through intermediate
+  sections.
+- **Momentum guard.** After a turn the accumulator is parked at a sentinel
+  so trackpad inertia can't cascade into a second turn; only a real pause
+  (`IDLE_RESET_MS`) clears it.
+
+**Tuning knobs** (feel is hardware-dependent — tune in a real browser):
+`TURN_THRESHOLD`, `IDLE_RESET_MS`, `RECEDE_LAG`, `RECEDE_SCALE`,
+`RECEDE_DIM` in the hook; turn duration/curve via the `--motion-*` tokens
+(`slower`/`cinematic`); gate `min-h-svh` to `md:` if the full-height
+layout feels too airy on mobile.
+
 ## Unified content model (basis for M3)
 
 One base shape so the homepage, tag filtering, and "related writing" work

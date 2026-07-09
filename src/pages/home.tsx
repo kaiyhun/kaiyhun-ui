@@ -61,6 +61,7 @@ import { GatewayPanel } from "@/features/home/gateway-panel"
 import { MatrixRain } from "@/features/home/matrix-rain"
 import { TypeOut } from "@/features/home/type-out"
 import { SectionNav, type HomeSection } from "@/features/home/section-nav"
+import { useSectionPager } from "@/features/home/use-section-pager"
 import { MEDIA } from "@/lib/media-queries"
 import { toggleMatrixTheme, useMatrixTheme } from "@/lib/theme"
 import { cn } from "@/lib/utils"
@@ -95,10 +96,23 @@ export default function Home() {
      with every trigger (hero button here, Konami code in app.tsx) */
   const matrix = useMatrixTheme()
 
+  /* Boundary page-turn: each [data-page-section] is a full-viewport
+     "page"; scrolling past a section's edge turns the next one in with a
+     cinematic cover transition — the old page recedes beneath the new.
+     Sections are therefore FULL-BLEED with an opaque bg (so the incoming
+     page covers the receding one edge-to-edge) and land flush at the
+     viewport top; their inner column padding clears the fixed header.
+     (Pointer + motion only — a11y escape hatch in the hook.) */
+  const pager = useSectionPager()
+
   return (
     <main>
-      {/* ============ Hero — identity statement ============ */}
-      <section className="relative flex min-h-svh items-center overflow-hidden">
+      {/* ============ Hero — identity statement (page 1) ========= */}
+      <section
+        id="hero"
+        data-page-section
+        className="relative flex min-h-svh items-center overflow-hidden bg-background"
+      >
         {matrix ? (
           <MatrixRain className="absolute inset-0 h-full w-full" />
         ) : (
@@ -164,163 +178,180 @@ export default function Home() {
       {/* ============ Gateway — doors to live wings ============ */}
       <section
         id="photography"
+        data-page-section
         aria-labelledby="explore"
-        // scroll-mt keeps the heading clear of the fixed header when the
-        // floating section nav jumps here; pb only (no pt) so both
-        // homepage sections share consistent spacing
-        className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
+        className="relative flex min-h-svh flex-col justify-center bg-background"
       >
-        <Reveal>
-          <h2 id="explore" className="text-display-sm">
-            Photography
-          </h2>
-          <p className="mt-4 max-w-prose text-muted-foreground">
-            Two bodies of work — more wings (drawings, the lab, the blog) open
-            as they're built.
-          </p>
-        </Reveal>
-        <div className="mt-12 flex flex-col gap-6">
+        <div className="mx-auto w-full max-w-6xl px-6 py-24">
           <Reveal>
-            <GatewayPanel
-              to="/photography?category=landscape"
-              title="Landscape"
-              subtitle={countLine("landscape")}
-              picture={GATEWAY_COVER.cover.picture}
-              portraitPicture={gatewayPortrait}
-              placeholder={GATEWAY_COVER.cover.lqip}
-            />
+            <h2 id="explore" className="text-display-sm">
+              Photography
+            </h2>
+            <p className="mt-4 max-w-prose text-muted-foreground">
+              Two bodies of work — more wings (drawings, the lab, the blog) open
+              as they're built.
+            </p>
           </Reveal>
-          <Reveal>
-            <GatewayPanel
-              to="/photography?category=portrait"
-              title="Portrait"
-              subtitle={countLine("portrait")}
-              picture={portraitPanelShot}
-              portraitPicture={portraitPanelVertical}
-              placeholder={portraitPanelLqip}
-            />
-          </Reveal>
+          <div className="mt-12 flex flex-col gap-6">
+            <Reveal>
+              <GatewayPanel
+                to="/photography?category=landscape"
+                title="Landscape"
+                subtitle={countLine("landscape")}
+                picture={GATEWAY_COVER.cover.picture}
+                portraitPicture={gatewayPortrait}
+                placeholder={GATEWAY_COVER.cover.lqip}
+              />
+            </Reveal>
+            <Reveal>
+              <GatewayPanel
+                to="/photography?category=portrait"
+                title="Portrait"
+                subtitle={countLine("portrait")}
+                picture={portraitPanelShot}
+                portraitPicture={portraitPanelVertical}
+                placeholder={portraitPanelLqip}
+              />
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ============ Editing — tutorials & presets ============ */}
       <section
         id="editing"
+        data-page-section
         aria-labelledby="editing-heading"
-        className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
+        className="relative flex min-h-svh flex-col justify-center bg-background"
       >
-        <Reveal>
-          <h2 id="editing-heading" className="text-right text-display-sm">
-            Editing
-          </h2>
-          <p className="mt-4 ml-auto max-w-prose text-right text-muted-foreground">
-            Behind each of my photos is a mountain of editing.
-          </p>
-        </Reveal>
-        <div className="mt-12 flex flex-col gap-6">
+        <div className="mx-auto w-full max-w-6xl px-6 py-24">
           <Reveal>
-            <GatewayPanel
-              to="/tutorial"
-              title="Tutorials"
-              subtitle="Editing walkthroughs, in video"
-              picture={tutorialsPanelShot}
-              portraitPicture={tutorialsPanelVertical}
-              placeholder={tutorialsPanelLqip}
-              align="right"
-            />
+            <h2 id="editing-heading" className="text-right text-display-sm">
+              Editing
+            </h2>
+            <p className="mt-4 ml-auto max-w-prose text-right text-muted-foreground">
+              Behind each of my photos is a mountain of editing.
+            </p>
           </Reveal>
-          <Reveal>
-            <GatewayPanel
-              to="/preset"
-              title="Presets"
-              subtitle="Free Lightroom presets (.xmp)"
-              picture={presetsPanelShot}
-              portraitPicture={presetsPanelVertical}
-              placeholder={presetsPanelLqip}
-              align="right"
-            />
-          </Reveal>
+          <div className="mt-12 flex flex-col gap-6">
+            <Reveal>
+              <GatewayPanel
+                to="/tutorial"
+                title="Tutorials"
+                subtitle="Editing walkthroughs, in video"
+                picture={tutorialsPanelShot}
+                portraitPicture={tutorialsPanelVertical}
+                placeholder={tutorialsPanelLqip}
+                align="right"
+              />
+            </Reveal>
+            <Reveal>
+              <GatewayPanel
+                to="/preset"
+                title="Presets"
+                subtitle="Free Lightroom presets (.xmp)"
+                picture={presetsPanelShot}
+                portraitPicture={presetsPanelVertical}
+                placeholder={presetsPanelLqip}
+                align="right"
+              />
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ============ Drawings — the progress record ============ */}
       <section
         id="drawing"
+        data-page-section
         aria-labelledby="drawings-heading"
-        className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
+        className="relative flex min-h-svh flex-col justify-center bg-background"
       >
-        <Reveal>
-          <h2 id="drawings-heading" className="text-display-sm">
-            Drawing
-          </h2>
-          <p className="mt-4 max-w-prose text-muted-foreground">
-            Not a showcase — an honest record of learning to draw, and failing
-            at it.
-          </p>
-        </Reveal>
-        <div className="mt-12">
+        <div className="mx-auto w-full max-w-6xl px-6 py-24">
           <Reveal>
-            <GatewayPanel
-              to="/drawing"
-              title="The Story"
-              subtitle="Twenty years of picking it up, putting it down, and starting again."
-              picture={drawingPanelShot}
-              portraitPicture={drawingPanelVertical}
-              placeholder={drawingPanelLqip}
-            />
+            <h2 id="drawings-heading" className="text-display-sm">
+              Drawing
+            </h2>
+            <p className="mt-4 max-w-prose text-muted-foreground">
+              Not a showcase — an honest record of learning to draw, and failing
+              at it.
+            </p>
           </Reveal>
+          <div className="mt-12">
+            <Reveal>
+              <GatewayPanel
+                to="/drawing"
+                title="The Story"
+                subtitle="Twenty years of picking it up, putting it down, and starting again."
+                picture={drawingPanelShot}
+                portraitPicture={drawingPanelVertical}
+                placeholder={drawingPanelLqip}
+              />
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* ============ Lab — research & code (text-only door) ======= */}
       <section
         id="lab"
+        data-page-section
         aria-labelledby="lab-heading"
-        className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
+        className="relative flex min-h-svh flex-col justify-center bg-background"
       >
-        <Reveal>
-          <h2 id="lab-heading" className="text-display-sm">
-            Lab
-          </h2>
-          <p className="mt-4 max-w-prose text-muted-foreground">
-            Research, projects, and the code behind them.
-          </p>
-          <Link
-            to="/lab"
-            className="group mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            Enter the lab
-            <ArrowRight
-              aria-hidden
-              className="size-4 transition-transform duration-(--motion-duration-fast) ease-(--ease-out-expo) group-hover:translate-x-1"
-            />
-          </Link>
-        </Reveal>
+        <div className="mx-auto w-full max-w-6xl px-6 py-24">
+          <Reveal>
+            <h2 id="lab-heading" className="text-display-sm">
+              Lab
+            </h2>
+            <p className="mt-4 max-w-prose text-muted-foreground">
+              Research, projects, and the code behind them.
+            </p>
+            <Link
+              to="/lab"
+              className="group mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            >
+              Enter the lab
+              <ArrowRight
+                aria-hidden
+                className="size-4 transition-transform duration-(--motion-duration-fast) ease-(--ease-out-expo) group-hover:translate-x-1"
+              />
+            </Link>
+          </Reveal>
+        </div>
       </section>
 
       {/* ============ Blog — the hallway (hidden until real) ==== */}
       {POSTS.length > 0 && (
         <section
           id="blog"
+          data-page-section
           aria-labelledby="blog-heading"
-          className="mx-auto max-w-6xl scroll-mt-20 px-6 pb-32"
+          className="relative flex min-h-svh flex-col justify-center bg-background"
         >
-          <Reveal>
-            <h2 id="blog-heading" className="text-display-sm">
-              Blog
-            </h2>
-            <p className="mt-4 max-w-prose text-muted-foreground">
-              Some interesting things I thought I'd share.
-            </p>
-          </Reveal>
-          <div className="mt-8 max-w-3xl">
-            <WritingBand />
+          <div className="mx-auto w-full max-w-6xl px-6 py-24">
+            <Reveal>
+              <h2 id="blog-heading" className="text-display-sm">
+                Blog
+              </h2>
+              <p className="mt-4 max-w-prose text-muted-foreground">
+                Some interesting things I thought I'd share.
+              </p>
+            </Reveal>
+            <div className="mt-8 max-w-3xl">
+              <WritingBand />
+            </div>
           </div>
         </section>
       )}
 
-      {/* Floating section menu — appears once the visitor scrolls */}
-      <SectionNav sections={HOME_SECTIONS} />
+      {/* Floating section menu — appears once the visitor scrolls; its
+          entries drive the same page-turn and highlight the active page */}
+      <SectionNav
+        sections={HOME_SECTIONS}
+        activeId={pager.activeId}
+        onNavigate={pager.goTo}
+      />
     </main>
   )
 }

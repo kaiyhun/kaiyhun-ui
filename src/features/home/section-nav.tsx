@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useState } from "react"
 
 import { MOTION } from "@/lib/motion-tokens"
+import { cn } from "@/lib/utils"
 
 /** Scroll depth (px) after which the menu appears. */
 const SHOW_AFTER = 160
@@ -28,9 +29,18 @@ export interface HomeSection {
 
 interface SectionNavProps {
   sections: HomeSection[]
+  /** Current section id — highlighted in the list (from the pager). */
+  activeId?: string | null
+  /** When set, entries drive the page-turn pager instead of a raw
+   *  anchor jump (keeps the menu in sync with the section takeover). */
+  onNavigate?: (id: string) => void
 }
 
-export function SectionNav({ sections }: SectionNavProps) {
+export function SectionNav({
+  sections,
+  activeId,
+  onNavigate,
+}: SectionNavProps) {
   const [scrolled, setScrolled] = useState(false)
   const [collapsed, setCollapsed] = useState(
     () => sessionStorage.getItem(COLLAPSE_KEY) === "1",
@@ -96,7 +106,21 @@ export function SectionNav({ sections }: SectionNavProps) {
                   <li key={section.id}>
                     <a
                       href={`#${section.id}`}
-                      className="block rounded-md px-2 py-1.5 text-sm text-muted-foreground transition-colors duration-(--motion-duration-fast) outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                      aria-current={
+                        activeId === section.id ? "true" : undefined
+                      }
+                      onClick={(event) => {
+                        if (onNavigate) {
+                          event.preventDefault()
+                          onNavigate(section.id)
+                        }
+                      }}
+                      className={cn(
+                        "block rounded-md px-2 py-1.5 text-sm transition-colors duration-(--motion-duration-fast) outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50",
+                        activeId === section.id
+                          ? "bg-muted text-foreground"
+                          : "text-muted-foreground",
+                      )}
                     >
                       {section.label}
                     </a>
