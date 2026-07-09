@@ -59,6 +59,7 @@ import { WritingBand } from "@/features/blog/writing-band"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
 import { GatewayPanel } from "@/features/home/gateway-panel"
 import { MatrixRain } from "@/features/home/matrix-rain"
+import { ScrollHint } from "@/features/home/scroll-hint"
 import { TypeOut } from "@/features/home/type-out"
 import { SectionNav, type HomeSection } from "@/features/home/section-nav"
 import { useSectionPager } from "@/features/home/use-section-pager"
@@ -97,12 +98,12 @@ export default function Home() {
   const matrix = useMatrixTheme()
 
   /* Boundary page-turn: each [data-page-section] is a full-viewport
-     "page"; scrolling past a section's edge turns the next one in with a
-     cinematic cover transition — the old page recedes beneath the new.
-     Sections are therefore FULL-BLEED with an opaque bg (so the incoming
-     page covers the receding one edge-to-edge) and land flush at the
-     viewport top; their inner column padding clears the fixed header.
-     (Pointer + motion only — a11y escape hatch in the hook.) */
+     "page"; scrolling past a section's edge fades the page out, jumps
+     under the cover of the background, and fades the next page in.
+     Sections are FULL-BLEED with an opaque bg (the page IS the screen)
+     and land flush at the viewport top; their inner column padding
+     clears the fixed header. (Pointer + motion only — a11y escape
+     hatch in the hook.) */
   const pager = useSectionPager()
 
   return (
@@ -344,6 +345,9 @@ export default function Home() {
           </div>
         </section>
       )}
+
+      {/* Bobbing chevron — visible while more paged content sits below */}
+      <ScrollHint show={pager.moreBelow} />
 
       {/* Floating section menu — appears once the visitor scrolls; its
           entries drive the same page-turn and highlight the active page */}
