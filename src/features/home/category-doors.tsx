@@ -153,9 +153,9 @@ export function CategoryDoors({
                       align === "right" && "md:justify-end",
                     )}
                   >
-                    {/* Hero-scale type (same text-display token as the
-                        landing wordmark) — the doors ARE the section */}
-                    <span className="font-display text-display-sm">
+                    {/* One step under the section heading (lg) — big
+                        enough to own the section, clearly subordinate */}
+                    <span className="font-display text-display-md">
                       {door.label}
                     </span>
                     <ArrowRight

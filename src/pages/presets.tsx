@@ -38,7 +38,7 @@ export default function Presets() {
       />
 
       <Reveal>
-        <h1 className="text-display-sm">Presets</h1>
+        <h1 className="text-display-lg">Presets</h1>
         <div className="mt-4 max-w-prose space-y-4 leading-relaxed text-muted-foreground">
           {PRESETS_INTRO.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>

@@ -49,7 +49,7 @@
 /*
  * Tailwind v4 theme — maps raw tokens (defined in :root below) onto
  * Tailwind's namespaces so utilities like bg-background, font-display,
- * ease-cinematic, and text-display are generated from them.
+ * ease-cinematic, and text-display-xl are generated from them.
  */
 @theme inline {
   /* Typography */
@@ -60,16 +60,28 @@
     "Space Grotesk Variable", "Space Grotesk Fallback", var(--font-sans);
   --font-heading: var(--font-display);
 
-  /* Fluid display type scale — hero/headline sizes that scale with the
-       viewport between phone and large desktop. */
-  --text-display: clamp(2.4rem, 1.2rem + 6vw, 6.4rem);
-  --text-display--line-height: 0.95;
-  --text-display--letter-spacing: -0.03em;
-  --text-display--font-weight: 700;
-  --text-display-sm: clamp(2rem, 1.25rem + 3.75vw, 4.5rem);
-  --text-display-sm--line-height: 1;
-  --text-display-sm--letter-spacing: -0.02em;
-  --text-display-sm--font-weight: 700;
+  /* Fluid display type scale — four steps that scale with the viewport
+       between phone and large desktop. Intended roles:
+       xl = hero wordmark · lg = page/section headings ·
+       md = category doors (one step under the heading) ·
+       sm = section subtitles (the line under a heading; medium weight,
+            reads in either font family). */
+  --text-display-xl: clamp(2.4rem, 1.2rem + 6vw, 6.4rem);
+  --text-display-xl--line-height: 0.95;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-xl--font-weight: 700;
+  --text-display-lg: clamp(2rem, 1.25rem + 3.75vw, 4.5rem);
+  --text-display-lg--line-height: 1;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-display-lg--font-weight: 700;
+  --text-display-md: clamp(1.6rem, 1.1rem + 2.5vw, 3.25rem);
+  --text-display-md--line-height: 1.05;
+  --text-display-md--letter-spacing: -0.02em;
+  --text-display-md--font-weight: 700;
+  --text-display-sm: clamp(1.125rem, 1rem + 0.7vw, 1.6rem);
+  --text-display-sm--line-height: 1.35;
+  --text-display-sm--letter-spacing: -0.01em;
+  --text-display-sm--font-weight: 500;
 
   /* Motion easings — exposed as Tailwind ease-* utilities.
        Same curves are consumed by Motion (JS) via motion-tokens.ts. */

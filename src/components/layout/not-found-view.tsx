@@ -19,7 +19,7 @@ export function NotFoundView() {
     <main className="flex min-h-svh flex-col items-center justify-center gap-6 px-6 text-center">
       <title>404 — Kaiyhun</title>
       <Reveal>
-        <h1 className="text-display">
+        <h1 className="text-display-xl">
           404<span className="text-accent">.</span>
         </h1>
       </Reveal>

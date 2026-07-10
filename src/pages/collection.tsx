@@ -33,7 +33,7 @@ export default function Collection() {
       <meta name="description" content={collection.description} />
 
       <Reveal>
-        <h1 className="text-display-sm">{collection.title}</h1>
+        <h1 className="text-display-lg">{collection.title}</h1>
         <p className="mt-4 max-w-prose text-muted-foreground">
           {collection.description}
         </p>

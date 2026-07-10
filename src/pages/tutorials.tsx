@@ -61,7 +61,7 @@ export default function Tutorials() {
       />
 
       <Reveal>
-        <h1 className="text-display-sm">Tutorials</h1>
+        <h1 className="text-display-lg">Tutorials</h1>
         <p className="mt-4 max-w-prose leading-relaxed text-muted-foreground">
           Editing walkthroughs, in video — how the photographs get their look.
         </p>

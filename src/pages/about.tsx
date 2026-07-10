@@ -28,7 +28,7 @@ export default function About() {
       />
 
       <Reveal>
-        <h1 className="text-display-sm">About</h1>
+        <h1 className="text-display-lg">About</h1>
         <div className="mt-6 max-w-prose space-y-4 leading-relaxed text-foreground/85">
           {BIO.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>

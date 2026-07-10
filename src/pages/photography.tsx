@@ -130,7 +130,7 @@ export default function Photography() {
       />
 
       <Reveal>
-        <h1 className="text-display-sm">Photography</h1>
+        <h1 className="text-display-lg">Photography</h1>
         <div className="mt-8">
           <CategoryMenu value={category} onChange={setCategory} />
         </div>

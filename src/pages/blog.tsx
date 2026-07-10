@@ -50,7 +50,7 @@ export default function Blog() {
       />
 
       <Reveal>
-        <h1 className="text-display-sm">Blog</h1>
+        <h1 className="text-display-lg">Blog</h1>
         <p className="mt-4 max-w-prose leading-relaxed text-muted-foreground">
           Notes from every wing — the photography, the drawing practice, the
           editing craft, and the code underneath it all.

@@ -51,7 +51,7 @@ export default function Drawing() {
       />
 
       <Reveal>
-        <h1 className="text-display-sm">Drawing</h1>
+        <h1 className="text-display-lg">Drawing</h1>
         <p className="mt-4 max-w-prose leading-relaxed text-muted-foreground">
           Not a portfolio. A record of an old goal, picked back up — the
           studies, the false starts, and the gap in the middle.

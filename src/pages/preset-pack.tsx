@@ -42,7 +42,7 @@ export default function PresetPack() {
       />
 
       <Reveal>
-        <h1 className="text-display-sm">{PACK_2020.name}</h1>
+        <h1 className="text-display-lg">{PACK_2020.name}</h1>
         <ul className="mt-6 space-y-2">
           {PACK_2020_CONTENTS.map((line) => (
             <li

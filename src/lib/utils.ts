@@ -6,16 +6,18 @@ import { extendTailwindMerge } from "tailwind-merge"
 
 /**
  * tailwind-merge doesn't know our CUSTOM `text-*` theme utilities, so by
- * default it lumps the font-size ones (`text-display`, `text-display-sm`)
- * and the color ones (`text-wordmark`) into one `text-*` conflict group
- * and drops all but the last — e.g. `cn("text-display", "text-wordmark")`
- * would silently lose `text-display`. Registering them in their real
+ * default it lumps the font-size ones (the `text-display-*` scale) and
+ * the color ones (`text-wordmark`) into one `text-*` conflict group and
+ * drops all but the last — e.g. `cn("text-display-xl", "text-wordmark")`
+ * would silently lose `text-display-xl`. Registering them in their real
  * groups keeps a size and a color coexisting.
  */
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
-      "font-size": [{ text: ["display", "display-sm"] }],
+      "font-size": [
+        { text: ["display-xl", "display-lg", "display-md", "display-sm"] },
+      ],
       "text-color": [{ text: ["wordmark"] }],
     },
   },

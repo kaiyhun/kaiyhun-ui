@@ -144,7 +144,7 @@ export default function Home() {
           <Reveal>
             <h1
               className={cn(
-                "text-display text-wordmark",
+                "text-display-xl text-wordmark",
                 matrix && "font-mono",
               )}
             >
@@ -213,10 +213,10 @@ export default function Home() {
           ]}
         >
           <Reveal>
-            <h2 id="photography" className="text-display-sm">
+            <h2 id="photography" className="text-display-lg">
               Photography
             </h2>
-            <p className="mt-4 max-w-prose text-muted-foreground">
+            <p className="mt-4 max-w-prose text-display-sm text-muted-foreground">
               Two bodies of work — more wings (drawings, the lab, the blog) open
               as they're built.
             </p>
@@ -252,10 +252,10 @@ export default function Home() {
           ]}
         >
           <Reveal>
-            <h2 id="editing-heading" className="text-display-sm">
+            <h2 id="editing-heading" className="text-display-lg">
               Editing
             </h2>
-            <p className="mt-4 max-w-prose text-muted-foreground">
+            <p className="mt-4 max-w-prose text-display-sm text-muted-foreground">
               Behind each of my photos is a mountain of editing.
             </p>
           </Reveal>
@@ -284,10 +284,10 @@ export default function Home() {
         />
         <div className="relative mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>
-            <h2 id="drawings-heading" className="text-display-sm">
+            <h2 id="drawings-heading" className="text-display-lg">
               Drawing
             </h2>
-            <p className="mt-4 max-w-prose text-muted-foreground">
+            <p className="mt-4 max-w-prose text-display-sm text-muted-foreground">
               Not a showcase — an honest record of learning to draw, and failing
               at it.
             </p>
@@ -319,10 +319,10 @@ export default function Home() {
         <BinaryScene className="absolute inset-0 h-full w-full" />
         <div className="relative mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>
-            <h2 id="lab-heading" className="text-display-sm">
+            <h2 id="lab-heading" className="text-display-lg">
               Lab
             </h2>
-            <p className="mt-4 max-w-prose text-muted-foreground">
+            <p className="mt-4 max-w-prose text-display-sm text-muted-foreground">
               Research, projects, and the code behind them.
             </p>
             <Link
@@ -349,10 +349,10 @@ export default function Home() {
         >
           <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
             <Reveal>
-              <h2 id="blog-heading" className="text-display-sm">
+              <h2 id="blog-heading" className="text-display-lg">
                 Blog
               </h2>
-              <p className="mt-4 max-w-prose text-muted-foreground">
+              <p className="mt-4 max-w-prose text-display-sm text-muted-foreground">
                 Some interesting things I thought I'd share.
               </p>
             </Reveal>

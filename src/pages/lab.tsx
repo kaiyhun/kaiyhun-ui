@@ -34,7 +34,7 @@ export default function Lab() {
       <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_12rem] xl:gap-16">
         <div>
           <Reveal>
-            <h1 className="text-display-sm">Lab</h1>
+            <h1 className="text-display-lg">Lab</h1>
             <p className="mt-4 max-w-prose leading-relaxed text-muted-foreground">
               Research, projects, and the code behind them.
             </p>

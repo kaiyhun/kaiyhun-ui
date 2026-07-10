@@ -93,7 +93,7 @@ export default function PostPage() {
           <p className="font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase">
             {post.topics.map((topic) => TOPIC_LABELS[topic]).join(" · ")}
           </p>
-          <h1 className="mt-3 text-display-sm">{post.title}</h1>
+          <h1 className="mt-3 text-display-lg">{post.title}</h1>
           <div className="mt-4 flex items-center gap-3 text-sm text-muted-foreground">
             <time dateTime={post.date}>{formatPostDate(post.date)}</time>
             <span aria-hidden>·</span>
