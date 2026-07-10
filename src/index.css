@@ -60,12 +60,19 @@
     "Space Grotesk Variable", "Space Grotesk Fallback", var(--font-sans);
   --font-heading: var(--font-display);
 
-  /* Fluid display type scale — four steps that scale with the viewport
+  /* Fluid display type scale — five steps that scale with the viewport
        between phone and large desktop. Intended roles:
-       xl = hero wordmark · lg = page/section headings ·
+       2xl = the homepage hero wordmark (its single colossal moment) ·
+       xl = page-level statements (404) · lg = page/section headings ·
        md = category doors (one step under the heading) ·
        sm = section subtitles (the line under a heading; medium weight,
             reads in either font family). */
+  --text-display-2xl: clamp(3.4rem, 1.5rem + 11vw, 11rem);
+  /* lh 1 (not tighter): the wordmark rises out of an overflow mask —
+     a tighter line box would clip the y descender */
+  --text-display-2xl--line-height: 1;
+  --text-display-2xl--letter-spacing: -0.035em;
+  --text-display-2xl--font-weight: 700;
   --text-display-xl: clamp(2.4rem, 1.2rem + 6vw, 6.4rem);
   --text-display-xl--line-height: 0.95;
   --text-display-xl--letter-spacing: -0.03em;

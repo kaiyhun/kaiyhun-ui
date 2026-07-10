@@ -6,16 +6,9 @@
  * footer (site-wide). The recent-writing band (M8) and about teaser (M11)
  * appear when their wings are real.
  */
-import { ArrowRight, Terminal } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { Link } from "react-router"
 
-// prettier-ignore
-import heroShot from "@/assets/landscape/niagaraFalls/niagaraFalls_8.jpg?w=800;1200;2000;2560&format=avif;webp;jpeg&as=picture"
-import heroLqip from "@/assets/landscape/niagaraFalls/niagaraFalls_8.jpg?w=24&format=webp&inline"
-/* Portrait crop served on portrait screens (art direction — only the
-   matching orientation is ever downloaded) */
-// prettier-ignore
-import heroShotPortrait from "@/assets/landscape/niagaraFalls/niagaraFalls_9.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
 /* Photography doors (user picks carried over from the panels, now
    full-bleed): Landscape = lakeLouise_1 / lakeLouise_6 vertical;
    Portrait = nature_5 / studio_1 vertical */
@@ -53,36 +46,19 @@ import presetsDoorShot from "@/assets/landscape/goldenHour/goldenHour_7.jpg?w=80
 import presetsDoorLqip from "@/assets/landscape/goldenHour/goldenHour_7.jpg?w=24&format=webp&inline"
 // prettier-ignore
 import presetsDoorVertical from "@/assets/landscape/lake/lake_3.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
-import { Reveal, RevealGroup } from "@/components/motion/reveal"
-import { Button } from "@/components/ui/button"
-import {
-  collectionsIn,
-  photoCountIn,
-  requireCollection,
-} from "@/content/collections"
+import { Reveal } from "@/components/motion/reveal"
+import { collectionsIn, photoCountIn } from "@/content/collections"
 import { POSTS } from "@/content/posts"
-import { SITE } from "@/content/site"
 import { WritingBand } from "@/features/blog/writing-band"
-import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
 import { BinaryScene } from "@/features/home/binary-scene"
 import { CategoryDoors } from "@/features/home/category-doors"
-import { MatrixRain } from "@/features/home/matrix-rain"
+import { HomeHero } from "@/features/home/hero"
 import { ScrollHint } from "@/features/home/scroll-hint"
 import { SectionKicker } from "@/features/home/section-kicker"
 import { SocialRail } from "@/features/home/social-rail"
-import { TypeOut } from "@/features/home/type-out"
 import { RotatingBackdrop } from "@/features/presets/rotating-backdrop"
 import { SectionNav, type HomeSection } from "@/features/home/section-nav"
 import { useSectionPager } from "@/features/home/use-section-pager"
-import { MEDIA } from "@/lib/media-queries"
-import { toggleMatrixTheme, useMatrixTheme } from "@/lib/theme"
-import { cn } from "@/lib/utils"
-
-/** Hero photo metadata comes from the content model, not re-written here. */
-const HERO_ALT =
-  requireCollection("niagara-falls").photos.find(
-    (photo) => photo.file === "niagaraFalls_8",
-  )?.alt ?? ""
 
 /** Count line for a category door. */
 function countLine(category: "landscape" | "portrait") {
@@ -101,10 +77,6 @@ const HOME_SECTIONS: HomeSection[] = [
 ]
 
 export default function Home() {
-  /* Matrix mode — SITE-WIDE easter-egg theme; the hook stays in sync
-     with every trigger (hero button here, Konami code in app.tsx) */
-  const matrix = useMatrixTheme()
-
   /* Boundary page-turn: each [data-page-section] is a full-viewport
      "page"; scrolling past a section's edge fades the page out, jumps
      under the cover of the background, and fades the next page in.
@@ -128,72 +100,13 @@ export default function Home() {
     // (index.css) — coarse pointers page via native scroll snap, the
     // pointer-only wheel pager never runs there
     <main data-page-snap>
-      {/* ============ Hero — identity statement (page 1) ========= */}
+      {/* ============ Hero — "00", the identity statement ========= */}
       <section
         id="hero"
         data-page-section
-        className="relative flex min-h-svh items-center overflow-hidden bg-background"
+        className="relative flex min-h-svh overflow-hidden bg-background"
       >
-        {matrix ? (
-          <MatrixRain className="absolute inset-0 h-full w-full" />
-        ) : (
-          <ArtDirectedBackdrop
-            picture={heroShot}
-            variant={{ media: MEDIA.portrait, picture: heroShotPortrait }}
-            placeholder={heroLqip}
-            alt={HERO_ALT}
-            className="absolute inset-0"
-          />
-        )}
-        {/* Legibility scrim: slightly stronger through the middle since the
-            centered text sits over the brightest part of the falls */}
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-background/25"
-        />
-        <RevealGroup className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-6 py-32 text-center">
-          <Reveal>
-            <h1
-              className={cn(
-                "text-display-xl text-wordmark",
-                matrix && "font-mono",
-              )}
-            >
-              {SITE.name}
-            </h1>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p
-              className={cn(
-                "mt-4 max-w-xl text-lg text-foreground/85 sm:text-xl",
-                matrix && "font-mono text-base sm:text-lg",
-              )}
-            >
-              {matrix ? <TypeOut text={SITE.tagline} /> : SITE.tagline}
-            </p>
-          </Reveal>
-          <Reveal
-            delay={0.2}
-            className="mt-8 flex flex-wrap items-center justify-center gap-3"
-          >
-            <Button asChild size="lg">
-              <Link to="/photography">
-                View the photography
-                <ArrowRight data-icon="inline-end" aria-hidden />
-              </Link>
-            </Button>
-            {/* The rabbit hole (labels: content-draft §17) */}
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={toggleMatrixTheme}
-              aria-pressed={matrix}
-            >
-              <Terminal data-icon="inline-start" aria-hidden />
-              {matrix ? "Wake up" : "Enter the Matrix"}
-            </Button>
-          </Reveal>
-        </RevealGroup>
+        <HomeHero />
       </section>
 
       {/* ============ Photography — category doors ============ */}
