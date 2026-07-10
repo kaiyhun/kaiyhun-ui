@@ -12,7 +12,9 @@ mirroring the photography CategoryMenu) switches the page:
 
 - **Story** (default; no URL param) — the journey timeline below.
 - **Gallery** (`?view=gallery`) — just the work (`DrawingGallery`): each
-  group's title + description as a section heading with a masonry grid.
+  group headed by a numbered SectionKicker (the site's editorial
+  language; title + description verbatim) over a masonry grid. The
+  Story view's JourneyRail keeps its own bespoke design on purpose.
 
 Switching views clears `?photo` (fresh context). The PAGE owns the one
 lightbox over `DRAWING_SEQUENCE`; both views only report tile clicks up

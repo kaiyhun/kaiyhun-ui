@@ -2,7 +2,8 @@
  * ResponsiveImage — the one way images are rendered in this app.
  *
  * Consumes a vite-imagetools `picture` import (AVIF/WebP/JPEG srcsets +
- * fallback) and owns all delivery concerns so pages never hand-write them:
+ * fallback — JPEG kept deliberately for pre-2020 browsers; user decision
+ * 2026-07-10, docs/audit-2026-07-10.md) and owns all delivery concerns so pages never hand-write them:
  *
  * - `<picture>` with modern-format sources; browser picks the smallest
  *   sufficient file via `sizes`

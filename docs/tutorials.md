@@ -49,3 +49,15 @@ After = base layer; Before = top layer clipped by
 2. Update the imports + alt/caption in `BEFORE_AFTER`; drop the
    [PLACEHOLDER] markers.
 3. Rewrite `WHY_WE_EDIT` in your own voice (content-draft §14).
+
+
+## Videos-view layout (2026-07-10 recomposition)
+
+Featured tutorials render as numbered editorial media rows (facade
+7/12 + text column 5/12, alternating sides); the rest as a two-up card
+grid under a label-only SectionKicker; a full-width channel panel
+closes the view. Per-video `description` + `focus` fields live in the
+content model (DRAFTS, content-draft §20). VideoFacade tries the 1280px
+maxresdefault thumbnail first and steps down via onError; layouts that
+show the title themselves pass `showTitle={false}` and resolve it with
+`tutorialTitle()`.

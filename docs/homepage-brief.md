@@ -96,7 +96,19 @@ Each homepage section is a full-viewport "page" (`[data-page-section]`,
 lives in an inner `max-w-6xl` div whose padding — `py-16`, `md:py-24` —
 clears the fixed header). Content is vertically centered at every
 width (user decision — phones match desktop); text is left-aligned
-throughout.
+throughout. The HERO is "00" in the same system
+(`features/home/hero.tsx`): bottom-anchored stack — numbered eyebrow
+(DRAFT label "Personal universe"), colossal wordmark (text-display-2xl),
+approved tagline, CTAs, live meta counts bottom-right (lg+) — with a
+signature intro choreography (Ken Burns settle, drawn rule, masked
+wordmark rise, staggered fades; pointer parallax on fine pointers; all
+transform/opacity, reduced-motion safe, LCP still eager).
+Composition is the EDITORIAL KICKER system (user decision):
+each section's h2 is a tiny numbered eyebrow ("01 —— PHOTOGRAPHY",
+`features/home/section-kicker.tsx`; number+rule aria-hidden, so the
+accessible name stays clean) and the section has exactly ONE big type
+moment — the category doors (display-lg) on Photography/Editing, the
+statement line (display-md) on Drawing/Lab/Blog.
 You scroll within a section (the pager OWNS the wheel and applies the
 scroll itself, clamped to the section); at a section's edge, accumulated
 wheel delta past a threshold turns the "page"
@@ -123,9 +135,9 @@ paged content remains below the viewport).
   gestures stay native, tall sections scroll freely inside (snap areas
   larger than the snapport are scrollable within by spec), and the
   `pointer: coarse` gate is mutually exclusive with the pager's
-  `pointer: fine` wheel ownership. The site FOOTER gets
-  `scroll-snap-align: end` — without its own snap position, mandatory
-  snapping would yank back to the last section and strand it.
+  `pointer: fine` wheel ownership. (The homepage renders no footer —
+  gated in app.tsx — so the document ends on the last page and every
+  scroll position has a snap target.)
 - **Fade-through, not a transform "cover" turn (user decision — the cover
   felt stiff).** A Motion tween (tokens: `duration.slow` +
   `ease.cinematic`) fades ALL sections out, jumps with

@@ -38,7 +38,11 @@ import shot from "@/assets/iceland/iceland_1.jpg?w=400;800;1200;2000&format=avif
 import shotLqip from "@/assets/iceland/iceland_1.jpg?w=24&format=webp&inline"
 ```
 
-- `as=picture` → `{ sources: { avif, webp, jpeg → srcsets }, img: { src, w, h } }`
+- `as=picture` → `{ sources: { avif, webp, jpeg → srcsets }, img: { src, w, h } }` — the
+  fallback `<img>` is the last listed format (JPEG). The 2026-07-10
+  audit weighed dropping JPEG (82MB, 45% of dist, pre-2020 browsers
+  only) — the user chose to KEEP it for maximal compatibility
+  (docs/audit-2026-07-10.md)
 - `inline` → base64 data URL (~1 kB, the LQIP)
 - Everything is content-hashed by Vite → immutable browser caching despite
   GitHub Pages' fixed `max-age=600`

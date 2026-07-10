@@ -60,7 +60,9 @@ re-measure those overrides.
 Fluid display sizes (clamp-based, scale with viewport) — a four-step
 scale; names match relative size:
 
-- `text-display-xl` — hero wordmark: 2.4rem → 6.4rem
+- `text-display-2xl` — the homepage hero wordmark (single use):
+  3.4rem → 11rem
+- `text-display-xl` — page-level statements (404): 2.4rem → 6.4rem
 - `text-display-lg` — page/section headings: 2rem → 4.5rem
 - `text-display-md` — homepage category doors (one step under the
   heading): 1.6rem → 3.25rem

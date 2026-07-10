@@ -45,3 +45,17 @@ spans all 36 examples in page order (?photo URL-driven). Unknown
 2. Final row/backdrop picks → the imports at the top of presets.ts.
 3. Reviewed alt text → replace the generated `examples()` alts with
    hand-written ones when ready.
+
+
+## Pack-detail spine timeline (2026-07-10 recomposition)
+
+/preset/2020's preset sections hang off a vertical timeline: a
+track with one node per preset (KY01 → BONUS), a primary fill bar
+scroll-linked via Motion useScroll→scaleY (transform-only; spring
+smoothing is scroll-linked, safe under reduced motion), line-driven
+node states (nodes subscribe to the same spring as the bar and flip
+the instant the tip passes their measured position; ResizeObserver
+re-measures as masonry images settle),
+and a gentle dim on non-active section text. Spine parts are
+aria-hidden; heading ids/aria-labelledby unchanged. Feature lines
+render as pill chips — all preset copy verbatim.
