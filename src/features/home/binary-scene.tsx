@@ -1,23 +1,25 @@
 /**
  * BinaryScene — the Lab section's full-page ambient backdrop: a pixel cat
- * watching the moon under a starfield while clouds roll through, drawn
- * ENTIRELY from 0/1 glyphs. The section's text sits OVER it (user
+ * watching a white crescent moon under a starfield, clouds rolling
+ * through and two dandelions swaying in the same wind on the left — all
+ * drawn ENTIRELY from 0/1 glyphs. The section's text sits OVER it (user
  * decision — the scene fills the page, no negative space).
  *
  * The glyph grid is sized from a fixed cell (~14px, denser on phones) so
  * the scene gains cells with the viewport instead of scaling up; the
- * actors are placed adaptively each resize — moon top-right, cat
- * bottom-right (clear of the left text column on desktop), clouds in the
- * upper sky band (above the vertically-centered text), stars scattered
- * through the sky, a denser static "ground" along the bottom. Every
- * visible cell renders a mono "0"/"1"; a few percent flip per tick and
- * stars twinkle, so the image shimmers like living data. Chunky 10fps
- * redraw — the cadence is part of the look, and a few k fillText calls
- * per tick is cheap.
+ * actors are placed adaptively each resize — crescent top-right, cat
+ * bottom right-of-center at EVERY width (user decision), dandelions
+ * bottom-left, clouds in the upper sky band, stars scattered through the
+ * sky, a denser static "ground" along the bottom. Every visible cell
+ * renders a mono "0"/"1"; a few percent flip per tick and stars twinkle,
+ * so the image shimmers like living data. Chunky 10fps redraw — the
+ * cadence is part of the look, and a few k fillText calls per tick is
+ * cheap.
  *
- * Colors are theme tokens read from CSS (--primary for the moon,
- * --foreground for everything else at layered alphas), so Matrix mode
- * restyles the scene automatically — the effect re-arms on theme change.
+ * Everything draws in the --foreground token at layered alphas (the moon
+ * is simply the brightest layer — plain white, user decision), so Matrix
+ * mode restyles the scene automatically — the effect re-arms on theme
+ * change.
  *
  * Respect (same contract as MatrixRain): aria-hidden decorative canvas;
  * prefers-reduced-motion renders ONE static frame (cloud parked half
@@ -89,16 +91,101 @@ const EAR_TIP: Array<[number, number]> = [
   [9, 1],
 ]
 
-/** Moon: '#' bright, 'o' dim crater. 9×7. */
+/** Crescent moon (bright limb left, opening right): '#' bright,
+ *  'o' dim crater. 9×9. */
 const MOON = `
-..#####..
-.#######.
-####o####
-###oo####
-#########
-.###o###.
-..#####..
+..####...
+.####....
+####.....
+###......
+##o......
+###......
+####.....
+.####....
+..####...
 `
+
+/** Dandelions (left of the scene), 3 sway frames each — the wind leans
+ *  them right, matching the clouds' drift. Tall: 9×12, short: 7×9. */
+const DANDELION_TALL_FRAMES = [
+  `
+...###...
+..#####..
+..#####..
+...###...
+....#....
+....#....
+....#....
+...##....
+....#....
+....#....
+....#....
+....#....
+`,
+  `
+....###..
+...#####.
+...#####.
+....###..
+.....#...
+....#....
+....#....
+...##....
+....#....
+....#....
+....#....
+....#....
+`,
+  `
+.....###.
+....#####
+....#####
+.....###.
+......#..
+.....#...
+....#....
+...##....
+....#....
+....#....
+....#....
+....#....
+`,
+]
+const DANDELION_SHORT_FRAMES = [
+  `
+..###..
+.#####.
+..###..
+...#...
+...#...
+..##...
+...#...
+...#...
+...#...
+`,
+  `
+...###.
+..#####
+...###.
+....#..
+...#...
+..##...
+...#...
+...#...
+...#...
+`,
+  `
+...###.
+..#####
+...###.
+....#..
+....#..
+..##...
+...#...
+...#...
+...#...
+`,
+]
 
 /** Cloud shapes at different sizes/speeds (index-paired with CLOUD_MS). */
 const CLOUD_ART = [
@@ -147,6 +234,11 @@ const SWISH_SEQUENCE = [0, 1, 2, 1, 0]
 const TWITCH_EVERY_MS = 6000
 const TWITCH_JITTER_MS = 4000
 const TWITCH_MS = 280
+/** Dandelion sway: slow wind cycle (upright → lean → deep → lean),
+ *  per-flower phase offsets so the two never move in lockstep. */
+const SWAY_FRAME_MS = 1000
+const SWAY_SEQUENCE = [0, 1, 2, 1]
+const SWAY_PHASES = [0, 2]
 /** Fraction of background cells showing faint static. */
 const BG_DENSITY = 0.1
 
@@ -157,9 +249,11 @@ const L_STAR = 2
 const L_MOON_DIM = 3
 const L_MOON = 4
 const L_CLOUD = 5
-const L_CAT = 6
-/** Per-layer alpha (all layers use --foreground except the moon). */
-const LAYER_ALPHA = [0, 0.12, 0.5, 0.45, 1, 0.32, 0.55]
+const L_FLORA = 6
+const L_CAT = 7
+/** Per-layer alpha — everything draws in --foreground (the moon is
+ *  plain white by being the brightest layer, user decision). */
+const LAYER_ALPHA = [0, 0.12, 0.5, 0.45, 1, 0.32, 0.5, 0.55]
 
 const parseArt = (art: string) =>
   art
@@ -179,7 +273,6 @@ export function BinaryScene({ className }: { className?: string }) {
     if (!context) return
 
     const styles = getComputedStyle(canvas)
-    const moonColor = styles.getPropertyValue("--primary").trim()
     const inkColor = styles.getPropertyValue("--foreground").trim()
 
     const reducedMotion = window.matchMedia(
@@ -191,6 +284,10 @@ export function BinaryScene({ className }: { className?: string }) {
     const tailFrames = TAIL_FRAMES.map(parseArt)
     const moon = parseArt(MOON)
     const clouds = CLOUD_ART.map(parseArt)
+    const flowers = [
+      DANDELION_TALL_FRAMES.map(parseArt),
+      DANDELION_SHORT_FRAMES.map(parseArt),
+    ]
 
     /* Grid + per-cell state — rebuilt on resize (cols/rows change). */
     let cols = 0
@@ -210,6 +307,8 @@ export function BinaryScene({ className }: { className?: string }) {
     let catY = 0
     let cloudX = [0, 0, 0]
     let cloudY = [0, 0, 0]
+    let flowerX = [0, 0]
+    let flowerY = [0, 0]
 
     /* Animation state */
     let tailFrame = 0
@@ -254,6 +353,12 @@ export function BinaryScene({ className }: { className?: string }) {
       for (let c = 0; c < clouds.length; c++) {
         stamp(clouds[c], Math.round(cloudX[c]), cloudY[c], L_CLOUD)
       }
+      /* dandelions sway on a slow time-derived cycle (no state needed) */
+      for (let f = 0; f < flowers.length; f++) {
+        const step = Math.floor(now / SWAY_FRAME_MS) + SWAY_PHASES[f]
+        const swayFrame = SWAY_SEQUENCE[step % SWAY_SEQUENCE.length]
+        stamp(flowers[f][swayFrame], flowerX[f], flowerY[f], L_FLORA)
+      }
       stamp(tailFrames[tailFrame], catX - 3, catY + 4, L_CAT)
       stamp(catBody, catX, catY, L_CAT)
       if (now < twitchUntil) {
@@ -273,8 +378,7 @@ export function BinaryScene({ className }: { className?: string }) {
         const x = (i % cols) * cell + cell / 2
         const y = Math.floor(i / cols) * cell + cell / 2
         context.globalAlpha = LAYER_ALPHA[layer]
-        context.fillStyle =
-          layer === L_MOON || layer === L_MOON_DIM ? moonColor : inkColor
+        context.fillStyle = inkColor
         context.fillText(digits[i] ? "1" : "0", x, y)
       }
       context.globalAlpha = 1
@@ -308,20 +412,24 @@ export function BinaryScene({ className }: { className?: string }) {
         }
       }
 
-      /* Actors keep clear of the OTHER things on the page. Desktop: text
-         column left, Scroll-to menu bottom-right → moon top-right, cat
-         bottom right-of-center. Narrow screens: text is TOP-anchored and
-         the expanded menu owns the bottom-right → moon drops to mid-sky
-         right, cat moves to the bottom-LEFT. */
+      /* Actors keep clear of the OTHER things on the page. The cat sits
+         right-of-center at EVERY width (user decision); the dandelions
+         take the bottom-left. Narrow screens: text is top-anchored, so
+         the moon drops to mid-sky right. */
       const narrow = width < 640
       moonX = cols - 9 - Math.max(2, Math.round(cols * 0.06))
       moonY = Math.max(1, Math.round(rows * (narrow ? 0.3 : 0.08)))
-      catX = narrow ? 2 : Math.min(Math.round(cols * 0.62), cols - 15 - 2)
+      catX = Math.min(Math.round(cols * 0.62), cols - 15 - 2)
       catY = rows - 12 - 2
       cloudY = CLOUD_BAND.map((band) => Math.max(1, Math.round(rows * band)))
       // First cloud parked half across the moon (the static frame tells
       // the story too); the rest staggered off to the left
       cloudX = [moonX - 7, -18, Math.round(cols * 0.35)]
+      // Dandelions: bottom-left on the ground line, the short one a
+      // little to the tall one's right
+      flowerX = [Math.max(1, Math.round(cols * 0.05)), 0]
+      flowerX[1] = flowerX[0] + 10
+      flowerY = [rows - 12 - 2, rows - 9 - 2]
 
       draw(performance.now())
     }
