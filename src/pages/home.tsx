@@ -233,10 +233,10 @@ export default function Home() {
           <Reveal>
             {/* Right alignment is a wide-screen accent — one left reading
                 axis on phones (user decision) */}
-            <h2 id="editing-heading" className="text-display-sm md:text-right">
+            <h2 id="editing-heading" className="text-display-sm">
               Editing
             </h2>
-            <p className="mt-4 max-w-prose text-muted-foreground md:ml-auto md:text-right">
+            <p className="mt-4 max-w-prose text-muted-foreground">
               Behind each of my photos is a mountain of editing.
             </p>
           </Reveal>
@@ -249,7 +249,6 @@ export default function Home() {
                 picture={tutorialsPanelShot}
                 portraitPicture={tutorialsPanelVertical}
                 placeholder={tutorialsPanelLqip}
-                align="right"
               />
             </Reveal>
             <Reveal>
@@ -260,7 +259,6 @@ export default function Home() {
                 picture={presetsPanelShot}
                 portraitPicture={presetsPanelVertical}
                 placeholder={presetsPanelLqip}
-                align="right"
               />
             </Reveal>
           </div>
