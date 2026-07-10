@@ -16,16 +16,19 @@ import heroLqip from "@/assets/landscape/niagaraFalls/niagaraFalls_8.jpg?w=24&fo
    matching orientation is ever downloaded) */
 // prettier-ignore
 import heroShotPortrait from "@/assets/landscape/niagaraFalls/niagaraFalls_9.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
-/* Vertical gateway crop for small screens (user pick: lakeLouise_6) */
+/* Photography doors (user picks carried over from the panels, now
+   full-bleed): Landscape = lakeLouise_1 / lakeLouise_6 vertical;
+   Portrait = nature_5 / studio_1 vertical */
 // prettier-ignore
-import gatewayPortrait from "@/assets/landscape/lakeLouise/lakeLouise_6.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-/* Portrait-panel images (user picks): horizontal nature_5 (golden
-   meadow backlight), vertical studio_1 (red/blue gel studio) */
+import landscapeDoorShot from "@/assets/landscape/lakeLouise/lakeLouise_1.jpg?w=800;1200;2000;2560&format=avif;webp;jpeg&as=picture"
+import landscapeDoorLqip from "@/assets/landscape/lakeLouise/lakeLouise_1.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import portraitPanelShot from "@/assets/portrait/nature/nature_5.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import portraitPanelLqip from "@/assets/portrait/nature/nature_5.jpg?w=24&format=webp&inline"
+import landscapeDoorVertical from "@/assets/landscape/lakeLouise/lakeLouise_6.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
 // prettier-ignore
-import portraitPanelVertical from "@/assets/portrait/studio/studio_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import portraitDoorShot from "@/assets/portrait/nature/nature_5.jpg?w=800;1200;2000&format=avif;webp;jpeg&as=picture"
+import portraitDoorLqip from "@/assets/portrait/nature/nature_5.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import portraitDoorVertical from "@/assets/portrait/studio/studio_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
 /* Drawing-section rotating backdrop (DRAFT picks pending review,
    content-draft §18): iceland_1 / winter_1 / lake_1 — dark-edged frames
    that survive the wide center-crop; portrait screens see them near-
@@ -37,18 +40,19 @@ import drawingBackdrop1Lqip from "@/assets/landscape/iceland/iceland_1.jpg?w=24&
 import drawingBackdrop2 from "@/assets/landscape/winter/winter_1.jpg?w=800;1200;2000&format=avif;webp;jpeg&as=picture"
 // prettier-ignore
 import drawingBackdrop3 from "@/assets/landscape/lake/lake_1.jpg?w=800;1200;2000&format=avif;webp;jpeg&as=picture"
-/* Editing-section panels (user picks): Tutorials = niagaraFalls_14 /
-   coast_1; Presets = goldenHour_7 / lake_3 */
+/* Editing doors (user picks carried over from the panels, now
+   full-bleed): Tutorials = niagaraFalls_14 / coast_1; Presets =
+   goldenHour_7 / lake_3 */
 // prettier-ignore
-import tutorialsPanelShot from "@/assets/landscape/niagaraFalls/niagaraFalls_14.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import tutorialsPanelLqip from "@/assets/landscape/niagaraFalls/niagaraFalls_14.jpg?w=24&format=webp&inline"
+import tutorialsDoorShot from "@/assets/landscape/niagaraFalls/niagaraFalls_14.jpg?w=800;1200;2000;2560&format=avif;webp;jpeg&as=picture"
+import tutorialsDoorLqip from "@/assets/landscape/niagaraFalls/niagaraFalls_14.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import tutorialsPanelVertical from "@/assets/landscape/coast/coast_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import tutorialsDoorVertical from "@/assets/landscape/coast/coast_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
 // prettier-ignore
-import presetsPanelShot from "@/assets/landscape/goldenHour/goldenHour_7.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import presetsPanelLqip from "@/assets/landscape/goldenHour/goldenHour_7.jpg?w=24&format=webp&inline"
+import presetsDoorShot from "@/assets/landscape/goldenHour/goldenHour_7.jpg?w=800;1200;2000&format=avif;webp;jpeg&as=picture"
+import presetsDoorLqip from "@/assets/landscape/goldenHour/goldenHour_7.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import presetsPanelVertical from "@/assets/landscape/lake/lake_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import presetsDoorVertical from "@/assets/landscape/lake/lake_3.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"
 import { Button } from "@/components/ui/button"
 import {
@@ -61,7 +65,7 @@ import { SITE } from "@/content/site"
 import { WritingBand } from "@/features/blog/writing-band"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
 import { BinaryScene } from "@/features/home/binary-scene"
-import { GatewayPanel } from "@/features/home/gateway-panel"
+import { CategoryDoors } from "@/features/home/category-doors"
 import { MatrixRain } from "@/features/home/matrix-rain"
 import { ScrollHint } from "@/features/home/scroll-hint"
 import { TypeOut } from "@/features/home/type-out"
@@ -77,9 +81,6 @@ const HERO_ALT =
   requireCollection("niagara-falls").photos.find(
     (photo) => photo.file === "niagaraFalls_8",
   )?.alt ?? ""
-
-/** Landscape door backdrop; cover = lakeLouise_1 (user pick). */
-const GATEWAY_COVER = requireCollection("lake-louise")
 
 /** Count line for a category door. */
 function countLine(category: "landscape" | "portrait") {
@@ -184,16 +185,35 @@ export default function Home() {
         </RevealGroup>
       </section>
 
-      {/* ============ Gateway — doors to live wings ============ */}
+      {/* ============ Photography — category doors ============ */}
       <section
         id="photography"
         data-page-section
         aria-labelledby="explore"
-        className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
+        className="relative flex min-h-svh flex-col justify-center overflow-hidden bg-background"
       >
-        <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
+        <CategoryDoors
+          doors={[
+            {
+              to: "/photography?category=landscape",
+              label: "Landscape",
+              sublabel: countLine("landscape"),
+              picture: landscapeDoorShot,
+              portraitPicture: landscapeDoorVertical,
+              placeholder: landscapeDoorLqip,
+            },
+            {
+              to: "/photography?category=portrait",
+              label: "Portrait",
+              sublabel: countLine("portrait"),
+              picture: portraitDoorShot,
+              portraitPicture: portraitDoorVertical,
+              placeholder: portraitDoorLqip,
+            },
+          ]}
+        >
           <Reveal>
-            <h2 id="explore" className="text-display-sm">
+            <h2 id="photography" className="text-display-sm">
               Photography
             </h2>
             <p className="mt-4 max-w-prose text-muted-foreground">
@@ -201,42 +221,37 @@ export default function Home() {
               as they're built.
             </p>
           </Reveal>
-          <div className="mt-12 flex flex-col gap-6">
-            <Reveal>
-              <GatewayPanel
-                to="/photography?category=landscape"
-                title="Landscape"
-                subtitle={countLine("landscape")}
-                picture={GATEWAY_COVER.cover.picture}
-                portraitPicture={gatewayPortrait}
-                placeholder={GATEWAY_COVER.cover.lqip}
-              />
-            </Reveal>
-            <Reveal>
-              <GatewayPanel
-                to="/photography?category=portrait"
-                title="Portrait"
-                subtitle={countLine("portrait")}
-                picture={portraitPanelShot}
-                portraitPicture={portraitPanelVertical}
-                placeholder={portraitPanelLqip}
-              />
-            </Reveal>
-          </div>
-        </div>
+        </CategoryDoors>
       </section>
 
-      {/* ============ Editing — tutorials & presets ============ */}
+      {/* ============ Editing — category doors ============ */}
       <section
         id="editing"
         data-page-section
         aria-labelledby="editing-heading"
-        className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
+        className="relative flex min-h-svh flex-col justify-center overflow-hidden bg-background"
       >
-        <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
+        <CategoryDoors
+          doors={[
+            {
+              to: "/tutorial",
+              label: "Tutorials",
+              sublabel: "Editing walkthroughs, in video",
+              picture: tutorialsDoorShot,
+              portraitPicture: tutorialsDoorVertical,
+              placeholder: tutorialsDoorLqip,
+            },
+            {
+              to: "/preset",
+              label: "Presets",
+              sublabel: "Free Lightroom presets (.xmp)",
+              picture: presetsDoorShot,
+              portraitPicture: presetsDoorVertical,
+              placeholder: presetsDoorLqip,
+            },
+          ]}
+        >
           <Reveal>
-            {/* Right alignment is a wide-screen accent — one left reading
-                axis on phones (user decision) */}
             <h2 id="editing-heading" className="text-display-sm">
               Editing
             </h2>
@@ -244,29 +259,7 @@ export default function Home() {
               Behind each of my photos is a mountain of editing.
             </p>
           </Reveal>
-          <div className="mt-12 flex flex-col gap-6">
-            <Reveal>
-              <GatewayPanel
-                to="/tutorial"
-                title="Tutorials"
-                subtitle="Editing walkthroughs, in video"
-                picture={tutorialsPanelShot}
-                portraitPicture={tutorialsPanelVertical}
-                placeholder={tutorialsPanelLqip}
-              />
-            </Reveal>
-            <Reveal>
-              <GatewayPanel
-                to="/preset"
-                title="Presets"
-                subtitle="Free Lightroom presets (.xmp)"
-                picture={presetsPanelShot}
-                portraitPicture={presetsPanelVertical}
-                placeholder={presetsPanelLqip}
-              />
-            </Reveal>
-          </div>
-        </div>
+        </CategoryDoors>
       </section>
 
       {/* ============ Drawing — the cinematic door ============ */}
@@ -274,7 +267,7 @@ export default function Home() {
         id="drawing"
         data-page-section
         aria-labelledby="drawings-heading"
-        className="relative flex min-h-svh flex-col justify-start overflow-hidden bg-background md:justify-center"
+        className="relative flex min-h-svh flex-col justify-center overflow-hidden bg-background"
       >
         {/* Slow-rotating full-bleed backdrop (crossfades every few
             seconds on screen; reduced motion holds the first frame) */}
@@ -318,7 +311,7 @@ export default function Home() {
         id="lab"
         data-page-section
         aria-labelledby="lab-heading"
-        className="relative flex min-h-svh flex-col justify-start overflow-hidden bg-background md:justify-center"
+        className="relative flex min-h-svh flex-col justify-center overflow-hidden bg-background"
       >
         {/* Full-page binary pixel scene — a 0/1 cat watching the moon;
             the text sits over it (actors keep to the right/top, away
@@ -352,7 +345,7 @@ export default function Home() {
           id="blog"
           data-page-section
           aria-labelledby="blog-heading"
-          className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
+          className="relative flex min-h-svh flex-col justify-center bg-background"
         >
           <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
             <Reveal>
