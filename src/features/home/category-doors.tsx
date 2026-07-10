@@ -157,9 +157,9 @@ export function CategoryDoors({
                       align === "right" && "md:justify-end",
                     )}
                   >
-                    {/* One step under the section heading (lg) — big
-                        enough to own the section, clearly subordinate */}
-                    <span className="font-display text-display-md">
+                    {/* With the heading demoted to a kicker, the doors
+                        are the section's one big type moment */}
+                    <span className="font-display text-display-lg">
                       {door.label}
                     </span>
                     <ArrowRight

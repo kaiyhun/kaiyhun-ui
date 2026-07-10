@@ -68,6 +68,7 @@ import { BinaryScene } from "@/features/home/binary-scene"
 import { CategoryDoors } from "@/features/home/category-doors"
 import { MatrixRain } from "@/features/home/matrix-rain"
 import { ScrollHint } from "@/features/home/scroll-hint"
+import { SectionKicker } from "@/features/home/section-kicker"
 import { SocialRail } from "@/features/home/social-rail"
 import { TypeOut } from "@/features/home/type-out"
 import { RotatingBackdrop } from "@/features/presets/rotating-backdrop"
@@ -199,7 +200,7 @@ export default function Home() {
       <section
         id="photography"
         data-page-section
-        aria-labelledby="explore"
+        aria-labelledby="photography-heading"
         className="relative flex min-h-svh flex-col justify-center overflow-hidden bg-background"
       >
         <CategoryDoors
@@ -223,13 +224,12 @@ export default function Home() {
           ]}
         >
           <Reveal>
-            <h2 id="photography" className="text-display-lg">
-              Photography
-            </h2>
-            <p className="mt-4 max-w-prose text-display-sm text-muted-foreground">
-              Two bodies of work — more wings (drawings, the lab, the blog) open
-              as they're built.
-            </p>
+            <SectionKicker
+              number="01"
+              id="photography-heading"
+              label="Photography"
+              intro="Two bodies of work — more wings (drawings, the lab, the blog) open as they're built."
+            />
           </Reveal>
         </CategoryDoors>
       </section>
@@ -262,12 +262,12 @@ export default function Home() {
           ]}
         >
           <Reveal>
-            <h2 id="editing-heading" className="text-display-lg">
-              Editing
-            </h2>
-            <p className="mt-4 max-w-prose text-display-sm text-muted-foreground">
-              Behind each of my photos is a mountain of editing.
-            </p>
+            <SectionKicker
+              number="02"
+              id="editing-heading"
+              label="Editing"
+              intro="Behind each of my photos is a mountain of editing."
+            />
           </Reveal>
         </CategoryDoors>
       </section>
@@ -294,10 +294,9 @@ export default function Home() {
         />
         <div className="relative mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>
-            <h2 id="drawings-heading" className="text-display-lg">
-              Drawing
-            </h2>
-            <p className="mt-4 max-w-prose text-display-sm text-muted-foreground">
+            <SectionKicker number="03" id="drawings-heading" label="Drawing" />
+            {/* The statement IS the hero here — the label is the kicker */}
+            <p className="mt-8 max-w-3xl font-display text-display-md">
               Not a showcase — an honest record of learning to draw, and failing
               at it.
             </p>
@@ -329,10 +328,8 @@ export default function Home() {
         <BinaryScene className="absolute inset-0 h-full w-full" />
         <div className="relative mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>
-            <h2 id="lab-heading" className="text-display-lg">
-              Lab
-            </h2>
-            <p className="mt-4 max-w-prose text-display-sm text-muted-foreground">
+            <SectionKicker number="04" id="lab-heading" label="Lab" />
+            <p className="mt-8 max-w-3xl font-display text-display-md">
               Research, projects, and the code behind them.
             </p>
             <Link
@@ -359,10 +356,8 @@ export default function Home() {
         >
           <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
             <Reveal>
-              <h2 id="blog-heading" className="text-display-lg">
-                Blog
-              </h2>
-              <p className="mt-4 max-w-prose text-display-sm text-muted-foreground">
+              <SectionKicker number="05" id="blog-heading" label="Blog" />
+              <p className="mt-8 max-w-3xl font-display text-display-md">
                 Some interesting things I thought I'd share.
               </p>
             </Reveal>
