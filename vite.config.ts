@@ -46,7 +46,8 @@ export default defineConfig({
     react({ include: /\.(mdx|js|jsx|ts|tsx)$/ }),
     tailwindcss(),
     // Build-time image pipeline: imports with ?w=…&format=…&as=picture
-    // directives emit responsive AVIF/WebP/JPEG derivatives (docs/images.md)
+    // directives emit responsive AVIF/WebP/JPEG derivatives (docs/images.md;
+    // JPEG kept for pre-2020 browsers — user decision, audit 2026-07-10)
     imagetools({
       // Strip EXIF/GPS from every emitted image
       removeMetadata: true,
