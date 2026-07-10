@@ -26,14 +26,17 @@ import portraitPanelShot from "@/assets/portrait/nature/nature_5.jpg?w=400;800;1
 import portraitPanelLqip from "@/assets/portrait/nature/nature_5.jpg?w=24&format=webp&inline"
 // prettier-ignore
 import portraitPanelVertical from "@/assets/portrait/studio/studio_1.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-/* Drawings-section panel (user picks): horizontal lake_4 is a TEMP
-   placeholder until a suitable wide drawing exists; vertical
-   fromReference_3 */
+/* Drawing-section rotating backdrop (DRAFT picks pending review,
+   content-draft §18): iceland_1 / winter_1 / lake_1 — dark-edged frames
+   that survive the wide center-crop; portrait screens see them near-
+   natively (the library is 4:5). 4:5 masters at 100vw sizes. */
 // prettier-ignore
-import drawingPanelShot from "@/assets/landscape/lake/lake_4.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
-import drawingPanelLqip from "@/assets/landscape/lake/lake_4.jpg?w=24&format=webp&inline"
+import drawingBackdrop1 from "@/assets/landscape/iceland/iceland_1.jpg?w=800;1200;2000&format=avif;webp;jpeg&as=picture"
+import drawingBackdrop1Lqip from "@/assets/landscape/iceland/iceland_1.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import drawingPanelVertical from "@/assets/drawing/fromReference/fromReference_3.jpg?w=400;800;1200&format=avif;webp;jpeg&as=picture"
+import drawingBackdrop2 from "@/assets/landscape/winter/winter_1.jpg?w=800;1200;2000&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import drawingBackdrop3 from "@/assets/landscape/lake/lake_1.jpg?w=800;1200;2000&format=avif;webp;jpeg&as=picture"
 /* Editing-section panels (user picks): Tutorials = niagaraFalls_14 /
    coast_1; Presets = goldenHour_7 / lake_3 */
 // prettier-ignore
@@ -62,6 +65,7 @@ import { GatewayPanel } from "@/features/home/gateway-panel"
 import { MatrixRain } from "@/features/home/matrix-rain"
 import { ScrollHint } from "@/features/home/scroll-hint"
 import { TypeOut } from "@/features/home/type-out"
+import { RotatingBackdrop } from "@/features/presets/rotating-backdrop"
 import { SectionNav, type HomeSection } from "@/features/home/section-nav"
 import { useSectionPager } from "@/features/home/use-section-pager"
 import { MEDIA } from "@/lib/media-queries"
@@ -265,14 +269,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ Drawings — the progress record ============ */}
+      {/* ============ Drawing — the cinematic door ============ */}
       <section
         id="drawing"
         data-page-section
         aria-labelledby="drawings-heading"
-        className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
+        className="relative flex min-h-svh flex-col justify-start overflow-hidden bg-background md:justify-center"
       >
-        <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
+        {/* Slow-rotating full-bleed backdrop (crossfades every few
+            seconds on screen; reduced motion holds the first frame) */}
+        <RotatingBackdrop
+          pictures={[drawingBackdrop1, drawingBackdrop2, drawingBackdrop3]}
+          placeholder={drawingBackdrop1Lqip}
+          sizes="100vw"
+          className="absolute inset-0"
+        />
+        {/* Legibility scrim — heavier at the bottom where the text sits */}
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/25"
+        />
+        <div className="relative mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>
             <h2 id="drawings-heading" className="text-display-sm">
               Drawing
@@ -281,19 +298,18 @@ export default function Home() {
               Not a showcase — an honest record of learning to draw, and failing
               at it.
             </p>
-          </Reveal>
-          <div className="mt-12">
-            <Reveal>
-              <GatewayPanel
-                to="/drawing"
-                title="The Story"
-                subtitle="Twenty years of picking it up, putting it down, and starting again."
-                picture={drawingPanelShot}
-                portraitPicture={drawingPanelVertical}
-                placeholder={drawingPanelLqip}
+            {/* Door link (label draft: content-draft §18) */}
+            <Link
+              to="/drawing"
+              className="group mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            >
+              Enter the story
+              <ArrowRight
+                aria-hidden
+                className="size-4 transition-transform duration-(--motion-duration-fast) ease-(--ease-out-expo) group-hover:translate-x-1"
               />
-            </Reveal>
-          </div>
+            </Link>
+          </Reveal>
         </div>
       </section>
 
@@ -302,34 +318,31 @@ export default function Home() {
         id="lab"
         data-page-section
         aria-labelledby="lab-heading"
-        className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
+        className="relative flex min-h-svh flex-col justify-start overflow-hidden bg-background md:justify-center"
       >
-        <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
-          <div className="grid items-center gap-10 md:grid-cols-2">
-            <Reveal>
-              <h2 id="lab-heading" className="text-display-sm">
-                Lab
-              </h2>
-              <p className="mt-4 max-w-prose text-muted-foreground">
-                Research, projects, and the code behind them.
-              </p>
-              <Link
-                to="/lab"
-                className="group mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-              >
-                Enter the lab
-                <ArrowRight
-                  aria-hidden
-                  className="size-4 transition-transform duration-(--motion-duration-fast) ease-(--ease-out-expo) group-hover:translate-x-1"
-                />
-              </Link>
-            </Reveal>
-            {/* Binary pixel scene — a 0/1 cat watching the moon (decorative;
-                the text column is the real content) */}
-            <Reveal delay={0.1}>
-              <BinaryScene className="h-64 w-full sm:h-80 md:h-104" />
-            </Reveal>
-          </div>
+        {/* Full-page binary pixel scene — a 0/1 cat watching the moon;
+            the text sits over it (actors keep to the right/top, away
+            from the reading column) */}
+        <BinaryScene className="absolute inset-0 h-full w-full" />
+        <div className="relative mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
+          <Reveal>
+            <h2 id="lab-heading" className="text-display-sm">
+              Lab
+            </h2>
+            <p className="mt-4 max-w-prose text-muted-foreground">
+              Research, projects, and the code behind them.
+            </p>
+            <Link
+              to="/lab"
+              className="group mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            >
+              Enter the lab
+              <ArrowRight
+                aria-hidden
+                className="size-4 transition-transform duration-(--motion-duration-fast) ease-(--ease-out-expo) group-hover:translate-x-1"
+              />
+            </Link>
+          </Reveal>
         </div>
       </section>
 

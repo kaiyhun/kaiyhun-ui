@@ -1,15 +1,19 @@
 /**
- * BinaryScene — the Lab section's ambient scene: a pixel cat watching the
- * moon while clouds roll through, drawn ENTIRELY from 0/1 glyphs.
+ * BinaryScene — the Lab section's full-page ambient backdrop: a pixel cat
+ * watching the moon under a starfield while clouds roll through, drawn
+ * ENTIRELY from 0/1 glyphs. The section's text sits OVER it (user
+ * decision — the scene fills the page, no negative space).
  *
- * A fixed virtual grid (40×22 cells) is composited per frame from layered
- * bitmaps — sparse background static, moon (with dim craters), drifting
- * clouds (which occlude the moon as they pass), and the cat (tail-swish
- * frames + an occasional ear twitch). Every visible cell renders a mono
- * "0" or "1"; a few percent flip each tick, so the whole image shimmers
- * like living data. The grid scales to its container (cells ≈14px at the
- * desktop column width — user pick) and redraws at a chunky 10fps: the
- * cadence is part of the look, and ~1k fillText calls per tick is cheap.
+ * The glyph grid is sized from a fixed cell (~14px, denser on phones) so
+ * the scene gains cells with the viewport instead of scaling up; the
+ * actors are placed adaptively each resize — moon top-right, cat
+ * bottom-right (clear of the left text column on desktop), clouds in the
+ * upper sky band (above the vertically-centered text), stars scattered
+ * through the sky, a denser static "ground" along the bottom. Every
+ * visible cell renders a mono "0"/"1"; a few percent flip per tick and
+ * stars twinkle, so the image shimmers like living data. Chunky 10fps
+ * redraw — the cadence is part of the look, and a few k fillText calls
+ * per tick is cheap.
  *
  * Colors are theme tokens read from CSS (--primary for the moon,
  * --foreground for everything else at layered alphas), so Matrix mode
@@ -96,30 +100,43 @@ const MOON = `
 ..#####..
 `
 
-/** Two cloud shapes at different sizes/speeds. */
-const CLOUD_A = `
+/** Cloud shapes at different sizes/speeds (index-paired with CLOUD_MS). */
+const CLOUD_ART = [
+  `
 ...######....
 .##########..
 #############
-`
-const CLOUD_B = `
+`,
+  `
 ......#####....
 ..###########..
 ###############
 ####..#########
-`
+`,
+  `
+..#######..
+###########
+.####..###.
+`,
+]
+/** ms per one-cell drift, per cloud. */
+const CLOUD_MS = [500, 700, 900]
+/** Sky-band heights (fraction of rows) the clouds drift along. */
+const CLOUD_BAND = [0.06, 0.2, 0.32]
 
 /* --------------------------- scene constants ------------------------- */
 
-const GRID_COLS = 40
-const GRID_ROWS = 22
+/** Cell size in px — the "medium" chunkiness (user pick); denser cells on
+ *  phones so the scene keeps enough grid to compose. */
+const CELL_WIDE = 14
+const CELL_NARROW = 11
 /** Chunky redraw cadence — the terminal feel (user pick: calm). */
 const TICK_MS = 100
 /** Per-tick chance a cell's digit flips. */
 const SHIMMER_P = 0.02
-/** Cloud step intervals (ms per one-cell drift). */
-const CLOUD_A_MS = 500
-const CLOUD_B_MS = 700
+/** Fraction of sky cells carrying a star; per-tick twinkle chance. */
+const STAR_DENSITY = 0.015
+const TWINKLE_P = 0.04
 /** Tail swish: every ~3s (+ jitter), one frame per 260ms through the
  *  rest→mid→up→mid→rest sequence. */
 const SWISH_EVERY_MS = 3200
@@ -131,27 +148,18 @@ const TWITCH_EVERY_MS = 6000
 const TWITCH_JITTER_MS = 4000
 const TWITCH_MS = 280
 /** Fraction of background cells showing faint static. */
-const BG_DENSITY = 0.12
+const BG_DENSITY = 0.1
 
 /** Layer ids in paint order (higher stamps over lower). */
 const L_EMPTY = 0
 const L_BG = 1
-const L_MOON_DIM = 2
-const L_MOON = 3
-const L_CLOUD = 4
-const L_CAT = 5
+const L_STAR = 2
+const L_MOON_DIM = 3
+const L_MOON = 4
+const L_CLOUD = 5
+const L_CAT = 6
 /** Per-layer alpha (all layers use --foreground except the moon). */
-const LAYER_ALPHA = [0, 0.14, 0.45, 1, 0.32, 0.55]
-
-/** Fixed placements in the virtual grid. */
-const MOON_X = 29
-const MOON_Y = 2
-const CAT_X = 5
-const CAT_Y = GRID_ROWS - 12 - 1
-const TAIL_X = CAT_X - 3
-const TAIL_Y = CAT_Y + 4
-const CLOUD_A_Y = 2
-const CLOUD_B_Y = 6
+const LAYER_ALPHA = [0, 0.12, 0.5, 0.45, 1, 0.32, 0.55]
 
 const parseArt = (art: string) =>
   art
@@ -182,38 +190,36 @@ export function BinaryScene({ className }: { className?: string }) {
     const catBody = parseArt(CAT_BODY)
     const tailFrames = TAIL_FRAMES.map(parseArt)
     const moon = parseArt(MOON)
-    const cloudA = parseArt(CLOUD_A)
-    const cloudB = parseArt(CLOUD_B)
+    const clouds = CLOUD_ART.map(parseArt)
 
-    const cellCount = GRID_COLS * GRID_ROWS
-    /** Which digit each cell shows (0/1) — flips make the shimmer. */
-    const digits = new Uint8Array(cellCount)
-    /** Which background cells carry faint static (fixed per mount). */
-    const bgMask = new Uint8Array(cellCount)
-    for (let i = 0; i < cellCount; i++) {
-      digits[i] = Math.random() < 0.5 ? 0 : 1
-      // Denser static on the last row reads as ground under the cat
-      const density = i >= cellCount - GRID_COLS ? 0.55 : BG_DENSITY
-      bgMask[i] = Math.random() < density ? 1 : 0
-    }
-    /** Rebuilt every draw: which layer owns each cell. */
-    const layers = new Uint8Array(cellCount)
+    /* Grid + per-cell state — rebuilt on resize (cols/rows change). */
+    let cols = 0
+    let rows = 0
+    let cell = CELL_WIDE
+    let cellCount = 0
+    let digits = new Uint8Array(0)
+    let bgMask = new Uint8Array(0)
+    let starMask = new Uint8Array(0)
+    let starLit = new Uint8Array(0)
+    let layers = new Uint8Array(0)
 
-    /* Scene state */
-    let cloudAX = 8 // parked half across the moon for the static frame
-    let cloudBX = -16
+    /* Adaptive placements (recomputed on resize). */
+    let moonX = 0
+    let moonY = 0
+    let catX = 0
+    let catY = 0
+    let cloudX = [0, 0, 0]
+    let cloudY = [0, 0, 0]
+
+    /* Animation state */
     let tailFrame = 0
     let swishAt = performance.now() + SWISH_EVERY_MS
-    let swishStep = -1 // -1 = not swishing
+    let swishStep = -1
     let swishFrameAt = 0
     let twitchAt = performance.now() + TWITCH_EVERY_MS
     let twitchUntil = 0
-    let lastCloudA = 0
-    let lastCloudB = 0
+    const lastCloud = [0, 0, 0]
 
-    let cell = 0
-    let offsetX = 0
-    let offsetY = 0
     let width = 0
     let height = 0
 
@@ -226,29 +232,33 @@ export function BinaryScene({ className }: { className?: string }) {
     ) => {
       for (let row = 0; row < art.length; row++) {
         const y = atY + row
-        if (y < 0 || y >= GRID_ROWS) continue
+        if (y < 0 || y >= rows) continue
         const line = art[row]
         for (let col = 0; col < line.length; col++) {
           const x = atX + col
-          if (x < 0 || x >= GRID_COLS) continue
+          if (x < 0 || x >= cols) continue
           const ch = line[col]
-          if (ch === "#") layers[y * GRID_COLS + x] = layer
-          else if (ch === "o") layers[y * GRID_COLS + x] = dimLayer
+          if (ch === "#") layers[y * cols + x] = layer
+          else if (ch === "o") layers[y * cols + x] = dimLayer
         }
       }
     }
 
     const draw = (now: number) => {
       /* ---- composite the layer grid (painter's order) ---- */
-      for (let i = 0; i < cellCount; i++) layers[i] = bgMask[i] ? L_BG : L_EMPTY
-      stamp(moon, MOON_X, MOON_Y, L_MOON, L_MOON_DIM)
-      stamp(cloudA, Math.round(cloudAX), CLOUD_A_Y, L_CLOUD)
-      stamp(cloudB, Math.round(cloudBX), CLOUD_B_Y, L_CLOUD)
-      stamp(tailFrames[tailFrame], TAIL_X, TAIL_Y, L_CAT)
-      stamp(catBody, CAT_X, CAT_Y, L_CAT)
+      for (let i = 0; i < cellCount; i++) {
+        layers[i] = bgMask[i] ? L_BG : L_EMPTY
+        if (starMask[i] && starLit[i]) layers[i] = L_STAR
+      }
+      stamp(moon, moonX, moonY, L_MOON, L_MOON_DIM)
+      for (let c = 0; c < clouds.length; c++) {
+        stamp(clouds[c], Math.round(cloudX[c]), cloudY[c], L_CLOUD)
+      }
+      stamp(tailFrames[tailFrame], catX - 3, catY + 4, L_CAT)
+      stamp(catBody, catX, catY, L_CAT)
       if (now < twitchUntil) {
         for (const [col, row] of EAR_TIP) {
-          layers[(CAT_Y + row) * GRID_COLS + (CAT_X + col)] = L_EMPTY
+          layers[(catY + row) * cols + (catX + col)] = L_EMPTY
         }
       }
 
@@ -260,8 +270,8 @@ export function BinaryScene({ className }: { className?: string }) {
       for (let i = 0; i < cellCount; i++) {
         const layer = layers[i]
         if (layer === L_EMPTY) continue
-        const x = offsetX + (i % GRID_COLS) * cell + cell / 2
-        const y = offsetY + Math.floor(i / GRID_COLS) * cell + cell / 2
+        const x = (i % cols) * cell + cell / 2
+        const y = Math.floor(i / cols) * cell + cell / 2
         context.globalAlpha = LAYER_ALPHA[layer]
         context.fillStyle =
           layer === L_MOON || layer === L_MOON_DIM ? moonColor : inkColor
@@ -276,9 +286,43 @@ export function BinaryScene({ className }: { className?: string }) {
       canvas.width = Math.round(width * dpr)
       canvas.height = Math.round(height * dpr)
       context.setTransform(dpr, 0, 0, dpr, 0, 0)
-      cell = Math.min(width / GRID_COLS, height / GRID_ROWS)
-      offsetX = (width - cell * GRID_COLS) / 2
-      offsetY = (height - cell * GRID_ROWS) / 2
+
+      cell = width < 640 ? CELL_NARROW : CELL_WIDE
+      cols = Math.ceil(width / cell)
+      rows = Math.ceil(height / cell)
+      cellCount = cols * rows
+      digits = new Uint8Array(cellCount)
+      bgMask = new Uint8Array(cellCount)
+      starMask = new Uint8Array(cellCount)
+      starLit = new Uint8Array(cellCount)
+      layers = new Uint8Array(cellCount)
+      const skyRows = Math.floor(rows * 0.55)
+      for (let i = 0; i < cellCount; i++) {
+        digits[i] = Math.random() < 0.5 ? 0 : 1
+        // Denser static on the bottom two rows reads as ground
+        const density = i >= cellCount - cols * 2 ? 0.5 : BG_DENSITY
+        bgMask[i] = Math.random() < density ? 1 : 0
+        if (i < skyRows * cols && Math.random() < STAR_DENSITY) {
+          starMask[i] = 1
+          starLit[i] = Math.random() < 0.8 ? 1 : 0
+        }
+      }
+
+      /* Actors keep clear of the OTHER things on the page. Desktop: text
+         column left, Scroll-to menu bottom-right → moon top-right, cat
+         bottom right-of-center. Narrow screens: text is TOP-anchored and
+         the expanded menu owns the bottom-right → moon drops to mid-sky
+         right, cat moves to the bottom-LEFT. */
+      const narrow = width < 640
+      moonX = cols - 9 - Math.max(2, Math.round(cols * 0.06))
+      moonY = Math.max(1, Math.round(rows * (narrow ? 0.3 : 0.08)))
+      catX = narrow ? 2 : Math.min(Math.round(cols * 0.62), cols - 15 - 2)
+      catY = rows - 12 - 2
+      cloudY = CLOUD_BAND.map((band) => Math.max(1, Math.round(rows * band)))
+      // First cloud parked half across the moon (the static frame tells
+      // the story too); the rest staggered off to the left
+      cloudX = [moonX - 7, -18, Math.round(cols * 0.35)]
+
       draw(performance.now())
     }
 
@@ -291,20 +335,20 @@ export function BinaryScene({ className }: { className?: string }) {
       if (!visible || now - last < TICK_MS) return
       last = now
 
-      /* shimmer: a few digits flip each tick */
+      /* shimmer + twinkle */
       for (let i = 0; i < cellCount; i++) {
         if (Math.random() < SHIMMER_P) digits[i] ^= 1
+        if (starMask[i] && Math.random() < TWINKLE_P) starLit[i] ^= 1
       }
       /* clouds roll left → right, wrapping with a random pause */
-      if (now - lastCloudA >= CLOUD_A_MS) {
-        lastCloudA = now
-        cloudAX += 1
-        if (cloudAX > GRID_COLS) cloudAX = -13 - Math.random() * 22
-      }
-      if (now - lastCloudB >= CLOUD_B_MS) {
-        lastCloudB = now
-        cloudBX += 1
-        if (cloudBX > GRID_COLS) cloudBX = -15 - Math.random() * 30
+      for (let c = 0; c < clouds.length; c++) {
+        if (now - lastCloud[c] >= CLOUD_MS[c]) {
+          lastCloud[c] = now
+          cloudX[c] += 1
+          if (cloudX[c] > cols) {
+            cloudX[c] = -clouds[c][0].length - Math.random() * cols * 0.5
+          }
+        }
       }
       /* tail swish state machine */
       if (swishStep < 0 && now >= swishAt) {
