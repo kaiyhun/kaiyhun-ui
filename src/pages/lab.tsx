@@ -8,15 +8,15 @@
  * and papers (src/content/lab.ts). Intro copy is a DRAFT
  * (content-draft §13).
  */
+import { PageNav, type PageNavItem } from "@/components/layout/page-nav"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"
 import { PROJECTS } from "@/content/lab"
 import { SITE } from "@/content/site"
 import { RelatedWriting } from "@/features/blog/related-writing"
-import { LabNav, type LabSection } from "@/features/lab/lab-nav"
 import { PapersShelf } from "@/features/lab/papers-shelf"
 import { ProjectCard } from "@/features/lab/project-card"
 
-const SECTIONS: LabSection[] = [
+const SECTIONS: PageNavItem[] = [
   { id: "projects", label: "Projects" },
   { id: "papers", label: "Papers" },
   { id: "lab-writing", label: "Writing" },
@@ -88,7 +88,7 @@ export default function Lab() {
           </div>
         </div>
 
-        <LabNav sections={SECTIONS} />
+        <PageNav items={SECTIONS} className="hidden xl:block" />
       </div>
     </main>
   )
