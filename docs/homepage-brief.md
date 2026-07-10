@@ -60,18 +60,18 @@ incrementally — a door appears on the homepage only when its page is real
 
 ## Route map (target)
 
-| Route                | Page                                                                                                              |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `/`                  | Homepage hub                                                                                                      |
-| `/photography`       | Collection index + related writing + satellite links                                                              |
-| `/photography/:slug` | Collection gallery (replaces `/c/:slug`)                                                                          |
-| `/preset`            | Free preset downloads (photography satellite; LIVE placeholder)                                                   |
-| `/tutorial`          | Tutorial videos, embedded/linked (photography satellite; LIVE placeholder)                                        |
-| `/drawing`           | Drawing wing (LIVE — shipped as journey timeline w/ inline work rails, not a gallery; see `docs/drawing-wing.md`) |
-| `/lab`               | Lab — research & code pillar (LIVE, mock content; `docs/lab.md`)                                                  |
-| `/blog`              | All posts, filterable by topic                                                                                    |
-| `/blog/:slug`        | Post                                                                                                              |
-| `/about`             | Bio + contact                                                                                                     |
+| Route                | Page                                                                                                                                                                                                                                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/`                  | Homepage hub                                                                                                                                                                                                                                                                                                  |
+| `/photography`       | Collection index + related writing + satellite links. Homepage door: CategoryDoors — full-bleed reactive backdrop (hover/focus a category, its cover crossfades in; idle rotation), giant type links; scales to future categories (collaboration…). Same treatment on the Editing section (Tutorials/Presets) |
+| `/photography/:slug` | Collection gallery (replaces `/c/:slug`)                                                                                                                                                                                                                                                                      |
+| `/preset`            | Free preset downloads (photography satellite; LIVE placeholder)                                                                                                                                                                                                                                               |
+| `/tutorial`          | Tutorial videos, embedded/linked (photography satellite; LIVE placeholder)                                                                                                                                                                                                                                    |
+| `/drawing`           | Drawing wing (LIVE — shipped as journey timeline w/ inline work rails, not a gallery; see `docs/drawing-wing.md`). Homepage door: full cinematic door — rotating landscape-photo backdrop (RotatingBackdrop; DRAFT picks content-draft §18) + text over scrim; the old panel (TEMP lake_4) is retired         |
+| `/lab`               | Lab — research & code pillar (LIVE, mock content; `docs/lab.md`). Homepage door: BinaryScene — an ambient 0/1 pixel cat watching the moon, canvas glyph grid, theme-token colored (`features/home/binary-scene.tsx`; art = editable string bitmaps)                                                           |
+| `/blog`              | All posts, filterable by topic                                                                                                                                                                                                                                                                                |
+| `/blog/:slug`        | Post                                                                                                                                                                                                                                                                                                          |
+| `/about`             | Bio + contact                                                                                                                                                                                                                                                                                                 |
 
 ## Homepage composition (top to bottom)
 
@@ -93,14 +93,19 @@ incrementally — a door appears on the homepage only when its page is real
 
 Each homepage section is a full-viewport "page" (`[data-page-section]`,
 `min-h-svh`, FULL-BLEED with an opaque `bg-background`; the content column
-lives in an inner `max-w-6xl` div whose `py-24` clears the fixed header).
-You scroll freely _within_ a section (tall ones scroll normally); at a
-section's edge, accumulated wheel delta past a threshold turns the "page":
-the outgoing section recedes (lags the scroll at `RECEDE_LAG`, shrinks,
-dims — transform/opacity only) while the incoming one slides over it and
-lands FLUSH at the viewport top. Controller:
-`src/features/home/use-section-pager.ts`; drives (and syncs the active
-highlight of) the floating `SectionNav` menu.
+lives in an inner `max-w-6xl` div whose padding — `py-16`, `md:py-24` —
+clears the fixed header). Content is vertically centered at every
+width (user decision — phones match desktop); text is left-aligned
+throughout.
+You scroll within a section (the pager OWNS the wheel and applies the
+scroll itself, clamped to the section); at a section's edge, accumulated
+wheel delta past a threshold turns the "page"
+with a FADE-THROUGH: the page fades to the background, the scroll jumps
+invisibly, the new page fades in, landing FLUSH at the viewport top.
+Controller: `src/features/home/use-section-pager.ts`; drives (and syncs
+the active highlight of) the floating `SectionNav` menu and the
+`ScrollHint` chevron (bobbing bottom-center affordance, visible while any
+paged content remains below the viewport).
 
 **Load-bearing decisions:**
 
@@ -110,35 +115,62 @@ highlight of) the floating `SectionNav` menu.
   scrolling. The escape hatch is literally "don't attach the wheel
   listener" — so the paged behavior can never trap anyone, and the page
   degrades to a normal scroll.
-- **Turns are a Motion tween driving `window.scrollTo` (tokens:
-  `duration.slower` + `ease.cinematic`).** This REVERSES the earlier
-  "native `scrollIntoView` only" decision — the cinematic cover transition
-  (user decision) needs per-frame progress that native smooth scroll can't
-  provide. The tween's historic fragility (stale target after mid-turn
-  reflow → under-shoot) is countered by re-deriving the landing position
-  every frame and snapping exactly onto it on completion. `scrollTo` must
-  pass `behavior:"instant"` (global CSS `scroll-behavior:smooth` would
-  re-smooth each frame). Any keydown/pointerdown mid-turn cancels the
-  tween, so scrollbar grabs and paging keys always beat the animation.
+- **Touch pages via native CSS scroll-snap (user decision — mobile should
+  match the desktop page metaphor).** `@media (pointer: coarse)` +
+  `html:has([data-page-snap])` applies `scroll-snap-type: y mandatory`
+  with `scroll-snap-align: start` on sections (index.css; the homepage
+  opts in via `data-page-snap` on `<main>`). No JS touches touch:
+  gestures stay native, tall sections scroll freely inside (snap areas
+  larger than the snapport are scrollable within by spec), and the
+  `pointer: coarse` gate is mutually exclusive with the pager's
+  `pointer: fine` wheel ownership. The site FOOTER gets
+  `scroll-snap-align: end` — without its own snap position, mandatory
+  snapping would yank back to the last section and strand it.
+- **Fade-through, not a transform "cover" turn (user decision — the cover
+  felt stiff).** A Motion tween (tokens: `duration.slow` +
+  `ease.cinematic`) fades ALL sections out, jumps with
+  `scrollTo({behavior:"instant"})` (global CSS `scroll-behavior:smooth`
+  would re-animate the hidden jump), and fades back in. Fading every
+  section — not just the pair — covers viewports that span a boundary, and
+  makes the same fade serve any jump distance. Any keydown/pointerdown
+  mid-turn cancels the tween, so scrollbar grabs and paging keys always
+  beat the animation.
 - **Flush-top landings, no `scroll-mt`.** Sections carry no scroll margin;
-  header clearance is internal padding. This keeps the takeover truly
-  full-screen and the edge detection symmetric (with an 80px offset,
-  scrolling onward needed 80px of native creep before the next seam
-  engaged).
-- **Cover pairing is adjacent-only.** Menu jumps ≥2 pages away glide
-  without the recede effect — pairing pages viewports apart would animate
-  content that is never on screen. `activeId` is pinned to the target for
-  the duration so the menu highlight can't flicker through intermediate
-  sections.
-- **Momentum guard.** After a turn the accumulator is parked at a sentinel
-  so trackpad inertia can't cascade into a second turn; only a real pause
-  (`IDLE_RESET_MS`) clears it.
+  header clearance is internal padding. Keeps the takeover truly
+  full-screen and the edge detection symmetric.
+- **Wheel ownership, not native scroll + prediction (the tall-section
+  fix).** On pointer + motion we `preventDefault` EVERY wheel event and
+  apply the scroll ourselves, CLAMPED to the anchored section's flush
+  range. Earlier versions let the browser scroll natively inside a section
+  and predicted the seam from each event's `deltaY` — but macOS scroll
+  ACCELERATION scrolls many times the `deltaY`, so a fast flick leapt clean
+  over a tall section's seam (the next event already read the NEXT section
+  as current) and the homepage scrolled straight through. Owning the wheel
+  makes a boundary un-overshootable: a giant flick just lands on the wall,
+  and only accumulated intent AT the wall turns the page. The anchored
+  section advances ONLY via a turn, so acceleration can't silently move us
+  off it. Trade-off: within-section scrolling loses OS inertia (minor for
+  these moderate sections). Carve-out: at the last section's bottom (and
+  the footer beneath it) native scroll is allowed so the footer stays
+  reachable.
+- **Momentum guard with pause / reversal / rising-edge re-arms (Magic
+  Mouse).** After a turn the accumulator parks at a sentinel so inertia
+  can't cascade into a second turn; while parked, the tail is also
+  suppressed mid-section so landings stay flush. Magic Mouse tails tick
+  for seconds, constantly refreshing the idle clock — pause-only
+  re-arming made scrolling feel DEAD (a fresh swipe merged into the tail
+  was swallowed; users had to stop/click to recover). Re-arms: a genuine
+  pause (`IDLE_RESET_MS`), a direction reversal, or — since a tail's
+  |deltaY| only ever decays — a delta rising above `RE_ARM_RATIO ×` the
+  decaying recent peak (`PEAK_DECAY` per event).
+- **`activeId` is pinned to the target during a turn** so the menu
+  highlight can't flicker through intermediate sections.
 
 **Tuning knobs** (feel is hardware-dependent — tune in a real browser):
-`TURN_THRESHOLD`, `IDLE_RESET_MS`, `RECEDE_LAG`, `RECEDE_SCALE`,
-`RECEDE_DIM` in the hook; turn duration/curve via the `--motion-*` tokens
-(`slower`/`cinematic`); gate `min-h-svh` to `md:` if the full-height
-layout feels too airy on mobile.
+`TURN_THRESHOLD`, `IDLE_RESET_MS`, `RE_ARM_RATIO`, `PEAK_DECAY` in the
+hook; fade duration/curve via the `--motion-*` tokens (`slow` /
+`cinematic`); `y mandatory` → `y proximity` in index.css if mobile
+snapping feels too insistent.
 
 ## Unified content model (basis for M3)
 

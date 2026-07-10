@@ -63,7 +63,7 @@ src/app        shell: providers, AnimatePresence route transitions, route table
 src/pages      thin route components (ONLY default exports; pages are leaves —
                never import a page from anywhere but routes.tsx)
 src/features   gallery/ (masonry, lightbox, tag filter, category menu, pager)
-               home/ (gateway panels, art-directed backdrop, section nav)
+               home/ (category doors, art-directed backdrop, section nav)
                drawing/ (JourneyRail: chapter thread + collapsible image rails)
                blog/ (post list, topic menu, ToC, MDX element map, bands)
                lab/ (project cards, papers shelf, page nav)

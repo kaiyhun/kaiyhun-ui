@@ -2,7 +2,8 @@
 
 The research & code pillar: Projects (card grid) → Papers (citation
 shelf) → Related writing (code-topic posts), with a sticky "On this
-page" rail on xl+ (scroll-spy, same treatment as the post ToC).
+page" rail on xl+ (the shared PageNav — components/layout/page-nav.tsx —
+same rail as the post ToC, position-based scroll-spy).
 Cards link OUT — there are no project detail pages; deep write-ups are
 blog posts linked from the card.
 

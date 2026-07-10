@@ -53,8 +53,9 @@ on the new wing when it exists).
 - `/blog/:slug` (`pages/post.tsx`) — topics + title + date/reading-time/
   copy-link header; lazy MDX body through `MDX_COMPONENTS`;
   `TableOfContents` mounts INSIDE the same Suspense (it reads committed
-  headings; renders only with 3+ h2/h3, xl screens, scroll-spy via
-  IntersectionObserver); chronological prev/next pager; unknown slug →
+  headings; renders only with 3+ h2/h3, xl screens, position-based
+  scroll-spy via lib/use-scroll-spy — an IntersectionObserver band
+  missed anchor-click landings); chronological prev/next pager; unknown slug →
   NotFoundView. React 19 hoists the per-post `<title>`/`<meta>`.
 - Surfaces: `writing-band` (homepage, newest 3, hidden while no posts),
   `related-writing` (wings; renders nothing when its topic has no posts).

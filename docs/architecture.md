@@ -26,7 +26,8 @@ src/
   features/               # Domain modules — a feature's components/hooks/types
     gallery/              #   Masonry, lightbox, tag filter, category menu,
                           #   pager, photo resolver (globs of LIVE categories)
-    home/                 #   GatewayPanel, ArtDirectedBackdrop, SectionNav
+    home/                 #   CategoryDoors, ArtDirectedBackdrop, SectionNav,
+                          #   BinaryScene, ScrollHint, section pager
     drawing/              #   JourneyRail — chapter thread + collapsible image
                           #   rails (docs/drawing-wing.md)
   components/             # Shared, feature-agnostic building blocks

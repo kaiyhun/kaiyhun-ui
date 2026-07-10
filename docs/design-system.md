@@ -11,11 +11,11 @@ Components reference semantic tokens only — never raw colors, font names,
 pixel durations, or bezier curves. Change a token once and it propagates
 everywhere, including JS animations:
 
-| Layer                  | How it consumes tokens                                                                         |
-| ---------------------- | ---------------------------------------------------------------------------------------------- |
-| Tailwind utilities     | `@theme inline` maps tokens → `bg-primary`, `font-display`, `ease-out-expo`, `text-display`, … |
-| shadcn components      | Semantic vars (`--primary`, `--card`, `--radius`, …) per the shadcn contract                   |
-| Motion (JS animations) | `src/lib/motion-tokens.ts` parses the `--motion-*` vars once at startup                        |
+| Layer                  | How it consumes tokens                                                                            |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| Tailwind utilities     | `@theme inline` maps tokens → `bg-primary`, `font-display`, `ease-out-expo`, `text-display-xl`, … |
+| shadcn components      | Semantic vars (`--primary`, `--card`, `--radius`, …) per the shadcn contract                      |
+| Motion (JS animations) | `src/lib/motion-tokens.ts` parses the `--motion-*` vars once at startup                           |
 
 **Rule: if you find yourself typing a hex/oklch value, a font name, a `ms`
 number, or a `cubic-bezier` anywhere outside `src/index.css`, stop — add or
@@ -57,10 +57,18 @@ values (`@font-face` blocks at the top of `index.css`) so the web-font
 swap causes no layout shift — verified CLS 0.00. If the fonts ever change,
 re-measure those overrides.
 
-Fluid display sizes (clamp-based, scale with viewport):
+Fluid display sizes (clamp-based, scale with viewport) — a four-step
+scale; names match relative size:
 
-- `text-display` — hero headlines: 3rem → 8rem
-- `text-display-sm` — section headlines: 2rem → 4.5rem
+- `text-display-xl` — hero wordmark: 2.4rem → 6.4rem
+- `text-display-lg` — page/section headings: 2rem → 4.5rem
+- `text-display-md` — homepage category doors (one step under the
+  heading): 1.6rem → 3.25rem
+- `text-display-sm` — section subtitles (medium weight, relaxed line
+  height; sized for the line under a heading): 1.125rem → 1.6rem
+
+All four are registered in `extendTailwindMerge` (`lib/utils.ts`) — any
+new custom `text-*` utility MUST be added there too.
 
 Body sizes use Tailwind's default scale.
 
