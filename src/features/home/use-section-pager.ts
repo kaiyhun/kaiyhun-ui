@@ -34,9 +34,13 @@
  * edge above the decaying momentum peak (tails only ever decay).
  *
  * Deliberately POINTER-ONLY, MOTION-ON (user decision): touch keeps native
- * scrolling (we never touch touch events); `prefers-reduced-motion` and
- * keyboard users get plain continuous scroll (we only intercept `wheel`,
- * never keys). The escape hatch is simply not attaching the wheel listener.
+ * scrolling (we never touch touch events) — coarse-pointer devices get the
+ * page feel via native CSS scroll-snap instead (index.css, scoped to
+ * [data-page-snap]; gated on `pointer: coarse` so it can never overlap
+ * this pager's `pointer: fine` wheel ownership). `prefers-reduced-motion`
+ * and keyboard users get plain continuous scroll (we only intercept
+ * `wheel`, never keys). The escape hatch is simply not attaching the
+ * wheel listener.
  *
  * Returns `goTo(id)` (Scroll-to menu — same fade turn, instant under
  * reduced motion), the live `activeId` (menu highlight, pinned during a

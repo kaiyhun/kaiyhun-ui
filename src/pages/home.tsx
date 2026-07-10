@@ -107,7 +107,10 @@ export default function Home() {
   const pager = useSectionPager()
 
   return (
-    <main>
+    // data-page-snap opts the route into the touch page-snap CSS
+    // (index.css) — coarse pointers page via native scroll snap, the
+    // pointer-only wheel pager never runs there
+    <main data-page-snap>
       {/* ============ Hero — identity statement (page 1) ========= */}
       <section
         id="hero"
@@ -181,9 +184,9 @@ export default function Home() {
         id="photography"
         data-page-section
         aria-labelledby="explore"
-        className="relative flex min-h-svh flex-col justify-center bg-background"
+        className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
       >
-        <div className="mx-auto w-full max-w-6xl px-6 py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>
             <h2 id="explore" className="text-display-sm">
               Photography
@@ -223,14 +226,16 @@ export default function Home() {
         id="editing"
         data-page-section
         aria-labelledby="editing-heading"
-        className="relative flex min-h-svh flex-col justify-center bg-background"
+        className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
       >
-        <div className="mx-auto w-full max-w-6xl px-6 py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>
-            <h2 id="editing-heading" className="text-right text-display-sm">
+            {/* Right alignment is a wide-screen accent — one left reading
+                axis on phones (user decision) */}
+            <h2 id="editing-heading" className="text-display-sm md:text-right">
               Editing
             </h2>
-            <p className="mt-4 ml-auto max-w-prose text-right text-muted-foreground">
+            <p className="mt-4 max-w-prose text-muted-foreground md:ml-auto md:text-right">
               Behind each of my photos is a mountain of editing.
             </p>
           </Reveal>
@@ -266,9 +271,9 @@ export default function Home() {
         id="drawing"
         data-page-section
         aria-labelledby="drawings-heading"
-        className="relative flex min-h-svh flex-col justify-center bg-background"
+        className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
       >
-        <div className="mx-auto w-full max-w-6xl px-6 py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>
             <h2 id="drawings-heading" className="text-display-sm">
               Drawing
@@ -298,9 +303,9 @@ export default function Home() {
         id="lab"
         data-page-section
         aria-labelledby="lab-heading"
-        className="relative flex min-h-svh flex-col justify-center bg-background"
+        className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
       >
-        <div className="mx-auto w-full max-w-6xl px-6 py-24">
+        <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>
             <h2 id="lab-heading" className="text-display-sm">
               Lab
@@ -328,9 +333,9 @@ export default function Home() {
           id="blog"
           data-page-section
           aria-labelledby="blog-heading"
-          className="relative flex min-h-svh flex-col justify-center bg-background"
+          className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
         >
-          <div className="mx-auto w-full max-w-6xl px-6 py-24">
+          <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
             <Reveal>
               <h2 id="blog-heading" className="text-display-sm">
                 Blog

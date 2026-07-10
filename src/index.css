@@ -313,6 +313,26 @@
       scroll-behavior: auto;
     }
   }
+  /* Homepage page-snap (touch). The wheel pager is pointer-only, so
+     coarse-pointer devices get the page feel natively via CSS scroll
+     snap — no JS interception, gestures stay fully native (and the two
+     mechanisms can never overlap: the pager gates on `pointer: fine`).
+     Scoped with :has() to routes that opt in via [data-page-snap].
+     Tall sections stay freely scrollable inside — a snap area larger
+     than the snapport is scrollable within it by spec. The footer snaps
+     at its END edge; without a snap position of its own, mandatory
+     snapping would yank the viewport back and strand it. */
+  @media (pointer: coarse) {
+    html:has([data-page-snap]) {
+      scroll-snap-type: y mandatory;
+    }
+    html:has([data-page-snap]) [data-page-section] {
+      scroll-snap-align: start;
+    }
+    html:has([data-page-snap]) footer {
+      scroll-snap-align: end;
+    }
+  }
   ::selection {
     @apply bg-primary/40;
   }
