@@ -26,14 +26,16 @@ import portraitDoorVertical from "@/assets/portrait/studio/studio_1.jpg?w=800;12
 /* Drawing-section rotating backdrop (DRAFT picks pending review,
    content-draft §18): iceland_1 / winter_1 / lake_1 — dark-edged frames
    that survive the wide center-crop; portrait screens see them near-
-   natively (the library is 4:5). 4:5 masters at 100vw sizes. */
+   natively (the library is 4:5). Capped at 1600w (audit 2026-07-10):
+   these render under a 60%+ scrim, where 2000w was pure bytes — the
+   snow frame alone was 777KB avif at 2000w, ~500KB at 1600w. */
 // prettier-ignore
-import drawingBackdrop1 from "@/assets/landscape/iceland/iceland_1.jpg?w=800;1200;2000&format=avif;webp;jpeg&as=picture"
+import drawingBackdrop1 from "@/assets/landscape/iceland/iceland_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
 import drawingBackdrop1Lqip from "@/assets/landscape/iceland/iceland_1.jpg?w=24&format=webp&inline"
 // prettier-ignore
-import drawingBackdrop2 from "@/assets/landscape/winter/winter_1.jpg?w=800;1200;2000&format=avif;webp;jpeg&as=picture"
+import drawingBackdrop2 from "@/assets/landscape/winter/winter_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
 // prettier-ignore
-import drawingBackdrop3 from "@/assets/landscape/lake/lake_1.jpg?w=800;1200;2000&format=avif;webp;jpeg&as=picture"
+import drawingBackdrop3 from "@/assets/landscape/lake/lake_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
 /* Editing doors (user picks carried over from the panels, now
    full-bleed): Tutorials = niagaraFalls_14 / coast_1; Presets =
    goldenHour_7 / lake_3 */
