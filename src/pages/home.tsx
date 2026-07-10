@@ -68,6 +68,7 @@ import { BinaryScene } from "@/features/home/binary-scene"
 import { CategoryDoors } from "@/features/home/category-doors"
 import { MatrixRain } from "@/features/home/matrix-rain"
 import { ScrollHint } from "@/features/home/scroll-hint"
+import { SocialRail } from "@/features/home/social-rail"
 import { TypeOut } from "@/features/home/type-out"
 import { RotatingBackdrop } from "@/features/presets/rotating-backdrop"
 import { SectionNav, type HomeSection } from "@/features/home/section-nav"
@@ -111,6 +112,15 @@ export default function Home() {
      clears the fixed header. (Pointer + motion only — a11y escape
      hatch in the hook.) */
   const pager = useSectionPager()
+
+  /* Chevron click: turn to the section after the current one (same
+     page-turn as the Scroll-to menu) */
+  const advance = () => {
+    const ids = ["hero", ...HOME_SECTIONS.map((section) => section.id)]
+    const index = ids.indexOf(pager.activeId ?? "hero")
+    const next = ids[index + 1]
+    if (next) pager.goTo(next)
+  }
 
   return (
     // data-page-snap opts the route into the touch page-snap CSS
@@ -363,8 +373,13 @@ export default function Home() {
         </section>
       )}
 
-      {/* Bobbing chevron — visible while more paged content sits below */}
-      <ScrollHint show={pager.moreBelow} />
+      {/* Floating social icons — the paged homepage rarely reaches the
+          real footer, so its links surface here (bottom-left corner) */}
+      <SocialRail />
+
+      {/* Bobbing chevron — visible while more paged content sits below;
+          clicking it turns to the next section */}
+      <ScrollHint show={pager.moreBelow} onAdvance={advance} />
 
       {/* Floating section menu — appears once the visitor scrolls; its
           entries drive the same page-turn and highlight the active page */}

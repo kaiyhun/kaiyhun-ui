@@ -142,7 +142,11 @@ export function CategoryDoors({
                   onFocus={() => engage(index)}
                   onBlur={() => setHovered(null)}
                   className={cn(
-                    "group block transition-opacity duration-(--motion-duration-base) outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
+                    // inline-block, NOT block: the hit/hover area must
+                    // shrink-wrap the label — a block link spanned the
+                    // whole content column and reacted to the pointer far
+                    // right of the text
+                    "group inline-block transition-opacity duration-(--motion-duration-base) outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
                     // The chosen door reads; the rest step back
                     hovered !== null && hovered !== index && "opacity-40",
                   )}
