@@ -57,6 +57,7 @@ import { POSTS } from "@/content/posts"
 import { SITE } from "@/content/site"
 import { WritingBand } from "@/features/blog/writing-band"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
+import { BinaryScene } from "@/features/home/binary-scene"
 import { GatewayPanel } from "@/features/home/gateway-panel"
 import { MatrixRain } from "@/features/home/matrix-rain"
 import { ScrollHint } from "@/features/home/scroll-hint"
@@ -298,7 +299,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ Lab — research & code (text-only door) ======= */}
+      {/* ============ Lab — research & code ======= */}
       <section
         id="lab"
         data-page-section
@@ -306,24 +307,31 @@ export default function Home() {
         className="relative flex min-h-svh flex-col justify-start bg-background md:justify-center"
       >
         <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
-          <Reveal>
-            <h2 id="lab-heading" className="text-display-sm">
-              Lab
-            </h2>
-            <p className="mt-4 max-w-prose text-muted-foreground">
-              Research, projects, and the code behind them.
-            </p>
-            <Link
-              to="/lab"
-              className="group mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-            >
-              Enter the lab
-              <ArrowRight
-                aria-hidden
-                className="size-4 transition-transform duration-(--motion-duration-fast) ease-(--ease-out-expo) group-hover:translate-x-1"
-              />
-            </Link>
-          </Reveal>
+          <div className="grid items-center gap-10 md:grid-cols-2">
+            <Reveal>
+              <h2 id="lab-heading" className="text-display-sm">
+                Lab
+              </h2>
+              <p className="mt-4 max-w-prose text-muted-foreground">
+                Research, projects, and the code behind them.
+              </p>
+              <Link
+                to="/lab"
+                className="group mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              >
+                Enter the lab
+                <ArrowRight
+                  aria-hidden
+                  className="size-4 transition-transform duration-(--motion-duration-fast) ease-(--ease-out-expo) group-hover:translate-x-1"
+                />
+              </Link>
+            </Reveal>
+            {/* Binary pixel scene — a 0/1 cat watching the moon (decorative;
+                the text column is the real content) */}
+            <Reveal delay={0.1}>
+              <BinaryScene className="h-64 w-full sm:h-80 md:h-104" />
+            </Reveal>
+          </div>
         </div>
       </section>
 
