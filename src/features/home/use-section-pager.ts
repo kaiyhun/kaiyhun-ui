@@ -25,8 +25,9 @@
  * to the anchored section's flush range. A boundary can never be
  * overshot — a giant flick just lands on the wall — and only accumulated
  * intent AT the wall turns the page. Carve-out: at the last section's
- * bottom (and in the footer beneath it) we let native scroll through so the
- * footer stays reachable.
+ * bottom (and anything beneath it) we let native scroll through — with no
+ * footer on the homepage the document simply ends there, and the
+ * pass-through is a harmless no-op.
  *
  * Momentum guard: after a turn the accumulator parks at MOMENTUM_LOCK and
  * the inertial tail is held (no interior drift, no cascade) until a re-arm
@@ -296,8 +297,8 @@ export function useSectionPager() {
             scrollToIndex(anchor - 1, true)
         }
       }
-      // else: last section's bottom (footer) or first section's top —
-      // let native scroll through so the footer stays reachable.
+      // else: last section's bottom or first section's top — let native
+      // scroll pass through (a no-op now that nothing sits below).
     }
 
     // A scrollbar grab or key press mid-turn hands control back to native.

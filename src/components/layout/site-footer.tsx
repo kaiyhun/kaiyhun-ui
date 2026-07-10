@@ -1,5 +1,7 @@
 /**
- * SiteFooter — site-wide footer: social links + copyright.
+ * SiteFooter — footer for every page EXCEPT the homepage (gated in
+ * app.tsx's RoutedFooter): the paged home surfaces the same socials via
+ * its floating SocialRail instead. Social links + copyright.
  *
  * Socials come from the content model (src/content/site.ts) — URLs are
  * placeholders until the user swaps in real ones. Text links by design:

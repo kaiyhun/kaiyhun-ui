@@ -54,6 +54,16 @@ function AnimatedRoutes() {
   )
 }
 
+/** Site footer on every route EXCEPT the homepage (user decision): the
+ *  paged home is full-viewport "screens" whose social links live in the
+ *  floating SocialRail — a footer below the last page would just be
+ *  strandable scroll. Needs the location, so it lives under the router. */
+function RoutedFooter() {
+  const { pathname } = useLocation()
+  if (pathname === "/") return null
+  return <SiteFooter />
+}
+
 /** ↑↑↓↓←→←→BA — flips Matrix mode from ANY page (easter egg). */
 const KONAMI = [
   "ArrowUp",
@@ -92,7 +102,7 @@ export function App() {
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <SiteHeader />
         <AnimatedRoutes />
-        <SiteFooter />
+        <RoutedFooter />
         <TerminalPrompt />
       </BrowserRouter>
     </MotionConfig>

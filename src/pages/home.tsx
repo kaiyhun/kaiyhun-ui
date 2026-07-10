@@ -2,9 +2,10 @@
  * Home — the hub of the multi-domain site (docs/homepage-brief.md).
  *
  * Sections: identity hero (user-approved statement over niagaraFalls_8) →
- * gateway sections (Photography, Editing, Drawings — doors appear as wings ship) →
- * footer (site-wide). The recent-writing band (M8) and about teaser (M11)
- * appear when their wings are real.
+ * gateway sections (Photography, Editing, Drawing, Lab, Blog). No site
+ * footer here (user decision — gated in app.tsx): the paged home is
+ * full-viewport screens, and the floating SocialRail carries the links a
+ * footer would.
  */
 import { ArrowRight } from "lucide-react"
 import { Link } from "react-router"
@@ -282,7 +283,8 @@ export default function Home() {
       )}
 
       {/* Floating social icons — the paged homepage rarely reaches the
-          real footer, so its links surface here (bottom-left corner) */}
+          real footer, so its links surface here (bottom-center, above
+          the chevron) */}
       <SocialRail />
 
       {/* Bobbing chevron — visible while more paged content sits below;
