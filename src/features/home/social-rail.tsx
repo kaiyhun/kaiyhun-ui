@@ -2,8 +2,8 @@
  * SocialRail — the homepage's floating social icons (bottom-center,
  * stacked just above the scroll chevron).
  *
- * The paged homepage means visitors rarely reach the site footer, so its
- * social links surface here as bare icon buttons hovering over the
+ * The homepage renders NO site footer (gated in app.tsx), so this rail
+ * IS the home's social presence: bare icon buttons hovering over the
  * sections (user request — no pill chrome, just spaced icons).
  *
  * Brand glyphs are inline SVG paths (simple-icons shapes, CC0) because
@@ -62,9 +62,10 @@ export function SocialRail() {
   return (
     <nav
       aria-label="Social links"
-      // Faint until interacted with — present, not demanding (SectionNav
-      // pattern). bottom-14 clears the chevron parked at bottom-4.
-      className="pointer-events-none fixed inset-x-0 bottom-14 z-30 flex justify-center opacity-70 transition-opacity duration-(--motion-duration-fast) focus-within:opacity-100 hover:opacity-100"
+      // Fully opaque ON PURPOSE: the old faint-until-hover treatment let
+      // the binary scene's digits bleed through the glyphs and read as
+      // painting OVER the icons. bottom-14 clears the chevron at bottom-4.
+      className="pointer-events-none fixed inset-x-0 bottom-14 z-30 flex justify-center"
     >
       <ul className="pointer-events-auto flex items-center gap-2">
         {SITE.socials.map((social) => (
@@ -75,7 +76,10 @@ export function SocialRail() {
               {...(social.href.startsWith("mailto:")
                 ? {}
                 : { target: "_blank", rel: "noreferrer" })}
-              className="block rounded-full p-2 text-muted-foreground transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
+              // The drop-shadow is a background-colored halo — it pushes
+              // busy backdrop art (binary digits) back from the glyph
+              // edges without reintroducing a pill container
+              className="block rounded-full p-2 text-foreground/75 [filter:drop-shadow(0_0_6px_var(--background))] transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               {iconFor(social.label)}
             </a>

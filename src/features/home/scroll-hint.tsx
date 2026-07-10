@@ -52,7 +52,9 @@ export function ScrollHint({ show, onAdvance }: ScrollHintProps) {
               type="button"
               onClick={onAdvance}
               aria-label="Scroll to the next section"
-              className="pointer-events-auto block rounded-full p-2 text-muted-foreground/80 transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
+              // Same background-colored halo as the social rail — keeps
+              // the glyph readable over busy backdrop art
+              className="pointer-events-auto block rounded-full p-2 text-foreground/75 [filter:drop-shadow(0_0_6px_var(--background))] transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <ChevronDown aria-hidden className="size-5" />
             </button>
