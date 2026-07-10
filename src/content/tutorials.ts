@@ -31,16 +31,48 @@ export interface Tutorial {
   videoId: string
   /** Fallback title — real title comes from oEmbed at build. */
   title: string
-  /** Featured tutorials render large; the rest grid two-up. */
+  /** One-two sentences on what the video covers (DRAFT, content-draft
+   *  §20 — descriptions are ours, never overridden by oEmbed). */
+  description: string
+  /** Micro meta line: kind · tools (DRAFT, content-draft §20). */
+  focus: string
+  /** Featured tutorials render as editorial media rows; the rest grid. */
   featured?: boolean
 }
 
-/** Order = page order (user's grouping in docs/tutorial.md). */
+/** Order = page order (user's grouping in docs/tutorial.md).
+ *  ⚠ description/focus lines are CLAUDE DRAFTS pending review. */
 export const TUTORIALS: Tutorial[] = [
-  { videoId: "nDqvgqYOXB4", title: "How I edit my photos", featured: true },
-  { videoId: "dd3FJIzbnnM", title: "Dodge & burn", featured: true },
-  { videoId: "iDtUC8vlv4g", title: "Creating the long-exposure effect" },
-  { videoId: "J9W8RyY6w18", title: "Edit with me" },
+  {
+    videoId: "nDqvgqYOXB4",
+    title: "How I edit my photos",
+    description:
+      "The full pass on a single photograph — RAW import to final grade, with every decision narrated as it happens.",
+    focus: "Full walkthrough · Lightroom & Photoshop",
+    featured: true,
+  },
+  {
+    videoId: "dd3FJIzbnnM",
+    title: "Dodge & burn",
+    description:
+      "Shaping light after the fact: where to brighten, where to sink, and how far you can push before it starts to show.",
+    focus: "Technique · Photoshop",
+    featured: true,
+  },
+  {
+    videoId: "iDtUC8vlv4g",
+    title: "Creating the long-exposure effect",
+    description:
+      "Silky water without the ND filter — stacking ordinary frames into a long exposure that never happened.",
+    focus: "Technique · Photoshop",
+  },
+  {
+    videoId: "J9W8RyY6w18",
+    title: "Edit with me",
+    description:
+      "A real edit in real time.",
+    focus: "Session · Photoshop",
+  },
 ]
 
 export interface BeforeAfterPair {
@@ -76,5 +108,5 @@ export const BEFORE_AFTER: BeforeAfterPair[] = [
 export const WHY_WE_EDIT: string[] = [
   "The camera captures the moment; editing decides what is shown to the viewer. A photograph is complete on its own, but to some, its a blank canvas, a base to build upon.",
   "That's what these sliders are for. Drag the divider and watch the same frame change temperature, weight, and mood — color pushed toward what the moment felt like instead of what the sensor measured, light re-balanced to guide your eye where mine went first.",
-  "None of it is about rescuing a bad photo. It's about personality — the consistent set of choices that makes a photograph recognizably yours before anyone reads the name under it.",
+  "The consistent set of choices that makes a photograph recognizably yours.",
 ]
