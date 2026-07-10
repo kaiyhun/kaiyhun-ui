@@ -10,8 +10,9 @@
  * decorative (aria-hidden), so screen readers hear just the label.
  */
 interface SectionKickerProps {
-  /** Decorative order numeral ("01"…) — wayfinding rhythm, not content. */
-  number: string
+  /** Decorative order numeral ("01"…) — wayfinding rhythm, not content.
+   *  Omit for a label-only kicker (rule + label). */
+  number?: string
   /** h2 id — point the section's aria-labelledby here. */
   id: string
   label: string
@@ -31,9 +32,11 @@ export function SectionKicker({
         id={id}
         className="flex items-center gap-3 font-display text-xs font-semibold tracking-[0.15em] text-muted-foreground uppercase"
       >
-        <span aria-hidden className="text-primary">
-          {number}
-        </span>
+        {number && (
+          <span aria-hidden className="text-primary">
+            {number}
+          </span>
+        )}
         {/* border token is too faint over full-bleed imagery */}
         <span aria-hidden className="h-px w-10 bg-muted-foreground/40" />
         {label}
