@@ -39,6 +39,12 @@ function declaredRepos(): string[] {
 
 async function fetchStats(): Promise<Record<string, RepoStats>> {
   if (cache) return cache
+  // Escape hatch: skip network enrichment entirely (offline builds,
+  // CI without egress, debugging) — cards render without stats.
+  if (process.env.SKIP_BUILD_ENRICHMENT) {
+    cache = {}
+    return cache
+  }
   const stats: Record<string, RepoStats> = {}
   await Promise.allSettled(
     declaredRepos().map(async (repo) => {

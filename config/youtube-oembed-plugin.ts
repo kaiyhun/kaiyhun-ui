@@ -36,6 +36,12 @@ function declaredVideos(): string[] {
 
 async function fetchMeta(): Promise<Record<string, VideoMeta>> {
   if (cache) return cache
+  // Escape hatch: skip network enrichment entirely (offline builds,
+  // CI without egress, debugging) — the UI falls back gracefully.
+  if (process.env.SKIP_BUILD_ENRICHMENT) {
+    cache = {}
+    return cache
+  }
   const meta: Record<string, VideoMeta> = {}
   await Promise.allSettled(
     declaredVideos().map(async (videoId) => {
