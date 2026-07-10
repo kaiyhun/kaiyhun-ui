@@ -69,8 +69,7 @@ export const TUTORIALS: Tutorial[] = [
   {
     videoId: "J9W8RyY6w18",
     title: "Edit with me",
-    description:
-      "A real edit in real time.",
+    description: "A real edit in real time.",
     focus: "Session · Photoshop",
   },
 ]
