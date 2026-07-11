@@ -107,7 +107,7 @@ export default function Home() {
       <section
         id="hero"
         data-page-section
-        className="relative flex min-h-svh overflow-hidden bg-background"
+        className="relative flex min-h-dvh overflow-hidden bg-background"
       >
         <HomeHero />
       </section>
@@ -117,7 +117,7 @@ export default function Home() {
         id="photography"
         data-page-section
         aria-labelledby="photography-heading"
-        className="relative flex min-h-svh flex-col justify-center overflow-hidden bg-background"
+        className="relative flex min-h-dvh flex-col justify-center overflow-hidden bg-background"
       >
         <CategoryDoors
           doors={[
@@ -155,7 +155,7 @@ export default function Home() {
         id="editing"
         data-page-section
         aria-labelledby="editing-heading"
-        className="relative flex min-h-svh flex-col justify-center overflow-hidden bg-background"
+        className="relative flex min-h-dvh flex-col justify-center overflow-hidden bg-background"
       >
         <CategoryDoors
           doors={[
@@ -193,7 +193,7 @@ export default function Home() {
         id="drawing"
         data-page-section
         aria-labelledby="drawings-heading"
-        className="relative flex min-h-svh flex-col justify-center overflow-hidden bg-background"
+        className="relative flex min-h-dvh flex-col justify-center overflow-hidden bg-background"
       >
         {/* Slow-rotating full-bleed backdrop (crossfades every few
             seconds on screen; reduced motion holds the first frame) */}
@@ -236,7 +236,7 @@ export default function Home() {
         id="lab"
         data-page-section
         aria-labelledby="lab-heading"
-        className="relative flex min-h-svh flex-col justify-center overflow-hidden bg-background"
+        className="relative flex min-h-dvh flex-col justify-center overflow-hidden bg-background"
       >
         {/* Full-page binary pixel scene — a 0/1 cat watching the moon;
             the text sits over it (actors keep to the right/top, away
@@ -268,7 +268,7 @@ export default function Home() {
           id="blog"
           data-page-section
           aria-labelledby="blog-heading"
-          className="relative flex min-h-svh flex-col justify-center bg-background"
+          className="relative flex min-h-dvh flex-col justify-center bg-background"
         >
           <div className="mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
             <Reveal>

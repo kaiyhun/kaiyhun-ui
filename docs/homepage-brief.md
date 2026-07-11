@@ -92,7 +92,10 @@ incrementally — a door appears on the homepage only when its page is real
 ### Boundary page-turn (paged section scrolling)
 
 Each homepage section is a full-viewport "page" (`[data-page-section]`,
-`min-h-svh`, FULL-BLEED with an opaque `bg-background`; the content column
+`min-h-dvh` (DYNAMIC viewport height — `svh` left a gap at the bottom
+on phones once the URL bar collapsed mid-scroll, showing the next
+section's top; `dvh` tracks the browser chrome), FULL-BLEED with an
+opaque `bg-background`; the content column
 lives in an inner `max-w-6xl` div whose padding — `py-16`, `md:py-24` —
 clears the fixed header). Content is vertically centered at every
 width (user decision — phones match desktop); text is left-aligned

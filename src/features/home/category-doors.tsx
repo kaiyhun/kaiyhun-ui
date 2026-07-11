@@ -17,7 +17,7 @@
  * NOT ArtDirectedBackdrop: that component eager-loads for the hero;
  * four eager full-bleed images below the fold would be waste.
  *
- * The section shell (id, data-page-section, min-h-svh, opaque bg) stays
+ * The section shell (id, data-page-section, min-h-dvh, opaque bg) stays
  * in the page; this renders the absolute backdrop + the content column
  * (heading/prose children above the door stack).
  */
