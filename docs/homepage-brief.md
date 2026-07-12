@@ -130,14 +130,17 @@ paged content remains below the viewport).
   scrolling. The escape hatch is literally "don't attach the wheel
   listener" — so the paged behavior can never trap anyone, and the page
   degrades to a normal scroll.
-- **Touch pages via native CSS scroll-snap (user decision — mobile should
-  match the desktop page metaphor).** `@media (pointer: coarse)` +
-  `html:has([data-page-snap])` applies `scroll-snap-type: y mandatory`
-  with `scroll-snap-align: start` on sections (index.css; the homepage
-  opts in via `data-page-snap` on `<main>`). No JS touches touch:
-  gestures stay native, tall sections scroll freely inside (snap areas
-  larger than the snapport are scrollable within by spec), and the
-  `pointer: coarse` gate is mutually exclusive with the pager's
+- **Touch = free scroll + magnet snap (user decision 2026-07-12 —
+  `mandatory` page-forcing felt glitchy on real phones).**
+  `@media (pointer: coarse)` + `html:has([data-page-snap])` applies
+  `scroll-snap-type: y proximity` with `scroll-snap-align: start` on
+  sections (index.css; the homepage opts in via `data-page-snap` on
+  `<main>`): scrolling is completely normal, and the browser only
+  snaps a gesture that SETTLES near a section top. No JS touches
+  touch: gestures stay native, tall sections scroll freely inside
+  (snap areas larger than the snapport are scrollable within by
+  spec), and the `pointer: coarse` gate is mutually exclusive with
+  the pager's
   `pointer: fine` wheel ownership. (The homepage renders no footer —
   gated in app.tsx — so the document ends on the last page and every
   scroll position has a snap target.)
@@ -184,8 +187,8 @@ paged content remains below the viewport).
 **Tuning knobs** (feel is hardware-dependent — tune in a real browser):
 `TURN_THRESHOLD`, `IDLE_RESET_MS`, `RE_ARM_RATIO`, `PEAK_DECAY` in the
 hook; fade duration/curve via the `--motion-*` tokens (`slow` /
-`cinematic`); `y mandatory` → `y proximity` in index.css if mobile
-snapping feels too insistent.
+`cinematic`); `y proximity` is the shipped touch mode (mandatory was
+tried first and reverted — too insistent on real phones).
 
 ## Unified content model (basis for M3)
 

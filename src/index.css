@@ -414,13 +414,15 @@
      snap — no JS interception, gestures stay fully native (and the two
      mechanisms can never overlap: the pager gates on `pointer: fine`).
      Scoped with :has() to routes that opt in via [data-page-snap].
-     Tall sections stay freely scrollable inside — a snap area larger
-     than the snapport is scrollable within it by spec. (The homepage
-     renders no footer — the document ends on the last page, so every
-     scroll position has a snap target.) */
+     PROXIMITY, not mandatory (user decision 2026-07-12 — mandatory
+     forced every flick onto a page boundary and felt glitchy against
+     momentum + URL-bar resizes): scrolling is completely free, and the
+     browser only magnet-snaps when a gesture SETTLES near a section
+     top. Tall sections stay freely scrollable inside — a snap area
+     larger than the snapport is scrollable within it by spec. */
   @media (pointer: coarse) {
     html:has([data-page-snap]) {
-      scroll-snap-type: y mandatory;
+      scroll-snap-type: y proximity;
     }
     html:has([data-page-snap]) [data-page-section] {
       scroll-snap-align: start;

@@ -99,8 +99,9 @@ export default function Home() {
   }
 
   return (
-    // data-page-snap opts the route into the touch page-snap CSS
-    // (index.css) — coarse pointers page via native scroll snap, the
+    // data-page-snap opts the route into the touch snap CSS
+    // (index.css) — coarse pointers scroll FREELY and only magnet-snap
+    // when a gesture settles near a section top (y proximity); the
     // pointer-only wheel pager never runs there
     <main data-page-snap>
       {/* ============ Hero — "00", the identity statement ========= */}

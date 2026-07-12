@@ -103,7 +103,7 @@ export function TerminalPrompt() {
           placeholder="zsh"
           spellCheck={false}
           autoComplete="off"
-          className="w-48 rounded-sm bg-transparent [caret-color:var(--primary)] outline-none placeholder:text-primary/60 focus-visible:ring-2 focus-visible:ring-ring/50"
+          className="w-48 rounded-sm bg-transparent caret-primary outline-none placeholder:text-primary/60 focus-visible:ring-2 focus-visible:ring-ring/50"
         />
       </label>
     </form>
