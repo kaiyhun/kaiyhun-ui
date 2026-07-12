@@ -59,8 +59,13 @@ export function TerminalPrompt() {
       case "ls":
         setOutput("photography  drawing  lab  blog  about  tutorial  preset")
         break
+      case "run":
+        // The hidden game (docs/game.md) — `run` runs the runner
+        setOutput(null)
+        navigate("/run")
+        break
       case "help":
-        setOutput("commands: cd <page> · ls · clear · exit")
+        setOutput("commands: cd <page> · ls · clear · exit · run")
         break
       case "clear":
         setOutput(null)

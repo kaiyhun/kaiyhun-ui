@@ -148,7 +148,7 @@ export function ThemeDeck() {
         role="radiogroup"
         aria-label="Site theme"
         onKeyDown={onGroupKeyDown}
-        className="relative h-[24rem] w-full sm:h-[27rem]"
+        className="relative h-96 w-full sm:h-108"
       >
         {THEME_CARDS.map((card, index) => {
           const offset = index - focus

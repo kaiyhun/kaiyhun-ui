@@ -15,7 +15,7 @@ applyTheme(getTheme())
 
 /* A note for whoever opens the hood (easter egg — copy: content-draft §17) */
 console.log(
-  "%cWake up, Neo...%c\n\nLooking under the hood? I like you already.\nThis site is built in the open — the code, the presets, the process.\nTake what's useful, and pay it forward.\n\nP.S. ↑ ↑ ↓ ↓ ← → ← → B A works on every page.",
+  "%cWake up, Neo...%c\n\nLooking under the hood? I like you already.\nThis site is built in the open — the code, the presets, the process.\nTake what's useful, and pay it forward.\n\nP.S. ↑ ↑ ↓ ↓ ← → ← → B A works on every page.\nP.P.S. Once you're in, type `run` in the terminal. Bring reflexes.",
   "color:#00ff7f;font-size:16px;font-weight:bold;font-family:monospace",
   "color:#8aa;font-family:monospace",
 )

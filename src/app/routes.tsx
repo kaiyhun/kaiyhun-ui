@@ -18,6 +18,7 @@ const Blog = lazy(() => import("@/pages/blog"))
 const Lab = lazy(() => import("@/pages/lab"))
 const About = lazy(() => import("@/pages/about"))
 const Settings = lazy(() => import("@/pages/settings"))
+const Run = lazy(() => import("@/pages/run"))
 const Post = lazy(() => import("@/pages/post"))
 const NotFound = lazy(() => import("@/pages/not-found"))
 
@@ -44,6 +45,8 @@ export function AppRoutes({ location }: AppRoutesProps) {
       <Route path="lab" element={<Lab />} />
       <Route path="about" element={<About />} />
       <Route path="settings" element={<Settings />} />
+      {/* Easter egg — unlinked, un-sitemapped, noindex (docs/game.md) */}
+      <Route path="run" element={<Run />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )
