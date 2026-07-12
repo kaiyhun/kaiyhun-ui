@@ -59,3 +59,27 @@ re-measures as masonry images settle),
 and a gentle dim on non-active section text. Spine parts are
 aria-hidden; heading ids/aria-labelledby unchanged. Feature lines
 render as pill chips — all preset copy verbatim.
+
+
+## /preset/v2 — V2.0 preview page (2026-07-11, WIP by design)
+
+Deliberately UNLINKED from the index (the V2 row stays a no-link
+coming-soon). Structure: header from PACK_V2 + WIP banner → THE MIXER →
+the shared spine timeline (PresetTimeline, extracted from /preset/2020;
+currently fed PRESET_SECTIONS verbatim as stand-ins).
+
+The mixer (features/presets/preset-mixer.tsx) is styled as an EDITING
+PANEL: frame left, tool panel right (stacks on mobile). Each filter is
+a LAYER row — Switch (on/off) + opacity Slider + % readout — plus a
+header strip with hold-to-compare (eye, flashes the original) and
+reset. Layer model: enabled filters build a bottom→top stack of
+CUMULATIVE combo images (original → +tone → +tone+grain → …, keys from
+v2ComboKey over V2_MIXER_IMAGES in content/presets.ts); each layer
+renders at its slider's opacity, so sliders blend real exports like
+layer opacity in an editor. All 16 images are 2020-example STAND-INS
+(partial opacities blend two DIFFERENT photos until real same-frame
+exports land); going real = replacing the 16 imports. Delivery: layers
+fully covered by an opaque layer above are not mounted (default all-on
+fetches original + top combo only); hovering/focusing a row pre-warms
+every combo its slider or switch could reveal. Slider/Switch primitives
+came from the shadcn registry, restyled in components/ui.

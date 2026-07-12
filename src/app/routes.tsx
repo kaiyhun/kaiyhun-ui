@@ -12,6 +12,7 @@ const Collection = lazy(() => import("@/pages/collection"))
 const Tutorials = lazy(() => import("@/pages/tutorials"))
 const Presets = lazy(() => import("@/pages/presets"))
 const PresetPack = lazy(() => import("@/pages/preset-pack"))
+const PresetV2 = lazy(() => import("@/pages/preset-v2"))
 const Drawing = lazy(() => import("@/pages/drawing"))
 const Blog = lazy(() => import("@/pages/blog"))
 const Lab = lazy(() => import("@/pages/lab"))
@@ -33,6 +34,8 @@ export function AppRoutes({ location }: AppRoutesProps) {
       <Route path="photography/:slug" element={<Collection />} />
       <Route path="tutorial" element={<Tutorials />} />
       <Route path="preset" element={<Presets />} />
+      {/* Static "v2" outranks the :slug pattern (router route ranking) */}
+      <Route path="preset/v2" element={<PresetV2 />} />
       <Route path="preset/:slug" element={<PresetPack />} />
       <Route path="drawing" element={<Drawing />} />
       <Route path="blog" element={<Blog />} />

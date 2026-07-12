@@ -206,3 +206,85 @@ export const PRESET_SECTIONS: PresetSection[] = [
 export const PRESET_SEQUENCE: TaggedPhoto[] = PRESET_SECTIONS.flatMap((group) =>
   group.photos.map((photo) => ({ photo, collection: group })),
 )
+
+/* ===================== Preset V2.0 (PREVIEW MOCK) ==================== */
+
+/** V2 mixer filters — ⚠ label DRAFTS (content-draft §21); real filter
+ *  names arrive with the pack. Order here is the canonical combo-key
+ *  order below. */
+export const V2_FILTERS = [
+  { id: "tone", label: "Tone" },
+  { id: "grain", label: "Grain" },
+  { id: "fade", label: "Fade" },
+  { id: "warmth", label: "Warmth" },
+] as const
+
+export type V2FilterId = (typeof V2_FILTERS)[number]["id"]
+
+/** Combo key: enabled filter ids in V2_FILTERS order, joined with "+"
+ *  ("" = nothing enabled → the untouched original). */
+export function v2ComboKey(enabled: ReadonlySet<V2FilterId>): string {
+  return V2_FILTERS.filter((filter) => enabled.has(filter.id))
+    .map((filter) => filter.id)
+    .join("+")
+}
+
+// ⚠ ALL 16 combo images are STAND-INS (existing 2020 pack examples)
+// until real per-combination exports exist. To go real: replace each
+// import's path with the export for that key — nothing else changes.
+// prettier-ignore
+import v2Combo0 from "@/assets/preset/KY01/KY01_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+import v2Combo0Lqip from "@/assets/preset/KY01/KY01_1.jpg?w=24&format=webp&inline"
+// prettier-ignore
+import v2Combo1 from "@/assets/preset/KY01/KY01_2.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo2 from "@/assets/preset/KY02/KY02_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo3 from "@/assets/preset/KY02/KY02_2.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo4 from "@/assets/preset/KY03/KY03_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo5 from "@/assets/preset/KY03/KY03_2.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo6 from "@/assets/preset/KY04/KY04_2.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo7 from "@/assets/preset/KY04/KY04_3.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo8 from "@/assets/preset/KY05/KY05_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo9 from "@/assets/preset/KY05/KY05_2.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo10 from "@/assets/preset/KY06/KY06_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo11 from "@/assets/preset/KY06/KY06_2.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo12 from "@/assets/preset/KY07/KY07_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo13 from "@/assets/preset/KY07/KY07_2.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo14 from "@/assets/preset/KY08/KY08_1.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+// prettier-ignore
+import v2Combo15 from "@/assets/preset/KY08/KY08_2.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
+
+/** Every filter subset → its image. Keys follow v2ComboKey(). */
+export const V2_MIXER_IMAGES: Record<string, Picture> = {
+  "": v2Combo0, // original — nothing applied
+  tone: v2Combo1,
+  grain: v2Combo2,
+  fade: v2Combo3,
+  warmth: v2Combo4,
+  "tone+grain": v2Combo5,
+  "tone+fade": v2Combo6,
+  "tone+warmth": v2Combo7,
+  "grain+fade": v2Combo8,
+  "grain+warmth": v2Combo9,
+  "fade+warmth": v2Combo10,
+  "tone+grain+fade": v2Combo11,
+  "tone+grain+warmth": v2Combo12,
+  "tone+fade+warmth": v2Combo13,
+  "grain+fade+warmth": v2Combo14,
+  "tone+grain+fade+warmth": v2Combo15, // the default (everything on)
+}
+
+/** LQIP for the mixer frame's first paint (default combo's stand-in). */
+export const V2_MIXER_LQIP = v2Combo0Lqip
