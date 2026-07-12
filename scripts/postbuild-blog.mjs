@@ -73,6 +73,7 @@ const STATIC_ROUTES = [
   "tutorial",
   "preset",
   "preset/2020",
+  "settings",
 ]
 const urls = [
   ...STATIC_ROUTES.map((route) => ({ loc: `${ORIGIN}${BASE}${route}` })),

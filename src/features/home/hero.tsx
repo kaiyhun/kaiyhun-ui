@@ -152,7 +152,7 @@ export function HomeHero() {
       {/* Legibility scrim — weighted toward the bottom-left stack */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-background via-background/45 to-background/15"
+        className="absolute inset-0 bg-linear-to-t from-background via-background/45 to-background/15"
       />
 
       <div className="relative mx-auto flex w-full max-w-6xl flex-col justify-end px-6 pt-24 pb-36 md:pb-32">

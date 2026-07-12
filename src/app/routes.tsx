@@ -17,6 +17,7 @@ const Drawing = lazy(() => import("@/pages/drawing"))
 const Blog = lazy(() => import("@/pages/blog"))
 const Lab = lazy(() => import("@/pages/lab"))
 const About = lazy(() => import("@/pages/about"))
+const Settings = lazy(() => import("@/pages/settings"))
 const Post = lazy(() => import("@/pages/post"))
 const NotFound = lazy(() => import("@/pages/not-found"))
 
@@ -42,6 +43,7 @@ export function AppRoutes({ location }: AppRoutesProps) {
       <Route path="blog/:slug" element={<Post />} />
       <Route path="lab" element={<Lab />} />
       <Route path="about" element={<About />} />
+      <Route path="settings" element={<Settings />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   )

@@ -143,9 +143,17 @@
 
 /*
  * Raw token values. The site is dark-only by design (cinematic grade), so
- * the dark palette lives directly in :root — no theme toggle to maintain.
+ * the dark palette lives directly in :root — no light theme to maintain.
+ *
+ * The extra `.theme-default` selector shares this SINGLE definition as a
+ * scope class: the /settings theme cards wrap each face in its theme's
+ * class so a card shows ITS OWN palette even while another theme is
+ * active on <html> (a descendant's own declaration beats inherited
+ * custom properties). applyTheme (lib/theme.ts) also sets it on <html>
+ * in default mode, where it's a harmless restatement of :root.
  */
-:root {
+:root,
+.theme-default {
   /* ~65% — surfaces: near-black with a subtle cool blue cast */
   --background: oklch(0.16 0.012 255);
   --foreground: oklch(0.93 0.008 255);

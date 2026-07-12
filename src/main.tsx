@@ -6,12 +6,12 @@ import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 
 import { App } from "@/app/app"
-import { applyMatrixTheme, isMatrixTheme } from "@/lib/theme"
+import { applyTheme, getTheme } from "@/lib/theme"
 
 import "./index.css"
 
-// Re-apply a persisted Matrix session before first paint (no flash)
-applyMatrixTheme(isMatrixTheme())
+// Re-apply the persisted theme before first paint (no flash)
+applyTheme(getTheme())
 
 /* A note for whoever opens the hood (easter egg — copy: content-draft §17) */
 console.log(

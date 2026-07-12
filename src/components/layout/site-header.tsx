@@ -5,8 +5,11 @@
  * docs/homepage-brief.md); more links land as milestones ship.
  * Backdrop-blurred so the cinematic imagery reads through it.
  * Below `sm` the inline links collapse into the full-screen
- * MobileMenu (hamburger) — same link list, one source.
+ * MobileMenu (hamburger) — same link list, one source. The /settings
+ * gear sits apart from the wing links at the right edge (utility, not
+ * a wing) and also rides along inside the mobile menu.
  */
+import { Settings as SettingsIcon } from "lucide-react"
 import { Link, NavLink } from "react-router"
 
 import reactLogo from "@/assets/react.svg"
@@ -69,7 +72,24 @@ export function SiteHeader() {
             </NavLink>
           ))}
         </nav>
-        <MobileMenu links={NAV_LINKS} />
+        <div className="flex items-center gap-4">
+          <NavLink
+            to="/settings"
+            aria-label="Settings"
+            title="Settings"
+            className={({ isActive }) =>
+              cn(
+                "transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50",
+                isActive ? "text-primary" : "text-muted-foreground",
+              )
+            }
+          >
+            <SettingsIcon aria-hidden className="size-4" />
+          </NavLink>
+          <MobileMenu
+            links={[...NAV_LINKS, { label: "Settings", to: "/settings" }]}
+          />
+        </div>
       </div>
     </header>
   )

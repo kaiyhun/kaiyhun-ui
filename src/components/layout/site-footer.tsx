@@ -6,9 +6,15 @@
  * Socials come from the content model (src/content/site.ts) — URLs are
  * placeholders until the user swaps in real ones. Text links by design:
  * lucide dropped brand icons, and uppercase display-font labels fit the
- * bold aesthetic without an extra icon dependency.
+ * bold aesthetic without an extra icon dependency. A /settings link
+ * rides at the end of the row (internal, so router Link not <a>).
  */
+import { Link } from "react-router"
+
 import { SITE } from "@/content/site"
+
+const FOOTER_LINK =
+  "font-display text-xs font-semibold tracking-[0.15em] text-muted-foreground uppercase transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
 
 export function SiteFooter() {
   return (
@@ -21,12 +27,17 @@ export function SiteFooter() {
                 href={social.href}
                 target="_blank"
                 rel="noreferrer"
-                className="font-display text-xs font-semibold tracking-[0.15em] text-muted-foreground uppercase transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
+                className={FOOTER_LINK}
               >
                 {social.label}
               </a>
             </li>
           ))}
+          <li>
+            <Link to="/settings" className={FOOTER_LINK}>
+              Settings
+            </Link>
+          </li>
         </ul>
         <p className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} {SITE.name}
