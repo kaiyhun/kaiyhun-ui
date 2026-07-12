@@ -15,7 +15,9 @@
  *   1. the backdrop settles out of a slow Ken Burns zoom (1.07 → 1),
  *   2. the eyebrow rule draws itself in (scaleX, origin left),
  *   3. the wordmark rises out of an overflow mask,
- *   4. tagline → CTAs → meta fade up in sequence (Reveal delays).
+ *   4. tagline → CTAs → meta fade up in sequence (HeroEnter — MOUNT-
+ *      driven, not scroll-driven: whileInView could permanently hide
+ *      hero content after back-navigation; see HeroEnter's docstring).
  * Pointer-fine screens add a whisper of pointer parallax on the backdrop
  * (springs, ±px range below); the backdrop bleeds outward so the drift
  * never exposes an edge. MotionConfig reducedMotion="user" strips every
@@ -40,12 +42,11 @@ import heroLqip from "@/assets/landscape/niagaraFalls/niagaraFalls_8.jpg?w=24&fo
    matching orientation is ever downloaded) */
 // prettier-ignore
 import heroShotPortrait from "@/assets/landscape/niagaraFalls/niagaraFalls_9.jpg?w=800;1200;1600&format=avif;webp;jpeg&as=picture"
-import { Reveal } from "@/components/motion/reveal"
 import { Button } from "@/components/ui/button"
 import { PHOTO_COUNT, requireCollection } from "@/content/collections"
 import { DRAWING_SEQUENCE } from "@/content/drawings"
 import { POSTS } from "@/content/posts"
-import { SITE } from "@/content/site"
+import { HERO_COVER, HERO_CTA, SITE } from "@/content/site"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
 import { MatrixRain } from "@/features/home/matrix-rain"
 import { TypeOut } from "@/features/home/type-out"
@@ -63,6 +64,40 @@ const HERO_ALT =
 /** Pointer-parallax drift range (px) — a whisper, not a gimmick. */
 const PARALLAX_X = 14
 const PARALLAX_Y = 8
+
+/**
+ * Mount-driven entrance for hero content. The hero always STARTS in
+ * view, so the scroll-triggered Reveal is the wrong tool here: its
+ * IntersectionObserver check can miss during route transitions /
+ * restored scroll positions and leave content (the CTA row) at
+ * opacity 0 permanently — the "buttons disappear after navigating
+ * back" bug. Same visual grammar as Reveal (fade + rise, outExpo);
+ * MotionConfig reducedMotion="user" strips the transform as usual.
+ */
+function HeroEnter({
+  delay,
+  className,
+  children,
+}: {
+  delay: number
+  className?: string
+  children: React.ReactNode
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: MOTION.revealDistance }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        delay,
+        duration: MOTION.duration.slow,
+        ease: MOTION.ease.outExpo,
+      }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 /** The falls backdrop with the Ken Burns settle + pointer parallax. */
 function HeroBackdrop() {
@@ -122,7 +157,7 @@ export function HomeHero() {
 
       <div className="relative mx-auto flex w-full max-w-6xl flex-col justify-end px-6 pt-24 pb-36 md:pb-32">
         {/* Eyebrow — "00" opens the sections' 01–05 numbering */}
-        <Reveal delay={0.1}>
+        <HeroEnter delay={0.1}>
           <p
             className={cn(
               "flex items-center gap-3 font-display text-xs font-semibold tracking-[0.15em] text-muted-foreground uppercase",
@@ -144,9 +179,9 @@ export function HomeHero() {
               className="h-px w-10 origin-left bg-muted-foreground/40"
             />
             {/* DRAFT label (content-draft §19) */}
-            Personal universe
+            My Porfolio
           </p>
-        </Reveal>
+        </HeroEnter>
 
         {/* The wordmark rises out of a mask — the signature beat */}
         <div className="mt-4 overflow-hidden">
@@ -160,14 +195,14 @@ export function HomeHero() {
             }}
             className={cn(
               "text-display-2xl text-wordmark",
-              matrix && "font-mono",
+              matrix ? "font-mono" : "text-misregister",
             )}
           >
             {SITE.name}
           </motion.h1>
         </div>
 
-        <Reveal delay={0.55}>
+        <HeroEnter delay={0.55}>
           <p
             className={cn(
               "mt-5 max-w-xl text-lg text-foreground/85 sm:text-xl",
@@ -176,12 +211,17 @@ export function HomeHero() {
           >
             {matrix ? <TypeOut text={SITE.tagline} /> : SITE.tagline}
           </p>
-        </Reveal>
+        </HeroEnter>
 
-        <Reveal delay={0.7} className="mt-8 flex flex-wrap items-center gap-3">
+        <HeroEnter
+          delay={0.7}
+          className="mt-8 flex flex-wrap items-center gap-3"
+        >
+          {/* Featured CTA — label + route live in HERO_CTA (site.ts),
+              repointed by the user as new content takes priority */}
           <Button asChild size="lg">
-            <Link to="/photography">
-              View the photography
+            <Link to={HERO_CTA.to}>
+              {HERO_CTA.label}
               <ArrowRight data-icon="inline-end" aria-hidden />
             </Link>
           </Button>
@@ -195,7 +235,7 @@ export function HomeHero() {
             <Terminal data-icon="inline-start" aria-hidden />
             {matrix ? "Wake up" : "Enter the Matrix"}
           </Button>
-        </Reveal>
+        </HeroEnter>
       </div>
 
       {/* Live meta — real counts from the content model (noun copy is a
@@ -209,11 +249,46 @@ export function HomeHero() {
         transition={{ delay: 0.9, duration: MOTION.duration.slow }}
         className="absolute right-6 bottom-10 hidden lg:block"
       >
+        {/* Faux barcode + issue tag — part of the printed-cover chrome */}
+        {!matrix && (
+          <div aria-hidden className="mb-3 flex flex-col items-end gap-1.5">
+            <span className="barcode h-7 w-28 text-foreground/60" />
+            <span className="font-display text-[0.65rem] font-semibold tracking-[0.15em] text-muted-foreground/80 uppercase">
+              {HERO_COVER.issue}
+            </span>
+          </div>
+        )}
         <p className="text-right font-display text-xs font-semibold tracking-[0.15em] text-muted-foreground uppercase">
           {PHOTO_COUNT} photographs · {DRAWING_SEQUENCE.length} drawings ·{" "}
           {POSTS.length} posts
         </p>
       </motion.div>
+
+      {/* ==== Printed-cover chrome (decorative; not in Matrix mode) ==== */}
+      {!matrix && (
+        <>
+          {/* Spine rail — vertical microtype along the right edge, like
+              a magazine's spine text. Sits above the meta block's zone
+              on wide screens only. */}
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.1, duration: MOTION.duration.slow }}
+            className="absolute top-1/2 right-6 hidden -translate-y-1/2 font-display text-[0.65rem] font-semibold tracking-[0.3em] text-muted-foreground/70 uppercase [writing-mode:vertical-rl] lg:block"
+          >
+            {HERO_COVER.rail}
+          </motion.span>
+          {/* Film grain over everything — the layer that sells "printed
+              object". Bleeds past the edges so its jitter never shows
+              a seam; pointer-events-none scaffolding per the overlay
+              rule. */}
+          <div
+            aria-hidden
+            className="film-grain pointer-events-none absolute -inset-4"
+          />
+        </>
+      )}
     </>
   )
 }

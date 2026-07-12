@@ -135,7 +135,7 @@ export function PresetMixer() {
       <div
         role="img"
         aria-label={`Example photo with ${description} applied (stand-in image)`}
-        className="relative aspect-[3/2] overflow-hidden rounded-xl border border-border bg-card"
+        className="relative aspect-3/2 overflow-hidden rounded-xl border border-border bg-card"
       >
         <ResponsiveImage
           picture={V2_MIXER_IMAGES[""]}

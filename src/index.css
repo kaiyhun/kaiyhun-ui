@@ -314,6 +314,75 @@
   }
 }
 
+/* ---- Hero "printed cover" chrome (features/home/hero) ------------
+   The landing hero reads as a physical magazine cover: film grain,
+   press-misregistration inks on the wordmark, and a faux barcode.
+   All decorative (aria-hidden in JSX), all skipped in Matrix mode. */
+
+/* Film grain: tiled SVG fractal noise (inline data URI — self-
+   contained, no fetch), jittered between discrete positions like
+   projected film. Transform-only; the element bleeds beyond the hero
+   (-inset in JSX) so the jitter never exposes an edge. Static single
+   frame under reduced motion. Overlay blend keeps it a texture on the
+   photo's own light, not a gray veil. */
+.film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .film-grain {
+    animation: film-grain-jitter 0.8s steps(1, end) infinite;
+  }
+}
+@keyframes film-grain-jitter {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  12.5% {
+    transform: translate3d(-8px, 6px, 0);
+  }
+  25% {
+    transform: translate3d(6px, -10px, 0);
+  }
+  37.5% {
+    transform: translate3d(-12px, -4px, 0);
+  }
+  50% {
+    transform: translate3d(10px, 8px, 0);
+  }
+  62.5% {
+    transform: translate3d(-6px, 12px, 0);
+  }
+  75% {
+    transform: translate3d(12px, -6px, 0);
+  }
+  87.5% {
+    transform: translate3d(-10px, -12px, 0);
+  }
+}
+
+/* Press misregistration: the site's two inks (primary/accent) peeking
+   past the white plate, like a cover printed a hair off-register.
+   em-based offsets scale with the type; text-shadow has no layout
+   impact. Colors derive from the existing ink tokens — no new values. */
+.text-misregister {
+  text-shadow:
+    0.016em 0.012em 0 color-mix(in oklab, var(--primary) 45%, transparent),
+    -0.016em -0.012em 0 color-mix(in oklab, var(--accent) 40%, transparent);
+}
+
+/* Faux barcode: three offset hairline combs in currentColor make
+   convincingly irregular bars from pure CSS (no image). */
+.barcode {
+  background:
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 7px),
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 5px);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

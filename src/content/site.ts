@@ -7,6 +7,22 @@
  * docs/content-draft.md §6 and here when real.
  */
 
+/** Featured hero CTA — repoint label + route here as new content
+ *  becomes the priority (user request; current pick is a DRAFT). */
+export const HERO_CTA = {
+  label: "View the photography",
+  to: "/photography",
+} as const
+
+/** Hero "printed cover" microcopy (decorative chrome, aria-hidden in
+ *  the hero; DRAFTS pending review, content-draft §19). */
+export const HERO_COVER = {
+  /** Vertical spine rail along the right edge (wide screens). */
+  rail: "Photography · Drawing · Editing · Lab — one universe",
+  /** Issue tag under the faux barcode, bottom-right. */
+  issue: "v0.0.0",
+} as const
+
 export const SITE = {
   name: "Kaiyhun",
   shortName: "Kai",
