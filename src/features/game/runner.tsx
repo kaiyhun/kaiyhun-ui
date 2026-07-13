@@ -26,8 +26,13 @@
  *
  * Persistence: localStorage "run-best-score" (integer as string).
  */
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
+import {
+  ControlDeck,
+  type CapId,
+  type DeckLit,
+} from "@/features/game/control-deck"
 import {
   createGame,
   obstacleDigit,
@@ -66,6 +71,23 @@ const pad = (n: number) => String(n).padStart(5, "0")
 
 type OverlayStatus = "ready" | "playing" | "paused" | "over"
 
+const LIT_NONE: DeckLit = {
+  up: false,
+  down: false,
+  left: false,
+  right: false,
+  space: false,
+}
+
+/** Physical key → control-deck cap (for the lighting mirror). */
+const KEY_TO_CAP: Record<string, CapId> = {
+  ArrowUp: "up",
+  ArrowDown: "down",
+  ArrowLeft: "left",
+  ArrowRight: "right",
+  " ": "space",
+}
+
 export function Runner() {
   const theme = useTheme()
   const wrapperRef = useRef<HTMLDivElement>(null)
@@ -73,6 +95,26 @@ export function Runner() {
   const [overlay, setOverlay] = useState<OverlayStatus>("ready")
   const [finalScore, setFinalScore] = useState(0)
   const [isNewBest, setIsNewBest] = useState(false)
+
+  /* The arcade ControlDeck below the screen: `lit` mirrors held keys
+     AND held caps; `actionsRef` is the bridge the deck drives (the
+     game loop lives inside the effect). */
+  const [lit, setLit] = useState<DeckLit>(LIT_NONE)
+  const actionsRef = useRef({
+    primary: () => {},
+    move: (_dir: "left" | "right", _on: boolean) => {},
+  })
+  const setCapLit = useCallback((id: CapId, on: boolean) => {
+    setLit((prev) => (prev[id] === on ? prev : { ...prev, [id]: on }))
+  }, [])
+  const onCap = useCallback(
+    (id: CapId, pressed: boolean) => {
+      setCapLit(id, pressed)
+      if (id === "left" || id === "right") actionsRef.current.move(id, pressed)
+      else if (pressed) actionsRef.current.primary()
+    },
+    [setCapLit],
+  )
 
   /* One effect owns the whole game: canvas metrics, loop, listeners.
      `theme` is a dependency so a theme switch re-reads the tokens
@@ -236,8 +278,18 @@ export function Runner() {
       } else start()
     }
 
+    /* The ControlDeck drives the same actions through this bridge. */
+    actionsRef.current = {
+      primary: primaryAction,
+      move: (dir, on) => {
+        input[dir] = on
+      },
+    }
+
     const onKeyDown = (event: KeyboardEvent) => {
       const key = event.key
+      const cap = KEY_TO_CAP[key]
+      if (cap) setCapLit(cap, true) // light the deck's matching cap
       if (key === "ArrowLeft") {
         event.preventDefault()
         input.left = true
@@ -255,6 +307,8 @@ export function Runner() {
       }
     }
     const onKeyUp = (event: KeyboardEvent) => {
+      const cap = KEY_TO_CAP[event.key]
+      if (cap) setCapLit(cap, false)
       if (event.key === "ArrowLeft") input.left = false
       if (event.key === "ArrowRight") input.right = false
     }
@@ -282,53 +336,62 @@ export function Runner() {
       window.removeEventListener("keyup", onKeyUp)
       window.removeEventListener("blur", onBlur)
       canvas.removeEventListener("pointerdown", primaryAction)
+      actionsRef.current = { primary: () => {}, move: () => {} }
+      setLit(LIT_NONE)
     }
-  }, [theme])
+  }, [theme, setCapLit])
 
   return (
-    <div ref={wrapperRef} className="relative w-full">
-      <canvas
-        ref={canvasRef}
-        aria-label="Gravity-flip runner game. Space, up or down arrow, or tap: flip gravity. Left and right arrows: move."
-        className="w-full cursor-pointer rounded-xl border border-border"
-      />
-      {overlay !== "playing" && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-xl bg-background/70 text-center font-mono backdrop-blur-[2px]">
-          {overlay === "ready" && (
-            <>
-              <p className="text-2xl font-bold text-primary">run_</p>
+    <div className="w-full">
+      <div ref={wrapperRef} className="relative w-full">
+        <canvas
+          ref={canvasRef}
+          aria-label="Gravity-flip runner game. Space, up or down arrow, or tap: flip gravity. Left and right arrows: move."
+          className="w-full cursor-pointer rounded-xl border border-border"
+        />
+        {overlay !== "playing" && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-xl bg-background/70 text-center font-mono backdrop-blur-[2px]">
+            {overlay === "ready" && (
+              <>
+                <p className="text-2xl font-bold text-primary">run_</p>
+                <p className="text-sm text-muted-foreground">
+                  ↑ / ↓ / space / tap — flip gravity · ← → — move
+                </p>
+                <p className="text-xs tracking-[0.15em] text-muted-foreground uppercase">
+                  Press any of those to start
+                </p>
+              </>
+            )}
+            {overlay === "paused" && (
               <p className="text-sm text-muted-foreground">
-                ↑ / ↓ / space / tap — flip gravity · ← → — move
+                paused — press space to resume
               </p>
-              <p className="text-xs tracking-[0.15em] text-muted-foreground uppercase">
-                Press any of those to start
-              </p>
-            </>
-          )}
-          {overlay === "paused" && (
-            <p className="text-sm text-muted-foreground">
-              paused — press space to resume
-            </p>
-          )}
-          {overlay === "over" && (
-            <>
-              <p className="text-2xl font-bold text-primary">game over</p>
-              <p className="text-sm text-foreground">
-                score {pad(finalScore)}
-                {isNewBest && <span className="text-accent"> — new best!</span>}
-              </p>
-              <p className="text-xs tracking-[0.15em] text-muted-foreground uppercase">
-                R / enter / space — run it back
-              </p>
-            </>
-          )}
-        </div>
-      )}
-      {/* Results for screen readers (visual score lives on canvas) */}
-      <p aria-live="polite" className="sr-only">
-        {overlay === "over" &&
-          `Game over. Score ${finalScore}.${isNewBest ? " New best score." : ""}`}
-      </p>
+            )}
+            {overlay === "over" && (
+              <>
+                <p className="text-2xl font-bold text-primary">game over</p>
+                <p className="text-sm text-foreground">
+                  score {pad(finalScore)}
+                  {isNewBest && (
+                    <span className="text-accent"> — new best!</span>
+                  )}
+                </p>
+                <p className="text-xs tracking-[0.15em] text-muted-foreground uppercase">
+                  R / enter / space — run it back
+                </p>
+              </>
+            )}
+          </div>
+        )}
+        {/* Results for screen readers (visual score lives on canvas) */}
+        <p aria-live="polite" className="sr-only">
+          {overlay === "over" &&
+            `Game over. Score ${finalScore}.${isNewBest ? " New best score." : ""}`}
+        </p>
+      </div>
+
+      {/* The arcade control station — lights with the keys, plays on tap */}
+      <ControlDeck lit={lit} onCap={onCap} />
     </div>
   )
 }
