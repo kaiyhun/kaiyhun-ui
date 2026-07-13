@@ -31,7 +31,12 @@
  * of the choreography still runs.
  */
 import { Terminal } from "lucide-react"
-import { motion, useSpring } from "motion/react"
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  useSpring,
+} from "motion/react"
 import { useEffect } from "react"
 import { Link } from "react-router"
 
@@ -53,6 +58,7 @@ import { TypeOut } from "@/features/home/type-out"
 import { MEDIA } from "@/lib/media-queries"
 import { MOTION } from "@/lib/motion-tokens"
 import { toggleMatrixTheme, useMatrixTheme } from "@/lib/theme"
+import { useIdle } from "@/lib/use-idle"
 import { cn } from "@/lib/utils"
 
 /** Hero photo metadata comes from the content model, not re-written here. */
@@ -96,6 +102,154 @@ function HeroEnter({
     >
       {children}
     </motion.div>
+  )
+}
+
+/* ---- "The site dreams when you're away" (easter egg, Fable's #2,
+   2026-07-12, user-requested) -------------------------------------
+   After DREAM_AFTER_MS without ANY input, the hero starts dreaming;
+   the next input snaps it awake (fast AnimatePresence exit). Default
+   theme: an aurora — token-colored radial blobs breathing over the
+   photo (transform/opacity only, blend-mode is static). Matrix theme:
+   a signal glitch — scan bars, a vertical tear and a frame flash
+   flickering over the rain on long non-repeating prime-ish loops.
+   Skipped entirely under reduced motion (ambient animation), hidden
+   from AT (aria-hidden), pointer-events-none. The "dreaming…" whisper
+   is a DRAFT (content-draft §25). */
+const DREAM_AFTER_MS = 90_000
+
+/** Slow aurora blobs — colors are ink tokens at low alpha; `screen`
+ *  blend makes them read as light in the sky, not paint on the photo. */
+function AuroraDream() {
+  return (
+    <>
+      <motion.div
+        animate={{
+          x: [0, 70, -50, 0],
+          y: [0, -60, 40, 0],
+          scale: [1, 1.18, 0.94, 1],
+        }}
+        transition={{ duration: 37, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -top-1/4 -left-1/6 size-[85vmin] rounded-full bg-radial from-primary/50 via-primary/15 to-transparent mix-blend-screen"
+      />
+      <motion.div
+        animate={{
+          x: [0, -80, 50, 0],
+          y: [0, 50, -70, 0],
+          scale: [1, 0.92, 1.15, 1],
+        }}
+        transition={{ duration: 47, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/4 -right-1/6 size-[70vmin] rounded-full bg-radial from-accent/40 via-accent/10 to-transparent mix-blend-screen"
+      />
+      <motion.div
+        animate={{
+          x: [0, 60, -60, 0],
+          y: [0, -40, 60, 0],
+          scale: [1, 1.1, 0.9, 1],
+        }}
+        transition={{ duration: 59, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -bottom-1/4 left-1/4 size-[75vmin] rounded-full bg-radial from-chart-4/45 via-chart-4/10 to-transparent mix-blend-screen"
+      />
+    </>
+  )
+}
+
+/** Matrix nightmare: scan bars + a vertical tear + frame flashes on
+ *  long prime-ish loops so the pattern never visibly repeats. All
+ *  travel is translate (vh/vw), all flicker is opacity. */
+function GlitchDream() {
+  return (
+    <>
+      <motion.div
+        animate={{
+          y: [
+            "12vh",
+            "12vh",
+            "12vh",
+            "58vh",
+            "58vh",
+            "58vh",
+            "31vh",
+            "31vh",
+            "31vh",
+          ],
+          opacity: [0, 0.8, 0, 0, 0.6, 0, 0, 0.9, 0],
+        }}
+        transition={{
+          duration: 7.3,
+          times: [0, 0.04, 0.08, 0.42, 0.46, 0.5, 0.8, 0.84, 0.88],
+          repeat: Infinity,
+        }}
+        className="absolute inset-x-0 top-0 h-8 bg-primary/20"
+      />
+      <motion.div
+        animate={{
+          y: ["70vh", "70vh", "70vh", "22vh", "22vh", "22vh"],
+          opacity: [0, 0.7, 0, 0, 0.8, 0],
+        }}
+        transition={{
+          duration: 11.1,
+          times: [0, 0.03, 0.07, 0.55, 0.58, 0.62],
+          repeat: Infinity,
+        }}
+        className="absolute inset-x-0 top-0 h-2 bg-foreground/25"
+      />
+      <motion.div
+        animate={{
+          x: ["18vw", "18vw", "18vw", "73vw", "73vw", "73vw"],
+          opacity: [0, 0.6, 0, 0, 0.7, 0],
+        }}
+        transition={{
+          duration: 13.7,
+          times: [0, 0.02, 0.05, 0.6, 0.63, 0.67],
+          repeat: Infinity,
+        }}
+        className="absolute top-0 left-0 h-full w-1 bg-primary/30"
+      />
+      {/* the whole frame blinks like a dropped signal */}
+      <motion.div
+        animate={{ opacity: [0, 0, 0.12, 0, 0, 0.08, 0] }}
+        transition={{
+          duration: 17.9,
+          times: [0, 0.3, 0.32, 0.34, 0.75, 0.77, 0.79],
+          repeat: Infinity,
+        }}
+        className="absolute inset-0 bg-primary"
+      />
+    </>
+  )
+}
+
+/** Mounts the dream after true idleness; any input snaps it away. */
+function HeroDream({ matrix }: { matrix: boolean }) {
+  const idle = useIdle(DREAM_AFTER_MS)
+  const reduce = useReducedMotion()
+
+  if (reduce) return null
+  return (
+    <AnimatePresence>
+      {idle && (
+        <motion.div
+          aria-hidden
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0, transition: { duration: 0.35 } }}
+          transition={{ duration: 6, ease: "easeInOut" }}
+          className="pointer-events-none absolute inset-0 overflow-hidden"
+        >
+          {matrix ? <GlitchDream /> : <AuroraDream />}
+          {/* the whisper (DRAFT, content-draft §25) */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 4, duration: 5 }}
+            className="absolute top-24 right-6 font-mono text-xs tracking-[0.3em] text-muted-foreground/80 lowercase"
+          >
+            dreaming…
+          </motion.p>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
 
@@ -289,6 +443,10 @@ export function HomeHero() {
           />
         </>
       )}
+
+      {/* The site dreams when you're away (easter egg — see the
+          HeroDream block above) */}
+      <HeroDream matrix={matrix} />
     </>
   )
 }
