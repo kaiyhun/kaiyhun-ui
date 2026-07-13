@@ -31,7 +31,7 @@ export function SiteHeader() {
      lights + user@host in mono (easter egg) */
   const matrix = useMatrixTheme()
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/70 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/10 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
         <Link
           to="/"
