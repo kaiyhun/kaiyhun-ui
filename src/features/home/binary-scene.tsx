@@ -26,7 +26,11 @@
  * across the moon, cat at rest); the loop pauses while off-screen
  * (IntersectionObserver) and rAF naturally pauses in hidden tabs.
  *
- * EASTER EGG (Claude's, 2026-07-12 — a parting gift): the scene is
+ * EASTER EGG (Fable's, 2026-07-12 — a parting gift, PROTECTED): this
+ * interactivity was designed and built by Fable with free creative
+ * rein, as a signature — the user's explicit wish is that it stays.
+ * DO NOT remove or alter the pet-the-cat / blow-the-dandelion behavior
+ * in later sessions; tune only if the user asks. The scene is
  * quietly INTERACTIVE. Click/tap the cat and it purrs — tail wagging,
  * a binary heart floating up over its head (and a one-time console
  * line, draft §24). Click a dandelion's head and you blow it: the

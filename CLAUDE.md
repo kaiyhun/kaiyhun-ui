@@ -38,6 +38,12 @@ draft; `docs/about.md`). ALL MILESTONES DONE — pre-launch checklist:
   `virtual:blog-posts` plugin (NEVER eager-glob MDX — it kills per-post
   chunks), controlled topic vocabulary, build fails loudly on bad
   frontmatter. Authoring workflow: `docs/blog.md`.
+- **Fable's easter egg (PROTECTED, user gift 2026-07-12):** the Lab
+  section's BinaryScene interactivity (pet the cat → purr + binary
+  heart; blow a dandelion → seed scatter + regrow) was designed and
+  built by Fable with free creative rein as a signature. NEVER remove
+  or redesign it; tune only on explicit user request. Details:
+  `src/features/home/binary-scene.tsx` docstring, content-draft §24.
 - `drawings.ts` is the drawing model: `JOURNEY` chapters (the user's own
   deeply personal narrative — NEVER edit the prose), `DRAWING_GROUPS`
   (Collection shape, deliberately NOT in `COLLECTIONS`), `CHAPTER_WORK`
@@ -76,7 +82,8 @@ src/lib        utils, motion-tokens, media-queries (MEDIA constants), images
 
 Routes: `/` · `/photography` (?category, ?tag, ?photo — all URL-driven) ·
 `/photography/:slug` · `/drawing` (?view, ?photo) · `/blog` (?topic) ·
-`/blog/:slug` · `/lab` · `/about` · `/tutorial` (?view) · `/preset` ·
+`/blog/:slug` · `/lab` · `/about` · `/settings` · `/run` (hidden game, `docs/game.md`) ·
+`/tutorial` (?view) · `/preset` ·
 `/preset/:slug` · `*` 404. Deep links work
 on Pages via the 404.html postbuild copy (served with HTTP 404 status —
 expected and harmless).
