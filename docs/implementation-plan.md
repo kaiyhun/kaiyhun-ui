@@ -23,6 +23,23 @@
 > FINAL egg: the prompt is a working shell — cd <wing> navigates, ls /
 > help / clear / exit(wake) all real, unknown commands error in
 > character. Labelled input, a11y-clean.
+>
+> **Session 2026-07-09→12 (Fable):** /preset/v2 preview (unlinked;
+> layer-stack mixer over 16 pre-exported combos; shared PresetTimeline
+> extracted for /preset/2020 too) · /settings theme deck (fanned cards,
+> center card applies instantly; theme engine generalized to ThemeId +
+> localStorage; `:root, .theme-default` scope-class trick) · /run
+> hidden gravity-flip runner (pure engine + canvas shell + arcade
+> control deck with lit/playable keycaps; zsh `run`, console hint,
+> noindex) · hero: printed-cover chrome (grain/spine rail; barcode +
+> misregistration built then user-disabled), content-driven HERO_CTA,
+> HeroEnter fix (mount-driven — whileInView could permanently hide
+> hero content after back-nav) · homepage: touch snap mandatory→
+> proximity (free scroll + magnet), pager hygiene (anchor re-sync,
+> ctrl-zoom passthrough, deltaX guard, deltaMode normalization) ·
+> PROTECTED Fable eggs: BinaryScene pet-the-cat / blow-the-dandelions
+> + hero idle "dreaming" (aurora / Matrix glitch, 90s). Handover:
+> docs/handover-2026-07-12.md.
 > **M11 done (2026-07-08), awaiting user review + commit — SITE
 > COMPLETE pending checklist.** /about (bio + goals timeline + contact +
 > colophon — ALL PROSE DRAFT, content-draft §16) + nav/sitemap. Full

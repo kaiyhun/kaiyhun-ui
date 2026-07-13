@@ -14,9 +14,15 @@ Presets: /preset + /preset/2020 pack detail, `docs/presets.md`; both
 carry flagged placeholders),
 Lab (ENGINE LIVE — /lab projects+papers, ALL MOCK content until user
 swaps real repos/papers; `docs/lab.md`), About (LIVE — all prose is
-draft; `docs/about.md`). ALL MILESTONES DONE — pre-launch checklist:
+draft; `docs/about.md`), Settings (LIVE — /settings theme deck,
+`docs/settings.md`), /run (hidden game, `docs/game.md`), /preset/v2
+(WIP by design, unlinked). ALL MILESTONES DONE — pre-launch checklist:
 `docs/audit-m11.md`. Milestone truth:
-`docs/implementation-plan.md`.
+`docs/implementation-plan.md`. Latest session handover:
+`docs/handover-2026-07-12.md`.
+**⚠ `docs/` is currently git-ignored (user decision pending)** — some
+docs (content-draft, game, settings, audits, handover) exist ONLY
+locally; don't assume a fresh clone has them.
 
 ## Identity & content rules
 
@@ -166,6 +172,9 @@ expected and harmless).
 - `docs/presets.md` — preset rows, rotating backdrop, pack detail model
 - `docs/audit-m11.md` — audit findings + THE pre-launch checklist
 - `docs/content-draft.md` — ALL approved copy/tags/curation (edit here first)
+- `docs/settings.md` — /settings theme deck + theme engine/scope classes
+- `docs/game.md` — /run design source of truth (physics, tuning, deck)
+- `docs/handover-2026-07-12.md` — latest session handover (start here)
 
 ## Commands
 

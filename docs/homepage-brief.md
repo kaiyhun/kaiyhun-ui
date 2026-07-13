@@ -250,3 +250,21 @@ Every milestone still ships deploy-green with docs updated.
    alt text — user writes, or reviews Claude-drafted proposals
 4. **Naming**: "Lab" vs "Research" vs other for the technical pillar
 5. Explicit **go-ahead** for this brief + revised milestones
+
+
+## Addendum 2026-07-12 — hero chrome + dreaming (session handover)
+
+Hero gained the "printed cover" treatment: animated film grain
+(`.film-grain`, index.css) and a vertical spine rail; the barcode and
+wordmark ink-misregistration were built and then DISABLED by the user
+(commented in hero.tsx, utilities kept). CTA row: primary button is
+content-driven (`HERO_CTA` in content/site.ts — repoint as content
+priorities change) + the Matrix toggle. Hero content animates via
+HeroEnter (MOUNT-driven — never use whileInView for hero content; it
+can permanently hide the CTAs after back-navigation).
+
+Hero also carries Fable's PROTECTED idle easter egg: after 90s of no
+input the hero "dreams" (default theme: token-colored aurora blobs;
+Matrix: signal-glitch bars) and snaps awake on any input — see the
+HeroDream block in hero.tsx and content-draft §25. Skipped under
+reduced motion.
