@@ -165,7 +165,7 @@ export function HomeHero() {
             )}
           >
             <span aria-hidden className="text-primary">
-              00
+              v0.0.0
             </span>
             <motion.span
               aria-hidden
@@ -179,7 +179,7 @@ export function HomeHero() {
               className="h-px w-10 origin-left bg-muted-foreground/40"
             />
             {/* DRAFT label (content-draft §19) */}
-            My Porfolio
+            Porfolio
           </p>
         </HeroEnter>
 
@@ -195,10 +195,10 @@ export function HomeHero() {
             }}
             className={cn(
               "text-display-2xl text-wordmark",
-              matrix ? "font-mono" : "text-misregister",
+              matrix ? "font-mono" : "font-medium",
             )}
           >
-            {SITE.name}
+            {SITE.name.toUpperCase()}
           </motion.h1>
         </div>
 
@@ -222,7 +222,7 @@ export function HomeHero() {
           <Button asChild size="lg">
             <Link to={HERO_CTA.to}>
               {HERO_CTA.label}
-              <ArrowRight data-icon="inline-end" aria-hidden />
+              {/* <ArrowRight data-icon="inline-end" aria-hidden /> */}
             </Link>
           </Button>
           {/* The rabbit hole (labels: content-draft §17) */}
@@ -250,14 +250,14 @@ export function HomeHero() {
         className="absolute right-6 bottom-10 hidden lg:block"
       >
         {/* Faux barcode + issue tag — part of the printed-cover chrome */}
-        {!matrix && (
+        {/* {!matrix && (
           <div aria-hidden className="mb-3 flex flex-col items-end gap-1.5">
             <span className="barcode h-7 w-28 text-foreground/60" />
             <span className="font-display text-[0.65rem] font-semibold tracking-[0.15em] text-muted-foreground/80 uppercase">
               {HERO_COVER.issue}
             </span>
           </div>
-        )}
+        )} */}
         <p className="text-right font-display text-xs font-semibold tracking-[0.15em] text-muted-foreground uppercase">
           {PHOTO_COUNT} photographs · {DRAWING_SEQUENCE.length} drawings ·{" "}
           {POSTS.length} posts

@@ -10,7 +10,7 @@
 /** Featured hero CTA — repoint label + route here as new content
  *  becomes the priority (user request; current pick is a DRAFT). */
 export const HERO_CTA = {
-  label: "View the photography",
+  label: "See my art",
   to: "/photography",
 } as const
 
