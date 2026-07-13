@@ -207,7 +207,7 @@ export default function Home() {
         {/* Legibility scrim — heavier at the bottom where the text sits */}
         <div
           aria-hidden
-          className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/25"
+          className="absolute inset-0 bg-linear-to-t from-background via-background/60 to-background/25"
         />
         <div className="relative mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>

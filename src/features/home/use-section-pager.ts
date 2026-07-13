@@ -43,6 +43,19 @@
  * `wheel`, never keys). The escape hatch is simply not attaching the
  * wheel listener.
  *
+ * Wheel-event hygiene (audit 2026-07-12):
+ * - Because keys/scrollbar scroll NATIVELY, the anchor re-syncs to the
+ *   section under the viewport midpoint on every unlocked scroll event —
+ *   otherwise a PageDown three sections deep left a stale anchor and the
+ *   next wheel "turned" backwards to it. (Safe: our own clamped scrolls
+ *   never move the midpoint off the anchor, so re-sync is a no-op there.)
+ * - ctrl+wheel is pinch-zoom — never preventDefault it.
+ * - deltaX-dominant events (Magic Mouse side swipes) pass through: their
+ *   deltaY is noise, not vertical intent.
+ * - deltaY is normalized from deltaMode (Firefox/Windows wheel mice report
+ *   LINES, rarely PAGES): line ≈ 40px, page ≈ viewport — without this,
+ *   interior scrolling crawled at 3px/tick and turns needed ~20 ticks.
+ *
  * Returns `goTo(id)` (Scroll-to menu — same fade turn, instant under
  * reduced motion), the live `activeId` (menu highlight, pinned during a
  * turn), and `moreBelow` (any page content below the viewport — drives the
@@ -147,6 +160,11 @@ export function useSectionPager() {
         accumRef.current = MOMENTUM_LOCK
         settleRef.current = null
         setMoreBelow(hasMoreBelow(els))
+        /* A turn can be CANCELLED before its mid-jump (scrollbar grab,
+           key press) — re-sync the anchor to wherever we actually are so
+           the next wheel doesn't turn relative to a page never reached. */
+        anchorRef.current = currentIndex(els)
+        setActiveId(els[anchorRef.current]?.id ?? null)
       }
       settleRef.current = settle
 
@@ -201,7 +219,11 @@ export function useSectionPager() {
       const list = sections()
       setMoreBelow(hasMoreBelow(list))
       if (lockedRef.current) return // activeId pinned during a turn
-      setActiveId(list[currentIndex(list)]?.id ?? null)
+      /* Keys and the scrollbar scroll natively — follow them. Our own
+         clamped wheel scrolls never move the midpoint off the anchor,
+         so for wheel input this is a no-op. */
+      anchorRef.current = currentIndex(list)
+      setActiveId(list[anchorRef.current]?.id ?? null)
     }
 
     // Escape hatch: no wheel paging for touch / keyboard / reduced-motion.
@@ -215,7 +237,17 @@ export function useSectionPager() {
     }
 
     const onWheel = (event: WheelEvent) => {
-      const dy = event.deltaY
+      // Pinch-zoom (ctrl+wheel) and sideways swipes are not paging intent.
+      if (event.ctrlKey) return
+      if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return
+      // Normalize to pixels: deltaMode 1 = lines (~40px), 2 = pages.
+      const unit =
+        event.deltaMode === 1
+          ? 40
+          : event.deltaMode === 2
+            ? window.innerHeight
+            : 1
+      const dy = event.deltaY * unit
       const mag = Math.abs(dy)
       if (lockedRef.current) {
         event.preventDefault()

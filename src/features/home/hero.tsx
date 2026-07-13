@@ -30,7 +30,7 @@
  * canvas), fonts go mono, the tagline types itself (TypeOut) — the rest
  * of the choreography still runs.
  */
-import { ArrowRight, Terminal } from "lucide-react"
+import { Terminal } from "lucide-react"
 import { motion, useSpring } from "motion/react"
 import { useEffect } from "react"
 import { Link } from "react-router"
@@ -179,7 +179,7 @@ export function HomeHero() {
               className="h-px w-10 origin-left bg-muted-foreground/40"
             />
             {/* DRAFT label (content-draft §19) */}
-            Porfolio
+            Portfolio
           </p>
         </HeroEnter>
 
