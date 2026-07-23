@@ -5,9 +5,10 @@
  * docs/homepage-brief.md); more links land as milestones ship.
  * Backdrop-blurred so the cinematic imagery reads through it.
  * Below `sm` the inline links collapse into the full-screen
- * MobileMenu (hamburger) — same link list, one source. The /settings
- * gear sits apart from the wing links at the right edge (utility, not
- * a wing) and also rides along inside the mobile menu.
+ * MobileMenu (hamburger) — same link list, one source. Utility icons
+ * (the /settings gear now; room for more) sit at the right END of the
+ * primary nav, split from the wing links by a hairline rule; they also
+ * ride along inside the mobile menu.
  */
 import { Settings as SettingsIcon } from "lucide-react"
 import { Link, NavLink } from "react-router"
@@ -55,40 +56,56 @@ export function SiteHeader() {
             {matrix ? "kaiyhun@matrix: ~" : SITE.name}
           </span>
         </Link>
-        <nav aria-label="Primary" className="hidden items-center gap-6 sm:flex">
-          {NAV_LINKS.map((link) => (
+        {/* Right cluster: wing links, a hairline divider, then utility
+            icons — one group aligned to the right edge. */}
+        <div className="flex items-center gap-6">
+          <nav
+            aria-label="Primary"
+            className="hidden items-center gap-6 sm:flex"
+          >
+            {NAV_LINKS.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  cn(
+                    "font-display text-xs font-semibold tracking-[0.15em] uppercase transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50",
+                    matrix && "font-mono",
+                    isActive ? "text-primary" : "text-muted-foreground",
+                  )
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          {/* wing links | utility icons — desktop only (no links below sm) */}
+          <span
+            aria-hidden
+            className="hidden h-4 w-px bg-muted-foreground/30 sm:block"
+          />
+
+          {/* Utility icons: the /settings gear now, room for more; the
+              mobile hamburger tucks in here too (hidden on sm+). */}
+          <div className="flex items-center gap-4">
             <NavLink
-              key={link.to}
-              to={link.to}
+              to="/settings"
+              aria-label="Settings"
+              title="Settings"
               className={({ isActive }) =>
                 cn(
-                  "font-display text-xs font-semibold tracking-[0.15em] uppercase transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50",
-                  matrix && "font-mono",
+                  "transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50",
                   isActive ? "text-primary" : "text-muted-foreground",
                 )
               }
             >
-              {link.label}
+              <SettingsIcon aria-hidden className="size-4" />
             </NavLink>
-          ))}
-        </nav>
-        <div className="flex items-center gap-4">
-          <NavLink
-            to="/settings"
-            aria-label="Settings"
-            title="Settings"
-            className={({ isActive }) =>
-              cn(
-                "transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50",
-                isActive ? "text-primary" : "text-muted-foreground",
-              )
-            }
-          >
-            <SettingsIcon aria-hidden className="size-4" />
-          </NavLink>
-          <MobileMenu
-            links={[...NAV_LINKS, { label: "Settings", to: "/settings" }]}
-          />
+            <MobileMenu
+              links={[...NAV_LINKS, { label: "Settings", to: "/settings" }]}
+            />
+          </div>
         </div>
       </div>
     </header>
