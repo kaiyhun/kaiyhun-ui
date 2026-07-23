@@ -26,3 +26,6 @@ dist-ssr
 # Raw image originals (masters in src/assets are derived from these)
 originals/
 .playwright-mcp/
+
+# Docs live in the project wiki, not the repo
+docs/

@@ -4,8 +4,10 @@ package-lock.json
 src/assets/
 # Raw post drafts at the repo root (converted into src/content/posts/)
 blog_*.md
-docs/tutorial.md
-docs/preset.md
+
+# Docs live in the project WIKI, not the repo — never format-checked
+# here, so CI passes whether or not a docs/ folder exists locally.
+docs/
 
 # Playwright MCP scratch output
 .playwright-mcp/
