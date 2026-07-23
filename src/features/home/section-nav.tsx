@@ -7,7 +7,7 @@
  * and ScrollHint. Entries smooth-scroll to their sections via native
  * anchors (sections carry scroll-mt so the fixed header never covers
  * their headings). Collapsible to a small round button; the choice
- * persists for the session.
+ * persists ACROSS visits (localStorage) so a collapse sticks.
  *
  * Homepage-only by design — as wings ship (drawings, lab, blog…) the
  * page just adds entries to its `sections` prop.
@@ -22,6 +22,16 @@ import { cn } from "@/lib/utils"
 /** Scroll depth (px) after which the menu appears. */
 const SHOW_AFTER = 160
 const COLLAPSE_KEY = "home-section-nav-collapsed"
+
+/** Persisted collapse choice — localStorage so it survives ACROSS visits
+ *  (not just the tab session), guarded for private-mode storage throws. */
+function readCollapsed(): boolean {
+  try {
+    return localStorage.getItem(COLLAPSE_KEY) === "1"
+  } catch {
+    return false
+  }
+}
 
 export interface HomeSection {
   /** DOM id of the target section element. */
@@ -44,9 +54,7 @@ export function SectionNav({
   onNavigate,
 }: SectionNavProps) {
   const [scrolled, setScrolled] = useState(false)
-  const [collapsed, setCollapsed] = useState(
-    () => sessionStorage.getItem(COLLAPSE_KEY) === "1",
-  )
+  const [collapsed, setCollapsed] = useState(readCollapsed)
 
   // Plain window listener (passive), checked once on mount too — so
   // arriving mid-page (e.g. via a #hash link) shows the nav immediately
@@ -59,7 +67,11 @@ export function SectionNav({
 
   const setCollapsedPersistent = (next: boolean) => {
     setCollapsed(next)
-    sessionStorage.setItem(COLLAPSE_KEY, next ? "1" : "0")
+    try {
+      localStorage.setItem(COLLAPSE_KEY, next ? "1" : "0")
+    } catch {
+      // storage unavailable (private mode) — applies this session only
+    }
   }
 
   return (
