@@ -7,6 +7,10 @@
  * page-turn the Scroll-to menu uses, so it fades on desktop and lands on
  * the snap grid on touch).
  *
+ * Monitor screens only (`hidden lg:flex`) — below lg the homepage drops
+ * the chevron (user decision) and the social icons move up to the
+ * SectionNav's Y line instead.
+ *
  * The centering wrapper is pointer-events-none scaffolding; only the
  * button takes events (overlay rule). The bob is transform-only;
  * `MotionConfig reducedMotion="user"` stills it (the opacity fade in/out
@@ -37,8 +41,9 @@ export function ScrollHint({ show, onAdvance }: ScrollHintProps) {
           exit={{ opacity: 0 }}
           transition={{ duration: MOTION.duration.base }}
           // z-30 keeps it under the SectionNav menu (z-40); centered, so
-          // it never overlaps the corner chrome
-          className="pointer-events-none fixed inset-x-0 bottom-4 z-30 flex justify-center"
+          // it never overlaps the corner chrome. hidden lg:flex — no
+          // chevron below lg (mobile drops it; see docstring).
+          className="pointer-events-none fixed inset-x-0 bottom-4 z-30 hidden justify-center lg:flex"
         >
           <motion.span
             animate={{ y: [0, BOB_DISTANCE, 0] }}

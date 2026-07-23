@@ -1,19 +1,29 @@
 /**
- * SocialRail — the homepage's floating social icons (bottom-center,
- * stacked just above the scroll chevron).
+ * SocialRail — the homepage's floating social ICONS, centered along the
+ * bottom.
  *
  * The homepage renders NO site footer (gated in app.tsx), so this rail
  * IS the home's social presence: bare icon buttons hovering over the
  * sections (user request — no pill chrome, just spaced icons).
  *
+ * Placement (2026 refactor — `activeId` from the pager):
+ * - `lg`+ non-hero sections: bottom-14 (its long-standing spot, above
+ *   the scroll chevron) — "keep the icon look where it is".
+ * - `lg`+ HERO: HIDDEN — the hero swaps to the rotated vertical social
+ *   string on its right edge (hero.tsx). `activeId == null` counts as
+ *   hero so there's no flash before the pager reports the first section.
+ * - below `lg` (mobile/tablet): the icons move up to the SectionNav's Y
+ *   line (bottom-4 / sm:bottom-6) and stay CENTERED (user decision), on
+ *   every section — there is no scroll chevron there to sit above.
+ *
  * Brand glyphs are inline SVG paths (simple-icons shapes, CC0) because
  * lucide dropped brand icons — no new dependency; Email reuses lucide
  * Mail. The Twitter entry draws the X glyph (the URL is x.com). Links
  * and labels come from the content model (SITE.socials); icon-only
- * anchors carry aria-labels. Faint-until-hover like the SectionNav. The
- * full-width centering wrapper is pointer-events-none scaffolding — only
- * the links take events (overlay rule). The site-wide FOOTER keeps its
- * text links — this rail is homepage chrome, not a replacement.
+ * anchors carry aria-labels. The full-width centering wrapper is
+ * pointer-events-none scaffolding — only the links take events (overlay
+ * rule). The site-wide FOOTER keeps its text links — this rail is
+ * homepage chrome, not a replacement.
  *
  * Matrix mode: hidden — the terminal chrome owns the bottom edge.
  */
@@ -22,6 +32,7 @@ import type { ReactNode } from "react"
 
 import { SITE } from "@/content/site"
 import { useMatrixTheme } from "@/lib/theme"
+import { cn } from "@/lib/utils"
 
 /** simple-icons path data (24×24, CC0). */
 const BRAND_PATHS: Record<string, string> = {
@@ -54,18 +65,32 @@ function iconFor(label: string): ReactNode {
   return <Mail aria-hidden className="size-5" />
 }
 
-export function SocialRail() {
+interface SocialRailProps {
+  /** Active section id (from the pager) — the hero hides the icons at
+   *  lg in favour of hero.tsx's vertical social string. */
+  activeId?: string | null
+}
+
+export function SocialRail({ activeId }: SocialRailProps) {
   /* Matrix mode parks the zsh prompt bottom-left — yield the corner */
   const matrix = useMatrixTheme()
   if (matrix) return null
+
+  /* null activeId = fresh load at the top = hero (no icon flash) */
+  const onHero = !activeId || activeId === "hero"
 
   return (
     <nav
       aria-label="Social links"
       // Fully opaque ON PURPOSE: the old faint-until-hover treatment let
       // the binary scene's digits bleed through the glyphs and read as
-      // painting OVER the icons. bottom-14 clears the chevron at bottom-4.
-      className="pointer-events-none fixed inset-x-0 bottom-14 z-30 flex justify-center"
+      // painting OVER the icons. Below lg the icons sit at the nav's Y
+      // (bottom-4/6); at lg they rise to bottom-14 (above the chevron),
+      // and the hero hides them entirely (vertical string takes over).
+      className={cn(
+        "pointer-events-none fixed inset-x-0 bottom-4 z-30 flex justify-center sm:bottom-6 lg:bottom-14",
+        onHero && "lg:hidden",
+      )}
     >
       <ul className="pointer-events-auto flex items-center gap-2">
         {SITE.socials.map((social) => (

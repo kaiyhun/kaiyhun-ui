@@ -285,13 +285,17 @@ export default function Home() {
         </section>
       )}
 
-      {/* Floating social icons — the paged homepage rarely reaches the
-          real footer, so its links surface here (bottom-center, above
-          the chevron) */}
-      <SocialRail />
+      {/* Floating social icons (no footer on the paged home). Position
+          is section- and breakpoint-aware: bottom-14 on lg non-hero
+          sections, hidden on the lg hero (the hero's own vertical social
+          string takes over), and up at the SectionNav's Y line, still
+          centered, below lg. */}
+      <SocialRail activeId={pager.activeId} />
 
-      {/* Bobbing chevron — visible while more paged content sits below;
-          clicking it turns to the next section */}
+      {/* Bobbing chevron (monitor only — hidden below lg): visible while
+          more paged content sits below; clicking it turns to the next
+          section. On lg it shares the bottom line with the hero's
+          counts (chevron centered, counts right). */}
       <ScrollHint show={pager.moreBelow} onAdvance={advance} />
 
       {/* Floating section menu — appears once the visitor scrolls; its

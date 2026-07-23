@@ -5,10 +5,13 @@
  * Composition: a bottom-anchored editorial stack over the art-directed
  * falls backdrop — numbered eyebrow ("00 —— PERSONAL UNIVERSE", DRAFT
  * label, content-draft §19), the colossal wordmark (text-display-2xl, a
- * token added for this single use), the approved tagline, the CTA row,
- * and a live meta line (REAL counts from the content model) parked
- * bottom-right on wide screens. The bottom padding deliberately clears
- * the floating social rail + scroll chevron parked bottom-center.
+ * token added for this single use), the approved tagline, and the CTA
+ * row. On wide screens (lg): a live meta line (REAL counts) shares the
+ * bottom row with the centered scroll chevron (counts right), and the
+ * SOCIAL LINKS render as a single rotated vertical string down the
+ * right edge — replacing the old magazine spine (user request). Below
+ * lg the icon SocialRail carries the socials instead. The bottom
+ * padding deliberately clears the floating chrome parked bottom-center.
  *
  * Choreography — the one documented deviation from the Reveal-primitives
  * rule (a signature intro; still tokens-only, transform/opacity-only):
@@ -51,7 +54,7 @@ import { Button } from "@/components/ui/button"
 import { PHOTO_COUNT, requireCollection } from "@/content/collections"
 import { DRAWING_SEQUENCE } from "@/content/drawings"
 import { POSTS } from "@/content/posts"
-import { HERO_COVER, HERO_CTA, SITE } from "@/content/site"
+import { HERO_CTA, SITE } from "@/content/site"
 import { ArtDirectedBackdrop } from "@/features/home/art-directed-backdrop"
 import { MatrixRain } from "@/features/home/matrix-rain"
 import { TypeOut } from "@/features/home/type-out"
@@ -393,15 +396,19 @@ export function HomeHero() {
       </div>
 
       {/* Live meta — real counts from the content model (noun copy is a
-          DRAFT, content-draft §19). Wide screens only; sits clear of the
-          centered social rail / chevron. Plain opacity fade, NOT Reveal:
-          its slide-up offset pushes this bottom-hugging element below
-          the viewport, so the in-view trigger never fires */}
+          DRAFT, content-draft §19). Wide screens only; parked bottom-
+          RIGHT on the same line as the centered scroll chevron (the
+          h-9/items-center matches the chevron button's height so the two
+          read as one row). Plain opacity fade, NOT Reveal: its slide-up
+          offset pushes this bottom-hugging element below the viewport,
+          so the in-view trigger never fires. Hero-scoped on purpose
+          (user decision) — it scrolls away with the hero; the chevron is
+          fixed and continues across sections. */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.9, duration: MOTION.duration.slow }}
-        className="absolute right-6 bottom-10 hidden lg:block"
+        className="absolute right-6 bottom-4 hidden h-9 items-center lg:flex"
       >
         {/* Faux barcode + issue tag — part of the printed-cover chrome */}
         {/* {!matrix && (
@@ -421,18 +428,40 @@ export function HomeHero() {
       {/* ==== Printed-cover chrome (decorative; not in Matrix mode) ==== */}
       {!matrix && (
         <>
-          {/* Spine rail — vertical microtype along the right edge, like
-              a magazine's spine text. Sits above the meta block's zone
-              on wide screens only. */}
-          <motion.span
-            aria-hidden
+          {/* Social spine — the site's socials as a SINGLE rotated
+              vertical string down the right edge (user request), taking
+              over the magazine spine's exact treatment (writing-mode,
+              tracking, muted ink). Each name is a real link. lg-only:
+              below lg (and on every other section) the icon SocialRail
+              carries the socials instead. Labels come from SITE.socials
+              — "Twitter" renders as text; change to "X" in site.ts if
+              desired (content-draft). */}
+          <motion.nav
+            aria-label="Social links"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.1, duration: MOTION.duration.slow }}
             className="absolute top-1/2 right-6 hidden -translate-y-1/2 font-display text-[0.65rem] font-semibold tracking-[0.3em] text-muted-foreground/70 uppercase [writing-mode:vertical-rl] lg:block"
           >
-            {HERO_COVER.rail}
-          </motion.span>
+            {SITE.socials.map((social, index) => (
+              <span key={social.label}>
+                {index > 0 && (
+                  <span aria-hidden className="text-muted-foreground/40">
+                    {" · "}
+                  </span>
+                )}
+                <a
+                  href={social.href}
+                  {...(social.href.startsWith("mailto:")
+                    ? {}
+                    : { target: "_blank", rel: "noreferrer" })}
+                  className="transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-2 focus-visible:ring-ring/50"
+                >
+                  {social.label}
+                </a>
+              </span>
+            ))}
+          </motion.nav>
           {/* Film grain over everything — the layer that sells "printed
               object". Bleeds past the edges so its jitter never shows
               a seam; pointer-events-none scaffolding per the overlay
