@@ -11,14 +11,17 @@
  * the chevron (user decision) and the social icons move up to the
  * SectionNav's Y line instead.
  *
- * The centering wrapper is pointer-events-none scaffolding; only the
- * button takes events (overlay rule). The bob is transform-only;
- * `MotionConfig reducedMotion="user"` stills it (the opacity fade in/out
- * and the click behavior remain).
+ * Appears/disappears via the shared FLOATING_REVEAL (fade + slide, same
+ * as the SocialRail and SectionNav). The centering wrapper is
+ * pointer-events-none scaffolding; only the button takes events (overlay
+ * rule). The bob is a separate inner transform; `MotionConfig
+ * reducedMotion="user"` stills both the bob and the reveal's slide,
+ * leaving the opacity fade + the click behavior.
  */
 import { ChevronDown } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 
+import { FLOATING_REVEAL } from "@/features/home/floating-reveal"
 import { MOTION } from "@/lib/motion-tokens"
 
 interface ScrollHintProps {
@@ -36,10 +39,7 @@ export function ScrollHint({ show, onAdvance }: ScrollHintProps) {
     <AnimatePresence>
       {show && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: MOTION.duration.base }}
+          {...FLOATING_REVEAL}
           // z-30 keeps it under the SectionNav menu (z-40); centered, so
           // it never overlaps the corner chrome. hidden lg:flex — no
           // chevron below lg (mobile drops it; see docstring).
@@ -59,7 +59,7 @@ export function ScrollHint({ show, onAdvance }: ScrollHintProps) {
               aria-label="Scroll to the next section"
               // Same background-colored halo as the social rail — keeps
               // the glyph readable over busy backdrop art
-              className="pointer-events-auto block rounded-full p-2 text-foreground/75 [filter:drop-shadow(0_0_6px_var(--background))] transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
+              className="pointer-events-auto block rounded-full p-2 text-foreground/75 filter-[drop-shadow(0_0_6px_var(--background))] transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <ChevronDown aria-hidden className="size-5" />
             </button>

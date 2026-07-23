@@ -1,11 +1,13 @@
 /**
  * SectionNav — the homepage's floating "Scroll to" section menu.
  *
- * Hidden at the top of the page; fades in (bottom-right, deliberately
- * faint until hovered) once the visitor starts scrolling. Entries smooth-
- * scroll to their sections via native anchors (sections carry scroll-mt
- * so the fixed header never covers their headings). Collapsible to a
- * small round button; the choice persists for the session.
+ * Hidden at the top of the page; fades + slides in (bottom-right) once
+ * the visitor starts scrolling, and back out at the top — via the shared
+ * FLOATING_REVEAL, so it appears/disappears exactly like the SocialRail
+ * and ScrollHint. Entries smooth-scroll to their sections via native
+ * anchors (sections carry scroll-mt so the fixed header never covers
+ * their headings). Collapsible to a small round button; the choice
+ * persists for the session.
  *
  * Homepage-only by design — as wings ship (drawings, lab, blog…) the
  * page just adds entries to its `sections` prop.
@@ -14,7 +16,7 @@ import { ArrowUpDown, Minus } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useState } from "react"
 
-import { MOTION } from "@/lib/motion-tokens"
+import { FLOATING_REVEAL } from "@/features/home/floating-reveal"
 import { cn } from "@/lib/utils"
 
 /** Scroll depth (px) after which the menu appears. */
@@ -65,15 +67,11 @@ export function SectionNav({
       {scrolled && (
         <motion.nav
           aria-label="Scroll to"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 16 }}
-          transition={{
-            duration: MOTION.duration.base,
-            ease: MOTION.ease.outExpo,
-          }}
-          // Faint until interacted with — present, not demanding
-          className="fixed right-4 bottom-4 z-40 opacity-70 transition-opacity duration-(--motion-duration-fast) focus-within:opacity-100 hover:opacity-100 sm:right-6 sm:bottom-6"
+          {...FLOATING_REVEAL}
+          // Fully opaque when shown (matches the rail). NO CSS opacity
+          // transition here — a `transition-opacity` used to desync the
+          // exit fade (150ms) from the FLOATING_REVEAL slide (300ms).
+          className="fixed right-4 bottom-4 z-40 sm:right-6 sm:bottom-6"
         >
           {collapsed ? (
             <button

@@ -9,9 +9,12 @@
  * Placement (2026 refactor — `activeId` from the pager):
  * - `lg`+ non-hero sections: bottom-14 (its long-standing spot, above
  *   the scroll chevron) — "keep the icon look where it is".
- * - `lg`+ HERO: HIDDEN — the hero swaps to the rotated vertical social
- *   string on its right edge (hero.tsx). `activeId == null` counts as
- *   hero so there's no flash before the pager reports the first section.
+ * - `lg`+ HERO: hidden — the hero swaps to the rotated vertical social
+ *   string on its right edge (hero.tsx). Rather than pop via `display`,
+ *   the icons fade + slide (opacity/translate transition — the same
+ *   entrance as the SectionNav) as you turn off/onto the hero.
+ *   `activeId == null` counts as hero so there's no flash before the
+ *   pager reports the first section.
  * - below `lg` (mobile/tablet): the icons move up to the SectionNav's Y
  *   line (bottom-4 / sm:bottom-6) and stay CENTERED (user decision), on
  *   every section — there is no scroll chevron there to sit above.
@@ -82,17 +85,28 @@ export function SocialRail({ activeId }: SocialRailProps) {
   return (
     <nav
       aria-label="Social links"
-      // Fully opaque ON PURPOSE: the old faint-until-hover treatment let
-      // the binary scene's digits bleed through the glyphs and read as
-      // painting OVER the icons. Below lg the icons sit at the nav's Y
-      // (bottom-4/6); at lg they rise to bottom-14 (above the chevron),
-      // and the hero hides them entirely (vertical string takes over).
+      // Fully opaque ON PURPOSE (once shown): the faint-until-hover
+      // treatment let the binary scene's digits bleed through the
+      // glyphs. Below lg the icons sit at the nav's Y (bottom-4/6); at
+      // lg they rise to bottom-14 (above the chevron). On the lg hero
+      // they fade + slide OUT (the vertical string takes over). This CSS
+      // transition mirrors FLOATING_REVEAL (the Motion chrome's shared
+      // fade + 16px slide, duration-base + ease-out-expo) so all the
+      // floating chrome appears/disappears the same — CSS here only
+      // because the show/hide is breakpoint-dependent. Reduced motion
+      // keeps the fade, drops the slide (motion-safe on the translate).
       className={cn(
-        "pointer-events-none fixed inset-x-0 bottom-4 z-30 flex justify-center sm:bottom-6 lg:bottom-14",
-        onHero && "lg:hidden",
+        "pointer-events-none fixed inset-x-0 bottom-4 z-30 flex translate-y-0 justify-center opacity-100 transition duration-(--motion-duration-base) ease-out-expo sm:bottom-6 lg:bottom-14",
+        onHero && "lg:opacity-0 motion-safe:lg:translate-y-4",
       )}
     >
-      <ul className="pointer-events-auto flex items-center gap-2">
+      <ul
+        className={cn(
+          "pointer-events-auto flex items-center gap-2",
+          // While faded out on the lg hero, don't capture clicks
+          onHero && "lg:pointer-events-none",
+        )}
+      >
         {SITE.socials.map((social) => (
           <li key={social.label}>
             <a
@@ -104,7 +118,7 @@ export function SocialRail({ activeId }: SocialRailProps) {
               // The drop-shadow is a background-colored halo — it pushes
               // busy backdrop art (binary digits) back from the glyph
               // edges without reintroducing a pill container
-              className="block rounded-full p-2 text-foreground/75 [filter:drop-shadow(0_0_6px_var(--background))] transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
+              className="block rounded-full p-2 text-foreground/75 filter-[drop-shadow(0_0_6px_var(--background))] transition-colors duration-(--motion-duration-fast) outline-none hover:text-primary focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               {iconFor(social.label)}
             </a>
