@@ -70,8 +70,10 @@ function countLine(category: "landscape" | "portrait") {
 }
 
 /** Sections the floating nav can jump to — grows as wings ship
- *  (lab…). Writing appears only once posts exist ("hidden until real"). */
+ *  (lab…). Leads with "Top" (the hero, id "hero"); Writing appears only
+ *  once posts exist ("hidden until real"). */
 const HOME_SECTIONS: HomeSection[] = [
+  { id: "hero", label: "Top" },
   { id: "photography", label: "Photography" },
   { id: "editing", label: "Editing" },
   { id: "drawing", label: "Drawing" },
@@ -90,9 +92,10 @@ export default function Home() {
   const pager = useSectionPager()
 
   /* Chevron click: turn to the section after the current one (same
-     page-turn as the Scroll-to menu) */
+     page-turn as the Scroll-to menu). HOME_SECTIONS now leads with the
+     hero ("Top"), so the id list already starts there — no prepend. */
   const advance = () => {
-    const ids = ["hero", ...HOME_SECTIONS.map((section) => section.id)]
+    const ids = HOME_SECTIONS.map((section) => section.id)
     const index = ids.indexOf(pager.activeId ?? "hero")
     const next = ids[index + 1]
     if (next) pager.goTo(next)
