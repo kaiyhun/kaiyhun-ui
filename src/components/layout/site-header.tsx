@@ -9,9 +9,13 @@
  * (the /settings gear now; room for more) sit at the right END of the
  * primary nav, split from the wing links by a hairline rule; they also
  * ride along inside the mobile menu.
+ *
+ * The logo links home; ON the home route (where a `<Link to="/">` can't
+ * navigate — you're already there) a click scrolls back up to the hero
+ * instead, since the home "pages" are all sections of `/`.
  */
 import { Settings as SettingsIcon } from "lucide-react"
-import { Link, NavLink } from "react-router"
+import { Link, NavLink, useLocation } from "react-router"
 
 import reactLogo from "@/assets/react.svg"
 import { MobileMenu } from "@/components/layout/mobile-menu"
@@ -31,11 +35,23 @@ export function SiteHeader() {
   /* Matrix mode dresses the header as a terminal title bar: traffic
      lights + user@host in mono (easter egg) */
   const matrix = useMatrixTheme()
+  const { pathname } = useLocation()
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-border bg-background/10 backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-6">
         <Link
           to="/"
+          onClick={(event) => {
+            // Already home? A plain <Link to="/"> wouldn't move (same
+            // route), so scroll back up to the hero instead. scrollTo
+            // without an explicit `behavior` honors the CSS
+            // scroll-behavior — smooth normally, instant under reduced
+            // motion.
+            if (pathname === "/") {
+              event.preventDefault()
+              window.scrollTo({ top: 0 })
+            }
+          }}
           className="logo-home flex items-center gap-2.5 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
         >
           {matrix ? (
