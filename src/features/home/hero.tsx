@@ -4,8 +4,10 @@
  *
  * Composition: a bottom-anchored editorial stack over the art-directed
  * falls backdrop — numbered eyebrow ("00 —— PERSONAL UNIVERSE", DRAFT
- * label, content-draft §19), the colossal wordmark (text-display-2xl, a
- * token added for this single use), the approved tagline, and the CTA
+ * label, content-draft §19), the colossal wordmark (text-display-2xl on
+ * sm+, dialed to text-display-lg on mobile so the name matches the
+ * sections' scale rather than filling the screen), the approved tagline
+ * and the CTA
  * row. On wide screens (lg): a live meta line (REAL counts) shares the
  * bottom row with the centered scroll chevron (counts right), and the
  * SOCIAL LINKS render as a single rotated vertical string down the
@@ -351,7 +353,10 @@ export function HomeHero() {
               ease: MOTION.ease.outExpo,
             }}
             className={cn(
-              "text-display-2xl text-wordmark",
+              // Mobile: text-display-xl so the name matches the sections'
+              // largest text (category-door labels), not a screen-filler.
+              // sm+ restores the colossal text-display-2xl.
+              "text-display-xl text-wordmark sm:text-display-2xl",
               matrix ? "font-mono" : "font-medium",
             )}
           >
