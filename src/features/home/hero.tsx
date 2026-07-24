@@ -355,8 +355,8 @@ export function HomeHero() {
             className={cn(
               // Mobile: text-display-xl so the name matches the sections'
               // largest text (category-door labels), not a screen-filler.
-              // sm+ restores the colossal text-display-2xl.
-              "text-display-xl text-wordmark sm:text-display-2xl",
+              // sm+ restores text-display-xl.
+              "text-display-xl text-wordmark sm:text-display-xl",
               matrix ? "font-mono" : "font-medium",
             )}
           >
@@ -367,7 +367,9 @@ export function HomeHero() {
         <HeroEnter delay={0.55}>
           <p
             className={cn(
-              "mt-5 max-w-xl text-lg text-foreground/85 sm:text-xl",
+              // text-base = the real "medium" (there is no text-md in
+              // Tailwind); sm+ keeps the larger size. Matrix mirrors it.
+              "mt-5 max-w-xl text-base text-foreground/85 sm:text-xl",
               matrix && "font-mono text-base sm:text-lg",
             )}
           >
@@ -380,8 +382,10 @@ export function HomeHero() {
           className="mt-8 flex flex-wrap items-center gap-3"
         >
           {/* Featured CTA — label + route live in HERO_CTA (site.ts),
-              repointed by the user as new content takes priority */}
-          <Button asChild size="lg">
+              repointed by the user as new content takes priority.
+              text-sm at all breakpoints — matches the size-lg default;
+              mobile no longer gets a larger text-base bump. */}
+          <Button asChild size="lg" className="text-sm sm:text-sm">
             <Link to={HERO_CTA.to}>
               {HERO_CTA.label}
               {/* <ArrowRight data-icon="inline-end" aria-hidden /> */}
@@ -393,6 +397,7 @@ export function HomeHero() {
             variant="outline"
             onClick={toggleMatrixTheme}
             aria-pressed={matrix}
+            className="text-sm sm:text-sm"
           >
             <Terminal data-icon="inline-start" aria-hidden />
             {matrix ? "Wake up" : "Enter the Matrix"}
