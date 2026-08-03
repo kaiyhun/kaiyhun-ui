@@ -39,7 +39,7 @@ export default defineConfig({
       }),
     },
     blogPostsPlugin(),
-    // Lab enrichment: build-time GitHub stars/last-push, always fails soft
+    // /code enrichment: build-time GitHub stars/last-push, always fails soft
     githubStatsPlugin(),
     // Tutorials: build-time YouTube titles/thumbnails via oEmbed, soft-fail
     youtubeOembedPlugin(),

@@ -1,9 +1,10 @@
 /**
- * github-stats-plugin — the Lab's hybrid enrichment (docs/lab.md).
+ * github-stats-plugin — the /code wing's hybrid enrichment
+ * (docs/code.md).
  *
  * Serves `virtual:github-stats`: a map of "owner/name" → { stars,
  * pushedAt } fetched from the public GitHub API AT BUILD TIME for every
- * `repo:` a project declares in src/content/lab.ts (extracted from the
+ * `repo:` a project declares in src/content/code.ts (extracted from the
  * file text so the list lives in exactly one place).
  *
  * FAILURE IS ALWAYS SOFT: no token, 4s timeout per repo, any error
@@ -16,9 +17,9 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import type { Plugin } from "vite"
 
-const LAB_FILE = path.resolve(
+const CODE_FILE = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
-  "../src/content/lab.ts",
+  "../src/content/code.ts",
 )
 const VIRTUAL_ID = "virtual:github-stats"
 const RESOLVED_ID = "\0" + VIRTUAL_ID
@@ -32,8 +33,8 @@ interface RepoStats {
 let cache: Record<string, RepoStats> | undefined
 
 function declaredRepos(): string[] {
-  if (!fs.existsSync(LAB_FILE)) return []
-  const source = fs.readFileSync(LAB_FILE, "utf8")
+  if (!fs.existsSync(CODE_FILE)) return []
+  const source = fs.readFileSync(CODE_FILE, "utf8")
   return [...source.matchAll(/repo:\s*"([^"]+)"/g)].map((match) => match[1])
 }
 

@@ -12,8 +12,9 @@ narrative; `docs/drawing-wing.md`), Blog (ENGINE LIVE — MDX pipeline,
 Tutorials: facade embeds + before/after sliders, `docs/tutorials.md`;
 Presets: /preset + /preset/2020 pack detail, `docs/presets.md`; both
 carry flagged placeholders),
-Lab (ENGINE LIVE — /lab projects+papers, ALL MOCK content until user
-swaps real repos/papers; `docs/lab.md`), About (LIVE — all prose is
+Code (ENGINE LIVE — /code projects, renamed from Lab 2026-08-02 and the
+Papers section PARKED/commented out, ALL MOCK content until user swaps
+real repos; `docs/code.md`), About (LIVE — all prose is
 draft; `docs/about.md`), Settings (LIVE — /settings theme deck,
 `docs/settings.md`), /run (hidden game, `docs/game.md`), /preset/v2
 (WIP by design, unlinked). ALL MILESTONES DONE — pre-launch checklist:
@@ -78,17 +79,17 @@ src/features   gallery/ (masonry, lightbox, tag filter, category menu, pager)
                home/ (category doors, art-directed backdrop, section nav)
                drawing/ (JourneyRail: chapter thread + collapsible image rails)
                blog/ (post list, topic menu, ToC, MDX element map, bands)
-               lab/ (project cards, papers shelf, page nav)
+               code/ (project cards, parked papers shelf, page nav)
 src/components ui/ (shadcn, restyled) · motion/ (Reveal, Parallax) ·
                media/ (ResponsiveImage, PicturePreload) · layout/
 src/content    site.ts, collections.ts, drawings.ts, posts.ts + posts/*.mdx,
-               lab.ts, tutorials.ts, presets.ts, about.ts, types.ts — the content model
+               code.ts, tutorials.ts, presets.ts, about.ts, types.ts — the content model
 src/lib        utils, motion-tokens, media-queries (MEDIA constants), images
 ```
 
 Routes: `/` · `/photography` (?category, ?tag, ?photo — all URL-driven) ·
 `/photography/:slug` · `/drawing` (?view, ?photo) · `/blog` (?topic) ·
-`/blog/:slug` · `/lab` · `/about` · `/settings` · `/run` (hidden game, `docs/game.md`) ·
+`/blog/:slug` · `/code` · `/about` · `/settings` · `/run` (hidden game, `docs/game.md`) ·
 `/tutorial` (?view) · `/preset` ·
 `/preset/:slug` · `*` 404. Deep links work
 on Pages via the 404.html postbuild copy (served with HTTP 404 status —
@@ -167,7 +168,8 @@ expected and harmless).
 - `docs/images.md` — image pipeline + ResponsiveImage API
 - `docs/drawing-wing.md` — /drawing layout, rail mechanics, content model
 - `docs/blog.md` — MDX pipeline, authoring posts, topics, meta shells
-- `docs/lab.md` — /lab model, GitHub enrichment (soft-fail), mock swap
+- `docs/code.md` — /code model, GitHub enrichment (soft-fail), mock swap,
+  Lab→Code rename + parked Papers
 - `docs/tutorials.md` — facade embeds, oEmbed enrichment, slider contract
 - `docs/presets.md` — preset rows, rotating backdrop, pack detail model
 - `docs/audit-m11.md` — audit findings + THE pre-launch checklist

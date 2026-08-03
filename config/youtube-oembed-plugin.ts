@@ -1,6 +1,6 @@
 /**
  * youtube-oembed-plugin — build-time video metadata for the tutorials
- * wing (docs/tutorials.md), same shape as the Lab's GitHub enrichment.
+ * wing (docs/tutorials.md), same shape as /code's GitHub enrichment.
  *
  * Serves `virtual:youtube-meta`: videoId → { title, thumbnailUrl } from
  * YouTube's public oEmbed endpoint (no API key) for every
