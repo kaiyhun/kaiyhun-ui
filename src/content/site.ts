@@ -18,7 +18,7 @@ export const HERO_CTA = {
  *  the hero; DRAFTS pending review, content-draft §19). */
 export const HERO_COVER = {
   /** Vertical spine rail along the right edge (wide screens). */
-  rail: "Photography · Drawing · Editing · Lab — one universe",
+  rail: "Photography · Drawing · Editing · Code — one universe",
   /** Issue tag under the faux barcode, bottom-right. */
   issue: "v0.0.0",
 } as const

@@ -21,7 +21,7 @@ const DESTINATIONS: Record<string, string> = {
   photography: "/photography",
   drawing: "/drawing",
   drawings: "/drawing",
-  lab: "/lab",
+  code: "/code",
   blog: "/blog",
   about: "/about",
   tutorial: "/tutorial",
@@ -57,7 +57,7 @@ export function TerminalPrompt() {
         break
       }
       case "ls":
-        setOutput("photography  drawing  lab  blog  about  tutorial  preset")
+        setOutput("photography  drawing  code  blog  about  tutorial  preset")
         break
       case "run":
         // The hidden game (docs/game.md) — `run` runs the runner

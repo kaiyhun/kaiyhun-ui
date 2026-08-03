@@ -15,7 +15,7 @@ const PresetPack = lazy(() => import("@/pages/preset-pack"))
 const PresetV2 = lazy(() => import("@/pages/preset-v2"))
 const Drawing = lazy(() => import("@/pages/drawing"))
 const Blog = lazy(() => import("@/pages/blog"))
-const Lab = lazy(() => import("@/pages/lab"))
+const Code = lazy(() => import("@/pages/code"))
 const About = lazy(() => import("@/pages/about"))
 const Settings = lazy(() => import("@/pages/settings"))
 const Run = lazy(() => import("@/pages/run"))
@@ -42,7 +42,7 @@ export function AppRoutes({ location }: AppRoutesProps) {
       <Route path="drawing" element={<Drawing />} />
       <Route path="blog" element={<Blog />} />
       <Route path="blog/:slug" element={<Post />} />
-      <Route path="lab" element={<Lab />} />
+      <Route path="code" element={<Code />} />
       <Route path="about" element={<About />} />
       <Route path="settings" element={<Settings />} />
       {/* Easter egg — unlinked, un-sitemapped, noindex (docs/game.md) */}

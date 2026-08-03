@@ -8,7 +8,7 @@
  * are maintained ONCE).
  *
  * Purely presentational beyond the spy. Callers own where entries come
- * from and where the rail sits: the Lab page passes its static sections
+ * from and where the rail sits: the /code page passes its static sections
  * and lets its grid place the rail; the blog TableOfContents discovers a
  * post's headings, gates on 3+, indents h3s, and floats the rail beside
  * the reading column via className.
