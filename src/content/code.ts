@@ -1,11 +1,17 @@
 /**
- * Lab content model (docs/lab.md) — projects + papers for /lab.
+ * Code content model (docs/code.md) — projects (+ parked papers) for
+ * /code, the wing formerly called Lab.
  *
  * ⚠ EVERYTHING BELOW IS MOCK DATA (user decision, M9 kickoff): real
  * repos and papers land only when the whole UI is done. Every title is
  * prefixed [MOCK]; the `repo` fields point at well-known public repos
  * purely so the GitHub-stats enrichment renders with real numbers.
  * Replace wholesale — do not ship.
+ *
+ * `Paper`/`PAPERS` are PARKED, not dead (user decision 2026-08-02): the
+ * page no longer renders a Papers section, so nothing imports them
+ * today. Kept here so restoring the shelf is an uncomment, not a
+ * rewrite — see src/pages/code.tsx.
  *
  * `repo` opts a project into build-time enrichment (stars, last push)
  * via virtual:github-stats — config/github-stats-plugin.ts extracts the
@@ -95,7 +101,8 @@ export const PROJECTS: Project[] = [
   },
 ]
 
-/** MOCK papers — citation-style shelf rows. */
+/** MOCK papers — citation-style shelf rows. PARKED: unused while the
+ *  Papers section is commented out in src/pages/code.tsx. */
 export const PAPERS: Paper[] = [
   {
     title:

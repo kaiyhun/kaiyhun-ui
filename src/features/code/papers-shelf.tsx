@@ -1,13 +1,16 @@
 /**
- * PapersShelf — the Lab's publications list: citation-style rows (user
- * pick) with title, venue · year, optional authors, and outbound
- * PDF / arXiv / DOI links. Formal on purpose — papers shouldn't card
- * like repos.
+ * PapersShelf — the publications list: citation-style rows (user pick)
+ * with title, venue · year, optional authors, and outbound PDF / arXiv
+ * / DOI links. Formal on purpose — papers shouldn't card like repos.
+ *
+ * ⚠ PARKED (user decision 2026-08-02), NOT dead code: /code renders no
+ * Papers section for now, so nothing imports this. Kept intact so the
+ * shelf comes back by uncommenting three blocks in src/pages/code.tsx.
  */
 import { ArrowUpRight } from "lucide-react"
 
 import { Reveal } from "@/components/motion/reveal"
-import { PAPERS } from "@/content/lab"
+import { PAPERS } from "@/content/code"
 
 const LINK_CLASS =
   "inline-flex items-center gap-1 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase transition-colors duration-(--motion-duration-fast) outline-none hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"

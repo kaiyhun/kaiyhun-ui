@@ -1,8 +1,9 @@
 /**
- * ProjectCard — one Lab project: name + status badge, description, tech
- * chips, then a footer of outbound links (GitHub / demo / write-up) and
- * the build-time GitHub stats when the project declares a repo (stats
- * may be absent — offline builds omit them by design, docs/lab.md).
+ * ProjectCard — one /code project: name + status badge, description,
+ * tech chips, then a footer of outbound links (GitHub / demo /
+ * write-up) and the build-time GitHub stats when the project declares a
+ * repo (stats may be absent — offline builds omit them by design,
+ * docs/code.md).
  *
  * Cards link OUT (user decision) — there are no project detail pages;
  * deep write-ups are blog posts.
@@ -11,7 +12,7 @@ import { ArrowUpRight, Star } from "lucide-react"
 import { Link } from "react-router"
 import { GITHUB_STATS } from "virtual:github-stats"
 
-import { TECH_LABELS, type Project } from "@/content/lab"
+import { TECH_LABELS, type Project } from "@/content/code"
 import { cn } from "@/lib/utils"
 
 /** Badge tone per status — orange (rare accent) marks live experiments. */

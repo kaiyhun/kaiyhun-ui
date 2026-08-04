@@ -1,6 +1,7 @@
 /**
  * Ambient type for `virtual:github-stats` — served by
- * config/github-stats-plugin.ts (the Lab's build-time enrichment).
+ * config/github-stats-plugin.ts (the /code wing's build-time
+ * enrichment).
  * The map may be EMPTY (offline/rate-limited builds); consumers must
  * treat every entry as optional.
  */

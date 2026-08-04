@@ -1,42 +1,47 @@
 /**
- * Lab — /lab, the research & code pillar (M9, docs/lab.md).
+ * Code — /code, the code & projects pillar (M9, docs/code.md).
  *
- * Stacked sections — Projects (card grid), Papers (citation shelf),
- * Related writing (code-topic posts) — with a sticky right-side page
- * navigator on xl+ (user request). Cards link out; deep write-ups are
- * blog posts. ALL CONTENT IS MOCK until the user swaps in real repos
- * and papers (src/content/lab.ts). Intro copy is a DRAFT
- * (content-draft §13).
+ * Stacked sections — Projects (card grid) → Related writing (code-topic
+ * posts) — with a sticky right-side page navigator on xl+ (user
+ * request). Cards link out; deep write-ups are blog posts. ALL CONTENT
+ * IS MOCK until the user swaps in real repos (src/content/code.ts).
+ * Intro copy is a DRAFT (content-draft §13).
+ *
+ * PARKED (user decision 2026-08-02): the Papers section is commented
+ * out, not deleted — there's nothing real to cite yet. Restoring it =
+ * uncomment the three blocks below; the shelf component
+ * (features/code/papers-shelf.tsx) and the PAPERS data are untouched.
+ * The wing was renamed Lab → Code in the same pass.
  */
 import { PageNav, type PageNavItem } from "@/components/layout/page-nav"
 import { Reveal, RevealGroup } from "@/components/motion/reveal"
-import { PROJECTS } from "@/content/lab"
+import { PROJECTS } from "@/content/code"
 import { SITE } from "@/content/site"
 import { RelatedWriting } from "@/features/blog/related-writing"
-import { PapersShelf } from "@/features/lab/papers-shelf"
-import { ProjectCard } from "@/features/lab/project-card"
+// PARKED: import { PapersShelf } from "@/features/code/papers-shelf"
+import { ProjectCard } from "@/features/code/project-card"
 
 const SECTIONS: PageNavItem[] = [
   { id: "projects", label: "Projects" },
-  { id: "papers", label: "Papers" },
-  { id: "lab-writing", label: "Writing" },
+  // PARKED: { id: "papers", label: "Papers" },
+  { id: "code-writing", label: "Writing" },
 ]
 
-export default function Lab() {
+export default function Code() {
   return (
     <main className="mx-auto max-w-6xl px-6 pt-32 pb-24">
-      <title>{`Lab — ${SITE.name}`}</title>
+      <title>{`Code — ${SITE.name}`}</title>
       <meta
         name="description"
-        content="Research, projects, and the code behind them."
+        content="Projects, experiments, and the code behind them."
       />
 
       <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_12rem] xl:gap-16">
         <div>
           <Reveal>
-            <h1 className="text-display-lg">Lab</h1>
+            <h1 className="text-display-lg">Code</h1>
             <p className="mt-4 max-w-prose leading-relaxed text-muted-foreground">
-              Research, projects, and the code behind them.
+              Projects, experiments, and the code behind them.
             </p>
           </Reveal>
 
@@ -63,7 +68,7 @@ export default function Lab() {
             </RevealGroup>
           </section>
 
-          {/* ============ Papers ============ */}
+          {/* ============ Papers — PARKED (see docstring) ============
           <section
             id="papers"
             aria-labelledby="papers-heading"
@@ -81,9 +86,10 @@ export default function Lab() {
               <PapersShelf />
             </div>
           </section>
+          ======================================================== */}
 
           {/* ============ Writing (code-topic posts) ============ */}
-          <div id="lab-writing" className="scroll-mt-24">
+          <div id="code-writing" className="scroll-mt-24">
             <RelatedWriting topic="code" />
           </div>
         </div>
