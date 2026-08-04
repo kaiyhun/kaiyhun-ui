@@ -1,5 +1,5 @@
 /**
- * BinaryScene — the Lab section's full-page ambient backdrop: a pixel cat
+ * BinaryScene — the Code section's full-page ambient backdrop: a pixel cat
  * watching a white crescent moon under a starfield, clouds rolling
  * through and two dandelions swaying in the same wind on the left — all
  * drawn ENTIRELY from 0/1 glyphs. The section's text sits OVER it (user

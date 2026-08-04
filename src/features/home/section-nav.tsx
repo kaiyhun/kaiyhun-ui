@@ -9,7 +9,7 @@
  * their headings). Collapsible to a small round button; the choice
  * persists ACROSS visits (localStorage) so a collapse sticks.
  *
- * Homepage-only by design — as wings ship (drawings, lab, blog…) the
+ * Homepage-only by design — as wings ship (drawings, code, blog…) the
  * page just adds entries to its `sections` prop.
  */
 import { ArrowUpDown, Minus } from "lucide-react"

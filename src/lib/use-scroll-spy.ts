@@ -1,6 +1,6 @@
 /**
  * useScrollSpy — deterministic "which section is the reader in" for
- * on-page navs (the shared PageNav rail — blog ToC and the Lab page).
+ * on-page navs (the shared PageNav rail — blog ToC and the /code page).
  *
  * Position rule: the active heading is the LAST one at/above a reference
  * line at 25% of the viewport (below the headings' scroll-mt-24 ≈ 96px
@@ -13,8 +13,8 @@
  * JUMP OVERRIDE (the bottom-clamp fix): position alone is ambiguous at
  * the page end. Clicking an entry whose target has less than a viewport
  * of content below it CLAMPS the scroll at the document bottom, where the
- * bottom rule would hand the highlight to the LAST entry (click "Papers",
- * see "Writing" highlighted). Intent must come from the jump itself:
+ * bottom rule would hand the highlight to the LAST entry (click
+ * "Projects", see "Writing" highlighted). Intent must come from the jump itself:
  * `notifyJump(id)` (wired to the nav links' onClick) and #hash deep-links
  * hold the highlight on the jump target until the user takes over
  * scrolling (wheel / touch / pointer / key), which releases it to

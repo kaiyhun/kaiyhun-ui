@@ -2,7 +2,7 @@
  * Home — the hub of the multi-domain site (docs/homepage-brief.md).
  *
  * Sections: identity hero (user-approved statement over niagaraFalls_8) →
- * gateway sections (Photography, Editing, Drawing, Lab, Blog). No site
+ * gateway sections (Photography, Editing, Drawing, Code, Blog). No site
  * footer here (user decision — gated in app.tsx): the paged home is
  * full-viewport screens, and the floating SocialRail carries the links a
  * footer would.
@@ -70,14 +70,14 @@ function countLine(category: "landscape" | "portrait") {
 }
 
 /** Sections the floating nav can jump to — grows as wings ship
- *  (lab…). Leads with "Top" (the hero, id "hero"); Writing appears only
+ *  (code…). Leads with "Top" (the hero, id "hero"); Writing appears only
  *  once posts exist ("hidden until real"). */
 const HOME_SECTIONS: HomeSection[] = [
   { id: "hero", label: "Top" },
   { id: "photography", label: "Photography" },
   { id: "editing", label: "Editing" },
   { id: "drawing", label: "Drawing" },
-  { id: "lab", label: "Lab" },
+  { id: "code", label: "Code" },
   ...(POSTS.length > 0 ? [{ id: "blog", label: "Blog" }] : []),
 ]
 
@@ -148,7 +148,7 @@ export default function Home() {
               number="01"
               id="photography-heading"
               label="Photography"
-              intro="Two bodies of work — more wings (drawings, the lab, the blog) open as they're built."
+              intro="Two bodies of work — more wings (drawings, the code, the blog) open as they're built."
             />
           </Reveal>
         </CategoryDoors>
@@ -235,11 +235,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ Lab — research & code ======= */}
+      {/* ============ Code — projects & experiments ======= */}
       <section
-        id="lab"
+        id="code"
         data-page-section
-        aria-labelledby="lab-heading"
+        aria-labelledby="code-heading"
         className="relative flex min-h-dvh flex-col justify-center overflow-hidden bg-background"
       >
         {/* Full-page binary pixel scene — a 0/1 cat watching the moon;
@@ -248,15 +248,16 @@ export default function Home() {
         <BinaryScene className="absolute inset-0 h-full w-full" />
         <div className="relative mx-auto w-full max-w-6xl px-6 py-16 md:py-24">
           <Reveal>
-            <SectionKicker number="04" id="lab-heading" label="Lab" />
+            <SectionKicker number="04" id="code-heading" label="Code" />
             <p className="mt-8 max-w-3xl font-display text-display-md">
-              Research, projects, and the code behind them.
+              Projects, experiments, and the code behind them.
             </p>
+            {/* Door link (label draft — see content-draft §13) */}
             <Link
-              to="/lab"
+              to="/code"
               className="group mt-6 inline-flex items-center gap-2 font-display text-xs font-semibold tracking-[0.15em] text-primary uppercase outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             >
-              Enter the lab
+              See the code
               <ArrowRight
                 aria-hidden
                 className="size-4 transition-transform duration-(--motion-duration-fast) ease-(--ease-out-expo) group-hover:translate-x-1"
